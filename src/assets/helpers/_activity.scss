@@ -1,0 +1,105 @@
+.activityBrief{
+    .title{
+        font-size: 96px;
+        text-shadow: 4px 4px 8px #1F314352;
+    }
+    .contentTextShadow{
+        text-shadow: 4px 4px 8px #1F314352;
+    }
+}
+.onlineActivityBg{
+    background-color: #ECF2F5;
+}
+.offlineActivityBg{
+    background-color: #EFEBDE;
+}
+
+.pagination li{
+    width: 48px;
+    height: 48px;
+    display: flex;
+    justify-content:center ;
+    align-items: center;
+}
+
+.line{
+    width: 60%;
+    height: 0;
+}
+.line-sm{
+    width: 20%;
+    height: 0;
+}
+.memberPhoto-40{
+    width: 40px;
+    height: 40px;
+}
+
+.memberPhoto-56{
+    width: 56px;
+    height: 56px;
+}
+
+.memberPhoto-64{
+    width: 64px;
+    height: 64px;
+}
+
+.memberPhoto-120{
+    width: 120px;
+    height: 120px;
+}
+
+.endingThanksBgImg{
+    background-color: #E4E4E4 ;
+}
+
+.triangle-up{
+    width: 0;
+    height: 0;
+    border-left: 5px solid transparent;
+    border-right: 5px solid transparent;
+    border-bottom: 10px solid #E4E4E4;
+}
+.talkbubble {
+    width: 258px; 
+    height: 38px; 
+    background:#E4E4E4;
+    position: relative;
+    -moz-border-radius:    10px; 
+    -webkit-border-radius: 10px; 
+    border-radius:         10px;
+    &:after {
+        content:"";
+        position: absolute;
+        right: 124px;
+        bottom: 100%;
+        width: 0;
+        height: 0;
+        border-right: 5px solid transparent;
+        border-left: 5px solid transparent;
+        border-bottom: 12px solid #E4E4E4;
+    }
+}
+
+.talkbubble-down {
+    width: 258px; 
+    height: 38px; 
+    background:#4D5E67;
+    // border: 2px solid #4D5E67;
+    position: relative;
+    -moz-border-radius:    10px; 
+    -webkit-border-radius: 10px; 
+    border-radius:         10px;
+    &:before {
+        content:"";
+        position: absolute;
+        right: 124px;
+        top: 100%;
+        width: 0;
+        height: 0;
+        border-right: 5px solid transparent;
+        border-left: 5px solid transparent;
+        border-top: 8px solid #4D5E67;
+    }
+}
