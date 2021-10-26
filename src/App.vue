@@ -2,9 +2,10 @@
   <div id="nav">
     <router-link to="/">Home</router-link> |
     <router-link to="/about">About</router-link>|
-    <router-link to="/layout">Layout</router-link>
+    <router-link to="/layout">Layout</router-link>｜
+    <router-link to="/searchActivity">searchActivity</router-link>
   </div>
-<button type="button" class="btn btn-primary">Primary</button>
+<!-- <button type="button" class="btn btn-primary">Primary</button>
 <button type="button" class="btn btn-secondary">Secondary</button>
 <button type="button" class="btn btn-success">Success</button>
 <button type="button" class="btn btn-danger">Danger</button>
@@ -13,7 +14,7 @@
 <button type="button" class="btn btn-light">Light</button>
 <button type="button" class="btn btn-dark">Dark</button>
 
-<button type="button" class="btn btn-link">Link</button>
+<button type="button" class="btn btn-link">Link</button> -->
   <router-view/>
 </template>
 

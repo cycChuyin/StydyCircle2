@@ -19,6 +19,11 @@ const routes = [
     path: '/layout',
     name: 'Layout',
     component: () => import('../views/Layout.vue')
+  },
+  {
+    path: '/searchActivity',
+    name: 'SearchActivity',
+    component: () => import('../views/Activity/SearchForActivity.vue')
   }
 ]
 
