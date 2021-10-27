@@ -1,7 +1,7 @@
 <template>
   <div class="home">
-    <img alt="Vue logo" src="../assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
+    <img alt="Vue logo" src="../assets/logo.png" />
+    <HelloWorld msg="Welcome to Your Vue.js App" />
   </div>
 </template>
 
@@ -13,6 +13,10 @@ export default {
   name: 'Home',
   components: {
     HelloWorld
+  },
+  // 把環境變數讀取出來，確保環境變數已經加到專案裡
+  created () {
+    console.log(process.env.VUE_APP_API)
   }
 }
 </script>
