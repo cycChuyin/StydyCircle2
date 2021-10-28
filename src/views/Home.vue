@@ -1,22 +1,27 @@
 <template>
-  <div class="home">
-    <img alt="Vue logo" src="../assets/logo.png" />
-    <HelloWorld msg="Welcome to Your Vue.js App" />
+  <component-navbar></component-navbar>
+  <router-link to="/studyCircle">StudyCircle</router-link>｜
+  <router-link to="/login">Login</router-link>｜
+  <router-link to="/signUp">SignUp</router-link>｜
+  <div id="nav">
+    <router-link to="/">Home</router-link> |
+    <router-link to="/about">About</router-link>|
+    <router-link to="/layout">Layout</router-link>｜
+    <router-link to="/searchActivity">searchActivity</router-link> ｜
   </div>
+  <router-view></router-view>
+  <component-footer></component-footer>
 </template>
 
 <script>
-// @ is an alias to /src
-import HelloWorld from '@/components/HelloWorld.vue'
+import componentNavbar from '@/components/Layout/Navbar.vue'
+import componentFooter from '@/components/Layout/Footer.vue'
 
 export default {
   name: 'Home',
   components: {
-    HelloWorld
-  },
-  // 把環境變數讀取出來，確保環境變數已經加到專案裡
-  created () {
-    console.log(process.env.VUE_APP_API)
+    componentNavbar,
+    componentFooter
   }
 }
 </script>

@@ -38,17 +38,19 @@
               </div>
               <ul class="list-unstyled d-flex">
                 <li class="nav-item">
-                  <a class="nav-link text-secondary" href="#">
-                    <i class="bi bi-facebook"></i>
+                  <a class="nav-link text-secondary" :href="companyInfoes.FacebookLink">
+                    <i class="fab fa-facebook-square"></i>
                   </a>
                 </li>
                 <li class="nav-item">
-                  <a class="nav-link text-secondary" href="#">
-                    <i class="bi bi-instagram"></i>
+                  <a class="nav-link text-secondary" :href="companyInfoes.InstagramLink">
+                    <i class="fab fa-instagram"></i>
                   </a>
                 </li>
                 <li class="nav-item">
-                  <a class="nav-link text-secondary" href="#">Line</a>
+                  <a class="nav-link text-secondary" :href="companyInfoes.LineLink">
+                    <i class="fab fa-line"></i>
+                  </a>
                 </li>
               </ul>
               <!-- login -->
@@ -150,7 +152,11 @@ export default {
   data () {
     return {
       companyInfoes: {
-        Name: '公司名稱'
+        Name: '公司名稱',
+        Email: 'Email',
+        FacebookLink: 'Facebook',
+        InstagramLink: 'Instagram',
+        LineLink: 'Line'
       }
     }
   },
@@ -159,11 +165,11 @@ export default {
   },
   methods: {
     getCompanyData () {
-      this.axios
-        .get('https://studycircle.rocket-coding.com/api/CompanyInfoes')
-        .then((res) => {
-          console.log(res)
-        })
+      const api = `${process.env.VUE_APP_API}/CompanyInfoes`
+      this.axios.get(api).then((res) => {
+        console.log(res)
+        this.companyInfoes = res.data
+      })
     }
   }
 }

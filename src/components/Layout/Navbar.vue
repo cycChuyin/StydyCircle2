@@ -67,7 +67,7 @@
                 </ul>
             </div>
         </nav>
-        <img src="https://fakeimg.pl/239x66/?text=Study-logo" class="position-absolute top-50 start-50 translate-middle">
+        <img src="@/assets/photo/logo.png" class="position-absolute top-50 start-50 translate-middle" style="width:239px; height:auto;">
     </div>
 </div>
 
