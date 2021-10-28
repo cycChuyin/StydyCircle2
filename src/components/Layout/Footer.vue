@@ -1,7 +1,7 @@
 <template>
   <div class="border border-dark">
     <div class="container">
-      <img src="https://fakeimg.pl/307x84/?text=Study-logo" class="mt-5" />
+      <img src="@/assets/photo/logo.png" class="mt-5" style="width:239px; height:auto;" />
       <div
         class="
           row
@@ -165,7 +165,7 @@ export default {
   },
   methods: {
     getCompanyData () {
-      const api = `${process.env.VUE_APP_API}/CompanyInfoes`
+      const api = `${process.env.VUE_APP_API}/company/infoes`
       this.axios.get(api).then((res) => {
         console.log(res)
         this.companyInfoes = res.data
