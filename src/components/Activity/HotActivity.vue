@@ -55,15 +55,16 @@
               aria-labelledby="pills-home-tab"
             >
               <h3 class="fs-4 fw-bold mb-2">
-                《原子習慣：細微改變帶來巨大成就的實證法則》
+                {{ HotOnlineActivity.Name }}
               </h3>
               <p class="mb-0">
-                ｜日期：<span>2021.10.10（日）</span>｜時間：<span
+                ｜日期：<span>2021.10.10（日）</span> ｜時間：<span
                   >16:00 - 18:00</span
-                >｜人數：<span>10人以內</span>
+                >
+                ｜人數：<span>{{ HotOnlineActivity.LimitNumber }} 人以內</span>
               </p>
               <p class="py-3">
-                每天都進步1%，一年後，你會進步37倍；每天都退步1%，一年後，你會弱化到趨近於0！你的一點小改變、一個好習慣，將會產生複利效應，如滾雪球般，為你帶來豐碩的人生成果！一出版立刻風行全球，企業界、運動界、教育界、瘦身界都在用的習慣養成實作指南！
+                {{ HotOnlineActivity.Summary }}
               </p>
               <div class="d-flex justify-content-md-end">
                 <button
@@ -81,15 +82,16 @@
               aria-labelledby="pills-profile-tab"
             >
               <h3 class="fs-4 fw-bold mb-2">
-                《原子習慣：細微改變帶來巨大成就的實證法則 1 》
+                {{ HotEntityActivity.Name }}
               </h3>
               <p class="mb-0">
-                ｜日期：<span>2021.10.10（日）</span>｜時間：<span
+                ｜日期：<span>2021.10.10（日）</span> ｜時間：<span
                   >16:00 - 18:00</span
-                >｜人數：<span>10人以內</span>
+                >
+                ｜人數：<span>{{ HotEntityActivity.LimitNumber }} 人以內</span>
               </p>
               <p class="py-3">
-                每天都進步1%，一年後，你會進步37倍；每天都退步1%，一年後，你會弱化到趨近於0！你的一點小改變、一個好習慣，將會產生複利效應，如滾雪球般，為你帶來豐碩的人生成果！一出版立刻風行全球，企業界、運動界、教育界、瘦身界都在用的習慣養成實作指南！
+                {{ HotEntityActivity.Summary }}
               </p>
               <div class="d-flex justify-content-md-end">
                 <button
@@ -107,15 +109,16 @@
               aria-labelledby="pills-contact-tab"
             >
               <h3 class="fs-4 fw-bold mb-2">
-                《原子習慣：細微改變帶來巨大成就的實證法則 2 》
+                {{ HotWorkShop.Name }}
               </h3>
               <p class="mb-0">
-                ｜日期：<span>2021.10.10（日）</span>｜時間：<span
+                ｜日期：<span>2021.10.10（日）</span> ｜時間：<span
                   >16:00 - 18:00</span
-                >｜人數：<span>10人以內</span>
+                >
+                ｜人數：<span>{{ HotWorkShop.LimitNumber }} 人以內</span>
               </p>
               <p class="py-3">
-                每天都進步1%，一年後，你會進步37倍；每天都退步1%，一年後，你會弱化到趨近於0！你的一點小改變、一個好習慣，將會產生複利效應，如滾雪球般，為你帶來豐碩的人生成果！一出版立刻風行全球，企業界、運動界、教育界、瘦身界都在用的習慣養成實作指南！
+                {{ HotWorkShop.Summary }}
               </p>
               <div class="d-flex justify-content-md-end">
                 <button
@@ -132,3 +135,46 @@
     </div>
   </div>
 </template>
+
+<script>
+import splitDateString from '@/components/SpiltDateString.vue'
+
+export default {
+  name: 'Footer',
+  components: splitDateString,
+  data () {
+    return {
+      HotOnlineActivity: {
+        Name: '書名',
+        Image: 'Image',
+        ActivityStartDate: 'ActivityStartDate',
+        ActivityEndDate: 'ActivityEndDate',
+        LimitNumber: '人數',
+        Summary: 'brief',
+        newActivityStartDate: [],
+        newActivityEndDate: []
+      },
+      HotEntityActivity: {},
+      HotWorkShop: {}
+    }
+  },
+  methods: {
+    getHotActivityData () {
+      const api = `${process.env.VUE_APP_API}/activities/top-views`
+      this.axios.get(api).then((res) => {
+        this.HotOnlineActivity = res.data.HotOnlineActivity
+        this.HotEntityActivity = res.data.HotEntityActivity
+        this.HotWorkShop = res.data.HotWorkShop
+      })
+    },
+    splitDateString (stringToSplit, separator) {
+      const arrayOfStrings = stringToSplit.split(separator)
+      console.log(arrayOfStrings)
+      console.log(arrayOfStrings.length)
+    }
+  },
+  created () {
+    this.getHotActivityData()
+  }
+}
+</script>

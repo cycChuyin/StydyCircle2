@@ -165,7 +165,7 @@ export default {
   },
   methods: {
     getCompanyData () {
-      const api = `${process.env.VUE_APP_API}/company/infoes`
+      const api = `${process.env.VUE_APP_API}/api/company/infoes`
       this.axios.get(api).then((res) => {
         console.log(res)
         this.companyInfoes = res.data

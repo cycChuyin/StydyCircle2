@@ -44,18 +44,27 @@ export default {
       user: {
         account: '',
         password: ''
+      },
+      userTokenData: {
+        JwtToken: ''
       }
     }
   },
   methods: {
     signIn () {
       console.log('login')
-      const api = `${process.env.VUE_APP_API}/users/login`
+      const api = `${process.env.VUE_APP_API}/api/users/login`
       console.log(api)
       // POST請求
       this.axios
         .post(api, this.user)
-        .then((response) => console.log(response))
+        .then((response) => {
+          console.log(response)
+          const getJwtToken = response.data.JwtToken
+          this.userTokenData.JwtToken = getJwtToken
+          console.log(this.userTokenData.JwtToken, getJwtToken)
+          localStorage.setItem('JwtToken', getJwtToken)
+        })
         .catch((error) => console.log('response: ', error.response.data))
     }
   }
