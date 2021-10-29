@@ -53,10 +53,10 @@ export default {
   methods: {
     signIn () {
       console.log('login')
-      const api = `${process.env.VUE_APP_API}/api/users/login`
+      const api = `${process.env.VUE_APP_API}/users/login`
       console.log(api)
       // POST請求
-      this.axios
+      this.apiHelper
         .post(api, this.user)
         .then((response) => {
           console.log(response)
