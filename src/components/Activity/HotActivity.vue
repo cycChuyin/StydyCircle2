@@ -140,7 +140,6 @@
 import splitDateString from '@/components/SpiltDateString.vue'
 
 export default {
-  name: 'Footer',
   components: splitDateString,
   data () {
     return {
@@ -160,8 +159,8 @@ export default {
   },
   methods: {
     getHotActivityData () {
-      const api = `${process.env.VUE_APP_API}/activities/top-views`
-      this.axios.get(api).then((res) => {
+      // const api = `${process.env.VUE_APP_API}/activities/top-views`
+      this.$apiHelper.get('api/activities/top-views').then((res) => {
         this.HotOnlineActivity = res.data.HotOnlineActivity
         this.HotEntityActivity = res.data.HotEntityActivity
         this.HotWorkShop = res.data.HotWorkShop

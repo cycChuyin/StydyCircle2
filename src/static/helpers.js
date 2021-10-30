@@ -2,7 +2,7 @@ import axios from 'axios'
 
 const baseURL = `${process.env.VUE_APP_API}`
 
-export const axiosInstance = axios.create({ baseURL })
+const axiosInstance = axios.create({ baseURL })
 
 axiosInstance.interceptors.request.use(
   (config) => {
@@ -18,5 +18,4 @@ axiosInstance.interceptors.request.use(
   (err) => Promise.reject(err)
 )
 
-const apiHelper = axiosInstance
-export default apiHelper
+export default axiosInstance

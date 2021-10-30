@@ -50,7 +50,7 @@
               <ul class="list-unstyled nav-item d-flex mb-2 mb-lg-0">
                 <li class="nav-item ms-7">
                   <router-link
-                    to="/signUp"
+                    to="/sign-up"
                     class="nav-link text-secondary px-3 py-2"
                   >
                     註冊
@@ -105,7 +105,7 @@
         </div>
       </div>
     </nav>
-    <router-link to="/studyCircle">
+    <router-link to="/study-circle">
       <img
         src="@/assets/photo/logo.png"
         class="position-absolute top-50 start-50 translate-middle"

@@ -6,32 +6,37 @@ const routes = [
     path: '/',
     name: 'Home',
     component: Home,
-    redirect: '/studyCircle',
+    redirect: '/study-circle',
     children: [
       {
-        path: 'studyCircle',
+        path: 'study-circle',
         name: 'Index',
         component: () => import('../views/Index.vue')
       },
       {
         path: 'login',
         name: 'Login',
-        component: () => import('../views/Login.vue')
+        component: () => import('../views/users/Login.vue')
       },
       {
-        path: 'signUp',
+        path: 'sign-up',
         name: 'SignUp',
-        component: () => import('../views/SignUp.vue')
+        component: () => import('../views/users/SignUp.vue')
+      },
+      {
+        path: 'forget-password',
+        name: 'ForgetPassword',
+        component: () => import('../views/users/ForgetPassword.vue')
       },
       {
         path: 'reset-password',
         name: 'ResetPassword',
-        component: () => import('../views/ResetPassword.vue')
+        component: () => import('../views/users/ResetPassword.vue')
       },
       {
         path: 'auth-mail',
         name: 'AuthMail',
-        component: () => import('../views/AuthMail.vue')
+        component: () => import('../views/users/AuthMail.vue')
       }
     ]
   },

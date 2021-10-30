@@ -1,7 +1,11 @@
 <template>
   <div class="border border-dark">
     <div class="container">
-      <img src="@/assets/photo/logo.png" class="mt-5" style="width:239px; height:auto;" />
+      <img
+        src="@/assets/photo/logo.png"
+        class="mt-5"
+        style="width: 239px; height: auto"
+      />
       <div
         class="
           row
@@ -38,17 +42,26 @@
               </div>
               <ul class="list-unstyled d-flex">
                 <li class="nav-item">
-                  <a class="nav-link text-secondary" :href="companyInfoes.FacebookLink">
+                  <a
+                    class="nav-link text-secondary"
+                    :href="companyInfoes.FacebookLink"
+                  >
                     <i class="fab fa-facebook-square"></i>
                   </a>
                 </li>
                 <li class="nav-item">
-                  <a class="nav-link text-secondary" :href="companyInfoes.InstagramLink">
+                  <a
+                    class="nav-link text-secondary"
+                    :href="companyInfoes.InstagramLink"
+                  >
                     <i class="fab fa-instagram"></i>
                   </a>
                 </li>
                 <li class="nav-item">
-                  <a class="nav-link text-secondary" :href="companyInfoes.LineLink">
+                  <a
+                    class="nav-link text-secondary"
+                    :href="companyInfoes.LineLink"
+                  >
                     <i class="fab fa-line"></i>
                   </a>
                 </li>
@@ -165,8 +178,8 @@ export default {
   },
   methods: {
     getCompanyData () {
-      const api = `${process.env.VUE_APP_API}/company/infoes`
-      this.axios.get(api).then((res) => {
+      // const api = `${process.env.VUE_APP_API}/api/company/infoes`
+      this.$apiHelper.get('api/company/infoes').then((res) => {
         console.log(res)
         this.companyInfoes = res.data
       })
