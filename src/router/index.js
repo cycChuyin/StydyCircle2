@@ -37,6 +37,11 @@ const routes = [
         path: 'auth-mail',
         name: 'AuthMail',
         component: () => import('../views/users/AuthMail.vue')
+      },
+      {
+        path: 'auth-password',
+        name: 'AuthPassword',
+        component: () => import('../views/users/AuthPassword.vue')
       }
     ]
   },
