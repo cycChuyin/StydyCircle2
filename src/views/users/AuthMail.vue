@@ -27,7 +27,7 @@
           <div class="row justify-content-center">
             <div class="col-md-8">
               <router-link
-                to="/study-circle"
+                to="/login"
                 type="button"
                 class="btn btn-secondary rounded-pill text-white w-100"
               >
@@ -40,3 +40,47 @@
     </div>
   </div>
 </template>
+
+<script>
+export default {
+  data () {
+    return {
+      mailGuid: {
+        Guid: ''
+      }
+    }
+  },
+  created () {
+    // 取得 mailGuid 邏輯
+    // 先取得網址字串
+    const verifyLink = location.href
+    // console.log(verifyLink)
+    // 尋找網址列中是否有資料傳遞(QueryString)
+    if (verifyLink.indexOf('?') !== -1) {
+      // 在此直接將各自的參數資料切割放進ary中
+      // string verifyLink = @"https://" + urlHost + @"/#auth-mail?guid=" + mailGuid;
+      const aryGuid = verifyLink.split('?')
+      // 此時ary的內容為：
+      // ary[0] = 'urlHost'，ary[1] = 'guid= + mailGuid;'
+      // console.log(aryGuid)
+      // 下迴圈去搜尋每個資料參數
+      for (let i = 0; i <= aryGuid.length - 1; i++) {
+        // 如果資料名稱為 guid 的話那就把他取出來
+        if (aryGuid[i].split('=')[0] === 'guid') {
+          this.mailGuid.Guid = aryGuid[i].split('=')[1]
+        }
+      }
+    }
+
+    // PUT 請求
+    this.$apiHelper
+      .put('api/users/auth-mail', this.mailGuid)
+      .then((res) => {
+        console.log(res.data)
+      })
+      .catch((error) => {
+        console.log('response: ', error.res.data)
+      })
+  }
+}
+</script>

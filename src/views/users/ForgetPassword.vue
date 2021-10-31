@@ -35,6 +35,7 @@
                     "
                     id="loginUsername"
                     placeholder="thaktsheh@email.com"
+                    v-model="user.Account"
                   />
                 </div>
                 <div class="col-3">
@@ -84,14 +85,13 @@
                         <p class="fs-4 text-secondary mb-4">
                           請前往電子信箱點擊連結並重置密碼！
                         </p>
-                        <!-- <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">重新登入</button> -->
-                        <a
-                          href="#"
+                        <router-link
+                          to="/login"
                           class="btn btn-secondary rounded-pill text-white"
                           data-bs-dismiss="modal"
                         >
-                          確定</a
-                        >
+                          確定
+                        </router-link>
                       </div>
                     </div>
                   </div>

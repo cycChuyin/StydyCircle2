@@ -221,11 +221,11 @@ export default {
       this.$apiHelper
         .post('api/users/login', this.user)
         .then((res) => {
-          console.log(res)
+          // console.log(res)
           if (res.status === 200) {
             this.userTokenData = res.data
             const getJwtToken = res.data.JwtToken
-            console.log(this.userTokenData)
+            // console.log(this.userTokenData)
             localStorage.setItem('JwtToken', getJwtToken)
             this.$router.push('/study-circle')
           }

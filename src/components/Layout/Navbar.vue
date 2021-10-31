@@ -129,7 +129,8 @@
                   >
                 </li>
                 <li class="text-center text-secondary">
-                  <a
+                  <router-link
+                    to="/auth-password"
                     class="
                       dropdown-item
                       py-3
@@ -137,11 +138,10 @@
                       justify-content-center
                       align-items-center
                     "
-                    href="#"
                   >
                     <span class="material-icons pe-2">settings</span>
-                    重設密碼</a
-                  >
+                    重設密碼
+                  </router-link>
                 </li>
                 <li class="text-center text-secondary px-32 py-0">
                   <hr class="dropdown-divider m-0" />
@@ -175,9 +175,9 @@ export default {
   data () {
     return {
       token: '',
+      lostTokenData: {},
       isLogin: false,
-      isSighOut: true,
-      lostTokenData: {}
+      isSighOut: true
     }
   },
   created () {
