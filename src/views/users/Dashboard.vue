@@ -46,7 +46,7 @@
               </a>
             </li>
             <!-- login -->
-            <li class="nav-item" :class="{ 'd-none': isLogin }">
+            <!-- <li class="nav-item">
               <ul class="list-unstyled nav-item d-flex mb-2 mb-lg-0">
                 <li class="nav-item ms-7">
                   <router-link
@@ -73,9 +73,9 @@
                   >
                 </li>
               </ul>
-            </li>
+            </li> -->
             <!-- 登入後 + dropdown -->
-            <li class="nav-item dropdown" :class="{ 'd-none': isSighOut }">
+            <li class="nav-item dropdown" :class="{ 'd-none': isLogin }">
               <a
                 class="nav-link"
                 href="#"
@@ -171,50 +171,45 @@
 </template>
 
 <script>
-export default {
-  data () {
-    return {
-      token: '',
-      isLogin: false,
-      isSighOut: true,
-      lostTokenData: {}
-    }
-  },
-  created () {
-    // POST請求
-    this.$apiHelper.get('api/users/profile-data').then((res) => {
-      console.log(res)
-      const token = res.data.JwtToken
-      console.log(token)
-      this.token = token
+// export default {
+//   data () {
+//     return {
+//       token: '',
+//       isLogin: false
+//     }
+//   },
+//   created () {
+//     const token = localStorage.getItem('JwtToken')
+//     console.log(token)
+//     this.token = token
 
-      if (token) {
-        this.isLogin = !this.isLogin
-        this.isSighOut = !this.isSighOut
-      }
-    })
-  },
-  methods: {
-    signOut () {
-      console.log('signOut')
-      localStorage.removeItem('JwtToken')
-      //   DEL請求
-      this.$apiHelper
-        .delete('api/users/logout')
-        .then((res) => {
-          console.log(res.data.JwtToken)
-          const lostToken = res.data.JwtToken
-          localStorage.setItem('JwtToken', lostToken)
-          this.lostTokenData = res.data
-        })
-        .catch((error) => {
-          console.log('response: ', error.res.data)
-        })
-      this.isLogin = !this.isLogin
-      this.isSighOut = !this.isSighOut
-      console.log(this.isLogin, this.isSighOut)
-      this.$router.push('/study-circle')
-    }
-  }
-}
+//     // POST請求
+//     this.$apiHelper.get('api/users/profile-data').then((res) => {
+//       console.log(res)
+//     })
+//   },
+//   methods: {
+//     signOut () {
+//       console.log('signOut')
+//       localStorage.removeItem('JwtToken')
+//       //   DEL請求
+//       this.$apiHelper
+//         .delete('api/users/logout')
+//         .then((res) => {
+//           console.log(res.data.JwtToken)
+//           const lostToken = res.data.JwtToken
+//           localStorage.setItem('JwtToken', lostToken)
+//         })
+//         .catch((error) => {
+//           console.log('response: ', error.res.data)
+//         })
+//       this.isLogin = !this.isLogin
+//       console.log(this.isLogin)
+//       this.$router.push('/study-circle')
+//     }
+//     // changeMember(key){
+//     //     this[key]=!this[key]
+//     // }
+//   }
+// }
 </script>

@@ -3,6 +3,9 @@
     <div class="container">
       <div class="row justify-content-end py-10">
         <div class="col-md-6">
+          <img :src="HotOnlineActivity.Image" />
+        </div>
+        <div class="col-md-6">
           <ul class="nav nav-pills mb-3" id="pills-tab" role="tablist">
             <li class="nav-item" role="presentation">
               <button
@@ -144,6 +147,7 @@ export default {
   data () {
     return {
       HotOnlineActivity: {
+        Id: '',
         Name: '書名',
         Image: 'Image',
         ActivityStartDate: 'ActivityStartDate',

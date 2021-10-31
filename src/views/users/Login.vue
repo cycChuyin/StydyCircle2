@@ -207,7 +207,9 @@ export default {
         Account: '',
         Password: ''
       },
+      // 登入後接收的 Token 資訊
       userTokenData: {
+        Status: '',
         JwtToken: ''
       }
     }
@@ -215,17 +217,18 @@ export default {
   methods: {
     logIn () {
       console.log('login')
-      // const api = `${process.env.VUE_APP_API}/api/users/login`
-      // console.log(api)
       // POST請求
       this.$apiHelper
         .post('api/users/login', this.user)
         .then((res) => {
           console.log(res)
-          const getJwtToken = res.data.JwtToken
-          this.userTokenData.JwtToken = getJwtToken
-          console.log(this.userTokenData.JwtToken, getJwtToken)
-          localStorage.setItem('JwtToken', getJwtToken)
+          if (res.status === 200) {
+            this.userTokenData = res.data
+            const getJwtToken = res.data.JwtToken
+            console.log(this.userTokenData)
+            localStorage.setItem('JwtToken', getJwtToken)
+            this.$router.push('/study-circle')
+          }
         })
         .catch((error) => {
           console.log('response: ', error.res.data)
@@ -233,9 +236,9 @@ export default {
           console.log('response: ', error.res.headers)
         })
 
-      this.$apiHelper.get('api/users/profile-data').then((res) => {
-        console.log(res)
-      })
+      // this.$apiHelper.get('api/users/profile-data').then((res) => {
+      //   console.log(res)
+      // })
     }
   }
 }

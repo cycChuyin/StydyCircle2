@@ -42,6 +42,11 @@ const routes = [
         path: 'auth-password',
         name: 'AuthPassword',
         component: () => import('../views/users/AuthPassword.vue')
+      },
+      {
+        path: 'dashboard',
+        name: 'Dashboard',
+        component: () => import('../views/users/Dashboard.vue')
       }
     ]
   },

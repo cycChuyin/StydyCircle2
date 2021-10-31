@@ -20,7 +20,7 @@
                 ＊請輸入註冊之電子信箱，隨後會收到重置密碼的郵件
               </p>
             </div>
-            <form @submit="forgetPassword">
+            <form @submit.prevent="forgetPassword">
               <div class="row">
                 <div class="col-9">
                   <input
