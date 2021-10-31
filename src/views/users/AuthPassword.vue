@@ -20,7 +20,7 @@
                 ＊請先輸入目前登入之密碼，以便重置新密碼
               </p>
             </div>
-            <form @submit="authPassword">
+            <form @submit.prevent="authPassword">
               <div class="row">
                 <div class="col-md-9">
                   <input
@@ -38,10 +38,16 @@
                     placeholder=""
                     v-model="user.Password"
                   />
+                  <span
+                    class="text-danger fs-8 mt-2"
+                    :class="{ 'd-none': isError }"
+                  >
+                    密碼錯誤
+                  </span>
                 </div>
                 <div class="col-md-3">
                   <button
-                    class="btn btn-secondary rounded-pill w-100 text-white"
+                    class="btn btn-secondary rounded-pill w-100 text-white py-13"
                     type="submit"
                     id="button-addon2"
                   >
@@ -67,33 +73,42 @@ export default {
       },
       userTokenData: {
         JwtToken: ''
-      }
+      },
+      isError: true
+    }
+  },
+  created () {
+    const Token = localStorage.getItem('JwtToken')
+    console.log(Token)
+    if (!Token) {
+      this.$router.push('/login')
     }
   },
   methods: {
     authPassword () {
       console.log('authPassword')
-      // const api = `${process.env.VUE_APP_API}/api/users/login`
-      // console.log(api)
+      console.log(this.user.Password)
       // POST請求
-      //   this.$apiHelper
-      //     .post('api/users/login', this.user)
-      //     .then((res) => {
-      //       console.log(res)
-      //       const getJwtToken = res.data.JwtToken
-      //       this.userTokenData.JwtToken = getJwtToken
-      //       console.log(this.userTokenData.JwtToken, getJwtToken)
-      //       localStorage.setItem('JwtToken', getJwtToken)
-      //     })
-      //     .catch((error) => {
-      //       console.log('response: ', error.res.data)
-      //       console.log('response: ', error.res.status)
-      //       console.log('response: ', error.res.headers)
-      //     })
+      this.$apiHelper
+        .post('api/users/auth-password', this.user)
+        .then((res) => {
+          console.log(res)
+          const getJwtToken = res.data.JwtToken
+          this.userTokenData.JwtToken = getJwtToken
+          //   console.log(this.userTokenData.JwtToken, getJwtToken)
+          localStorage.setItem('JwtToken', getJwtToken)
 
-      //   this.$apiHelper.get('api/users/profile-data').then((res) => {
-      //     console.log(res)
-      //   })
+          const resStatus = res.status
+          console.log(resStatus)
+          if (resStatus === 200) {
+            return this.$router.push('/reset-password')
+          }
+        })
+        .catch((error) => {
+          console.log('response: ', error.res.data)
+          this.isError = !this.isError
+          console.log(this.isError)
+        })
     }
   }
 }

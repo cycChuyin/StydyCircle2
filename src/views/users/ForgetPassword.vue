@@ -45,7 +45,7 @@
                   <!-- Button trigger modal -->
                   <button
                     type="submit"
-                    class="btn btn-secondary rounded-pill text-white w-100"
+                    class="btn btn-secondary rounded-pill text-white w-100 py-13"
                     data-bs-toggle="modal"
                     data-bs-target="#staticBackdrop"
                   >
@@ -87,7 +87,7 @@
                         </p>
                         <router-link
                           to="/login"
-                          class="btn btn-secondary rounded-pill text-white"
+                          class="btn btn-secondary rounded-pill text-white py-13"
                           data-bs-dismiss="modal"
                         >
                           確定

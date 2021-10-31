@@ -28,6 +28,7 @@
                       ps-3
                       position-relative
                       form-control-darkGray
+                      py-13
                     "
                     placeholder="thak_tsheh@gmail.com"
                     aria-label="thak_tsheh@gmail.com"
@@ -115,7 +116,7 @@
                 <div class="input-group">
                   <input
                     type="password"
-                    class="form-control border-0 rounded-pill"
+                    class="form-control border-0 rounded-pill py-13"
                     id="signUpPassword"
                     placeholder=""
                     v-model="user.Password"
@@ -172,7 +173,7 @@
                 <div class="input-group">
                   <input
                     type="password"
-                    class="form-control border-0 rounded-pill position-relative"
+                    class="form-control border-0 rounded-pill position-relative py-13"
                     id="signUpConfirmPassword"
                     placeholder=""
                   />
@@ -223,7 +224,7 @@
               <!-- Button trigger modal -->
               <button
                 type="submit"
-                class="btn btn-secondary rounded-pill text-white w-100"
+                class="btn btn-secondary rounded-pill text-white w-100 py-13"
               >
                 註冊
               </button>
@@ -269,7 +270,7 @@
                   <!-- <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">重新登入</button> -->
                   <a
                     href="#"
-                    class="btn btn-secondary rounded-pill text-white"
+                    class="btn btn-secondary rounded-pill text-white py-13"
                     data-bs-dismiss="modal"
                     >回到首頁</a
                   >

@@ -36,6 +36,7 @@
                           ps-3
                           border-0
                           form-control-darkGray
+                          py-13
                         "
                         placeholder="thaktsheh@email.com"
                         required
@@ -60,6 +61,7 @@
                           position-relative
                           ps-3
                           border-0
+                          py-13
                         "
                         placeholder="Password"
                         required
@@ -113,7 +115,13 @@
                   </div>
                   <button
                     type="submit"
-                    class="btn btn-secondary w-100 text-white rounded-pill"
+                    class="
+                      btn btn-secondary
+                      w-100
+                      text-white
+                      rounded-pill
+                      py-13
+                    "
                   >
                     登入
                   </button>
@@ -151,6 +159,7 @@
                         btn
                         d-flex
                         align-items-center
+                        py-13
                       "
                     >
                       <i class="fab fa-facebook-square pe-md-32 pe-3"></i>
@@ -167,6 +176,7 @@
                         btn
                         d-flex
                         align-items-center
+                        py-13
                       "
                     >
                       <i class="fab fa-google pe-md-32 pe-3"></i>
@@ -183,6 +193,7 @@
                         btn
                         d-flex
                         align-items-center
+                        py-13
                       "
                     >
                       <i class="fab fa-line pe-md-32 pe-3"></i>

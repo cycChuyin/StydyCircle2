@@ -29,7 +29,7 @@
               <router-link
                 to="/login"
                 type="button"
-                class="btn btn-secondary rounded-pill text-white w-100"
+                class="btn btn-secondary rounded-pill text-white w-100 py-13"
               >
                 回到登入頁
               </router-link>
