@@ -3,47 +3,52 @@
     <div class="container">
       <div class="row justify-content-end py-10">
         <div class="col-md-6">
-          <img :src="HotOnlineActivity.Image" />
+          <img :src="HotOnlineActivity.Image" ref="bannerImage" />
         </div>
         <div class="col-md-6">
           <ul class="nav nav-pills mb-3" id="pills-tab" role="tablist">
-            <li class="nav-item" role="presentation">
+            <li
+              class="nav-item"
+              role="presentation"
+              ref="HotOnline"
+              @click="inputEvent"
+            >
               <button
                 class="nav-link active"
-                id="pills-home-tab"
+                id="pills-HotOnline"
                 data-bs-toggle="pill"
-                data-bs-target="#pills-online-studyCircle"
+                data-bs-target="#pills-HotOnline"
                 type="button"
                 role="tab"
-                aria-controls="pills-home"
+                aria-controls="pills-HotOnline"
                 aria-selected="true"
               >
                 線上讀書會
               </button>
             </li>
-            <li class="nav-item" role="presentation">
+            <li class="nav-item" role="presentation" @click="inputEvent">
               <button
                 class="nav-link"
-                id="pills-profile-tab"
+                id="pills-HotEntity"
                 data-bs-toggle="pill"
-                data-bs-target="#pills-offline-studyCircle"
+                data-bs-target="#pills-HotEntity"
                 type="button"
                 role="tab"
-                aria-controls="pills-profile"
+                aria-controls="pills-HotEntity"
                 aria-selected="false"
               >
                 實體讀書會
               </button>
             </li>
-            <li class="nav-item" role="presentation">
+            <li class="nav-item" role="presentation" @click="inputEvent">
               <button
                 class="nav-link"
-                id="pills-contact-tab"
+                id="pills-HotWorkShop"
                 data-bs-toggle="pill"
-                data-bs-target="#pills-activity"
+                data-bs-target="#pills-HotWorkShop"
                 type="button"
                 role="tab"
-                aria-controls="pills-contact"
+                aria-controls="pills-HotWorkShop"
                 aria-selected="false"
               >
                 活動工作坊
@@ -53,9 +58,9 @@
           <div class="tab-content text-secondary" id="pills-tabContent">
             <div
               class="tab-pane fade show active px-4 pt-3"
-              id="pills-online-studyCircle"
+              id="pills-HotOnline"
               role="tabpanel"
-              aria-labelledby="pills-home-tab"
+              aria-labelledby="pills-HotOnline-tab"
             >
               <h3 class="fs-4 fw-bold mb-2">
                 {{ HotOnlineActivity.Name }}
@@ -80,9 +85,9 @@
             </div>
             <div
               class="tab-pane fade px-4 pt-3"
-              id="pills-offline-studyCircle"
+              id="pills-HotEntity"
               role="tabpanel"
-              aria-labelledby="pills-profile-tab"
+              aria-labelledby="pills-HotEntity-tab"
             >
               <h3 class="fs-4 fw-bold mb-2">
                 {{ HotEntityActivity.Name }}
@@ -107,9 +112,9 @@
             </div>
             <div
               class="tab-pane fade px-4 pt-3"
-              id="pills-activity"
+              id="pills-HotWorkShop"
               role="tabpanel"
-              aria-labelledby="pills-contact-tab"
+              aria-labelledby="pills-HotWorkShop-tab"
             >
               <h3 class="fs-4 fw-bold mb-2">
                 {{ HotWorkShop.Name }}
@@ -168,6 +173,11 @@ export default {
         this.HotOnlineActivity = res.data.HotOnlineActivity
         this.HotEntityActivity = res.data.HotEntityActivity
         this.HotWorkShop = res.data.HotWorkShop
+
+        const imgUrl = `${process.env.VUE_APP_IMG}`
+        this.HotOnlineActivity.Image = `${imgUrl}/${this.HotOnlineActivity.Image}`
+        this.HotEntityActivity.Image = `${imgUrl}/${this.HotEntityActivity.Image}`
+        this.HotWorkShop.Image = `${imgUrl}/${this.HotWorkShop.Image}`
       })
     },
     splitDateString (stringToSplit, separator) {
@@ -175,9 +185,24 @@ export default {
       console.log(arrayOfStrings)
       console.log(arrayOfStrings.length)
     }
+    // inputEvent (e) {
+    //   console.log(e.target.id)
+    //   const id = e.target.id
+    //   const imgUrl = `${process.env.VUE_APP_IMG}`
+    //   if (id === 'pills-HotOnline') {
+    //     this.bannerImage = `${imgUrl}/${this.HotOnlineActivity.Image}`
+    //   } else if (id === 'pills-HotEntity') {
+    //     this.bannerImage = `${imgUrl}/${this.HotEntityActivity.Image}`
+    //   } else if (id === 'pills-HotWorkShop') {
+    //     this.bannerImage = `${imgUrl}/${this.HotWorkShop.Image}`
+    //   }
+    // }
   },
   created () {
     this.getHotActivityData()
+  },
+  mounted () {
+    console.log(this.$refs, this.$refs.bannerImage)
   }
 }
 </script>

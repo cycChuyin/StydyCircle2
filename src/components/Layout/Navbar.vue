@@ -174,25 +174,29 @@
 export default {
   data () {
     return {
-      token: '',
+      getJwtToken: '',
       lostTokenData: {},
       isLogin: false,
       isSighOut: true
     }
   },
   created () {
-    // POST請求
-    this.$apiHelper.get('api/users/profile-data').then((res) => {
-      console.log(res)
-      const token = res.data.JwtToken
-      console.log(token)
-      this.token = token
-
-      if (token) {
-        this.isLogin = !this.isLogin
-        this.isSighOut = !this.isSighOut
-      }
-    })
+    const isLoggin = localStorage.getItem('JwtToken')
+    if (isLoggin) {
+      this.isLogin = true
+      this.isSighOut = false
+      // GET請求
+      this.$apiHelper.get('api/users/profile-data').then((res) => {
+        console.log(res)
+        const token = res.data.JwtToken
+        console.log(token)
+        this.getJwtToken = token
+        localStorage.setItem('JwtToken', this.getJwtToken)
+      })
+    } else {
+      this.isLogin = false
+      this.isSighOut = true
+    }
   },
   methods: {
     signOut () {
@@ -215,6 +219,7 @@ export default {
       console.log(this.isLogin, this.isSighOut)
       this.$router.push('/study-circle')
     }
-  }
+  },
+  mounted () {}
 }
 </script>

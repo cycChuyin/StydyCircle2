@@ -233,8 +233,8 @@
   <!-- 活動卡片輪播 -->
   <div class="py-10">
     <activity-carouse></activity-carouse>
-    <activity-carouse></activity-carouse>
-    <activity-carouse></activity-carouse>
+    <!-- <activity-carouse></activity-carouse>
+    <activity-carouse></activity-carouse> -->
   </div>
   <!-- <component-swiper></component-swiper> -->
 </template>
