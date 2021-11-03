@@ -44,9 +44,15 @@ const routes = [
         component: () => import('../views/users/AuthPassword.vue')
       },
       {
-        path: 'dashboard',
-        name: 'Dashboard',
-        component: () => import('../views/users/Dashboard.vue')
+        path: 'activity-content/:id',
+        name: 'ActivityContent',
+        component: () => import('../views/Activity/ActivityContent.vue'),
+        props: (route) => {
+          // console.log(route)
+          return {
+            Id: route.params.id
+          }
+        }
       }
     ]
   },

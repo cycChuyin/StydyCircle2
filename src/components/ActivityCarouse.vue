@@ -507,7 +507,7 @@ export default {
             this.transDate(item)
 
             // 2. 加上圖片路徑
-            const imgUrl = `${process.env.VUE_APP_IMG}/${item.Image}`
+            const imgUrl = `${process.env.VUE_APP_IMG}/${item.Image}?2021`
             item.imgUrl = imgUrl
           })
           this.newOnlineActivity = activityData
@@ -524,7 +524,7 @@ export default {
             this.transDate(item)
 
             // 2. 加上圖片路徑
-            const imgUrl = `${process.env.VUE_APP_IMG}/${item.Image}`
+            const imgUrl = `${process.env.VUE_APP_IMG}/${item.Image}?2021`
             item.imgUrl = imgUrl
           })
           this.newEntityActivity = activityData
@@ -539,7 +539,7 @@ export default {
           activityData.forEach((item) => {
             this.transDate(item)
             // 2. 加上圖片路徑
-            const imgUrl = `${process.env.VUE_APP_IMG}/${item.Image}`
+            const imgUrl = `${process.env.VUE_APP_IMG}/${item.Image}?2021`
             item.imgUrl = imgUrl
           })
           this.newWorkShop = activityData
