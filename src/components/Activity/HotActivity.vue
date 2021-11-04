@@ -170,9 +170,9 @@ export default {
     getHotActivityData () {
       // const api = `${process.env.VUE_APP_API}/activities/top-views`
       this.$apiHelper.get('api/activities/top-views').then((res) => {
-        this.HotOnlineActivity = res.data.HotOnlineActivity
-        this.HotEntityActivity = res.data.HotEntityActivity
-        this.HotWorkShop = res.data.HotWorkShop
+        this.HotOnlineActivity = res.data.Data.HotOnlineActivity
+        this.HotEntityActivity = res.data.Data.HotEntityActivity
+        this.HotWorkShop = res.data.Data.HotWorkShop
 
         const imgUrl = `${process.env.VUE_APP_IMG}`
         this.HotOnlineActivity.Image = `${imgUrl}/${this.HotOnlineActivity.Image}`

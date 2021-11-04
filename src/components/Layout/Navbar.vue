@@ -99,7 +99,8 @@
                 aria-labelledby="navbarDropdown"
               >
                 <li class="text-center text-secondary">
-                  <a
+                  <router-link
+                    to="/profile"
                     class="
                       dropdown-item
                       py-3
@@ -107,11 +108,10 @@
                       justify-content-center
                       align-items-center
                     "
-                    href="#"
                   >
                     <span class="material-icons pe-2">person</span>
-                    個人檔案</a
-                  >
+                    個人檔案
+                  </router-link>
                 </li>
                 <li class="text-center text-secondary">
                   <a

@@ -48,9 +48,12 @@
                 />
                 <div class="p-40">
                   <h5 class="card-title p-0 mb-3">
-                    <a href="signUp.html" class="stretched-link text-dark">
+                    <router-link
+                      :to="`/activity-content/${item.Id}`"
+                      class="stretched-link text-dark"
+                    >
                       {{ item.Name }}
-                    </a>
+                    </router-link>
                   </h5>
                   <p class="text-dark mb-2">
                     活動日期｜{{ item.transStartDate }}
@@ -85,9 +88,12 @@
                 />
                 <div class="p-40">
                   <h5 class="card-title p-0 mb-3">
-                    <a href="signUp.html" class="stretched-link text-dark">
+                    <router-link
+                      :to="`/activity-content/${item.Id}`"
+                      class="stretched-link text-dark"
+                    >
                       {{ item.Name }}
-                    </a>
+                    </router-link>
                   </h5>
                   <p class="text-dark mb-2">
                     活動日期｜{{ item.transStartDate }}
@@ -96,7 +102,9 @@
                     活動時間｜{{ item.transStartTime }} ～
                     {{ item.transEndTime }}
                   </p>
-                  <p class="text-dark mb-0">活動講者｜{{ item.OrganizerName }}</p>
+                  <p class="text-dark mb-0">
+                    活動講者｜{{ item.OrganizerName }}
+                  </p>
                 </div>
               </div>
             </li>
@@ -120,9 +128,12 @@
                 />
                 <div class="p-40">
                   <h5 class="card-title p-0 mb-3">
-                    <a href="signUp.html" class="stretched-link text-dark">
+                    <router-link
+                      :to="`/activity-content/${item.Id}`"
+                      class="stretched-link text-dark"
+                    >
                       {{ item.Name }}
-                    </a>
+                    </router-link>
                   </h5>
                   <p class="text-dark mb-2">
                     活動日期｜{{ item.transStartDate }}
@@ -131,7 +142,9 @@
                     活動時間｜{{ item.transStartTime }} ～
                     {{ item.transEndTime }}
                   </p>
-                  <p class="text-dark mb-0">活動講者｜{{ item.OrganizerName }}</p>
+                  <p class="text-dark mb-0">
+                    活動講者｜{{ item.OrganizerName }}
+                  </p>
                 </div>
               </div>
             </li>
@@ -207,9 +220,12 @@
                 />
                 <div class="p-40">
                   <h5 class="card-title p-0 mb-3">
-                    <a href="signUp.html" class="stretched-link text-dark">
+                    <router-link
+                      :to="`/activity-content/${item.Id}`"
+                      class="stretched-link text-dark"
+                    >
                       {{ item.Name }}
-                    </a>
+                    </router-link>
                   </h5>
                   <p class="text-dark mb-2">
                     活動日期｜{{ item.transStartDate }}
@@ -244,9 +260,12 @@
                 />
                 <div class="p-40">
                   <h5 class="card-title p-0 mb-3">
-                    <a href="signUp.html" class="stretched-link text-dark">
+                    <router-link
+                      :to="`/activity-content/${item.Id}`"
+                      class="stretched-link text-dark"
+                    >
                       {{ item.Name }}
-                    </a>
+                    </router-link>
                   </h5>
                   <p class="text-dark mb-2">
                     活動日期｜{{ item.transStartDate }}
@@ -281,9 +300,12 @@
                 />
                 <div class="p-40">
                   <h5 class="card-title p-0 mb-3">
-                    <a href="signUp.html" class="stretched-link text-dark">
+                    <router-link
+                      :to="`/activity-content/${item.Id}`"
+                      class="stretched-link text-dark"
+                    >
                       {{ item.Name }}
-                    </a>
+                    </router-link>
                   </h5>
                   <p class="text-dark mb-2">
                     活動日期｜{{ item.transStartDate }}
@@ -370,9 +392,12 @@
                 />
                 <div class="p-40">
                   <h5 class="card-title p-0 mb-3">
-                    <a href="signUp.html" class="stretched-link text-dark">
+                    <router-link
+                      :to="`/activity-content/${item.Id}`"
+                      class="stretched-link text-dark"
+                    >
                       {{ item.Name }}
-                    </a>
+                    </router-link>
                   </h5>
                   <p class="text-dark mb-2">
                     活動日期｜{{ item.transStartDate }}
@@ -407,9 +432,12 @@
                 />
                 <div class="p-40">
                   <h5 class="card-title p-0 mb-3">
-                    <a href="signUp.html" class="stretched-link text-dark">
+                    <router-link
+                      :to="`/activity-content/${item.Id}`"
+                      class="stretched-link text-dark"
+                    >
                       {{ item.Name }}
-                    </a>
+                    </router-link>
                   </h5>
                   <p class="text-dark mb-2">
                     活動日期｜{{ item.transStartDate }}
@@ -444,9 +472,12 @@
                 />
                 <div class="p-40">
                   <h5 class="card-title p-0 mb-3">
-                    <a href="signUp.html" class="stretched-link text-dark">
+                    <router-link
+                      :to="`/activity-content/${item.Id}`"
+                      class="stretched-link text-dark"
+                    >
                       {{ item.Name }}
-                    </a>
+                    </router-link>
                   </h5>
                   <p class="text-dark mb-2">
                     活動日期｜{{ item.transStartDate }}
@@ -501,7 +532,7 @@ export default {
       // GET請求
       this.$apiHelper.get('api/activities/new9/type/0').then((res) => {
         if (res.data.Status) {
-          const activityData = res.data.Info
+          const activityData = res.data.Data
           // console.log(activityData)
           activityData.forEach((item) => {
             this.transDate(item)
@@ -519,7 +550,7 @@ export default {
       // GET請求
       this.$apiHelper.get('api/activities/new9/type/1').then((res) => {
         if (res.data.Status) {
-          const activityData = res.data.Info
+          const activityData = res.data.Data
           activityData.forEach((item) => {
             this.transDate(item)
 
@@ -535,7 +566,7 @@ export default {
       // GET請求
       this.$apiHelper.get('api/activities/new9/type/2').then((res) => {
         if (res.data.Status) {
-          const activityData = res.data.Info
+          const activityData = res.data.Data
           activityData.forEach((item) => {
             this.transDate(item)
             // 2. 加上圖片路徑
