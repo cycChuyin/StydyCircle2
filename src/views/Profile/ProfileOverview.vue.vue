@@ -136,8 +136,18 @@
         </div>
       </div>
       <div class="col-md-9 px-13">
-        <router-link to="/profile/my-activity" class="mb-32 fw-bold fs-4 text-secondary me-4" type="button">我的活動</router-link>
-        <router-link to="/profile/study-partner" class="mb-32 fw-bold fs-4 text-secondary me-4" type="button">讀冊夥伴</router-link>
+        <router-link
+          to="/profile/my-activity"
+          class="mb-32 fw-bold fs-4 text-secondary me-4"
+          type="button"
+          >我的活動</router-link
+        >
+        <router-link
+          to="/profile/study-partner"
+          class="mb-32 fw-bold fs-4 text-secondary me-4"
+          type="button"
+          >讀冊夥伴</router-link
+        >
         <router-view></router-view>
       </div>
     </div>
@@ -150,10 +160,19 @@ import componentNavbar from '@/components/Layout/Navbar.vue'
 import componentFooter from '@/components/Layout/Footer.vue'
 
 export default {
-  name: 'Home',
+  data () {
+    return {}
+  },
   components: {
     componentNavbar,
     componentFooter
+  },
+  created () {
+    const Token = localStorage.getItem('JwtToken')
+    console.log(Token)
+    if (!Token) {
+      this.$router.push('/login')
+    }
   }
 }
 </script>

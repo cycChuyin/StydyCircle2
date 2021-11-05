@@ -232,8 +232,8 @@ export default {
       this.$apiHelper
         .post('api/users/login', this.user)
         .then((res) => {
-          // console.log(res)
-          if (res.status === 200) {
+          // console.log(res.data.Status)
+          if (res.data.Status) {
             this.userTokenData = res.data
             const getJwtToken = res.data.JwtToken
             // console.log(this.userTokenData)

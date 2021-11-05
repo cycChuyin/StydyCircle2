@@ -207,8 +207,8 @@ export default {
         .delete('api/users/logout')
         .then((res) => {
           console.log(res.data.JwtToken)
-          const lostToken = res.data.JwtToken
-          localStorage.setItem('JwtToken', lostToken)
+          // const lostToken = res.data.JwtToken
+          // localStorage.setItem('JwtToken', lostToken)
           this.lostTokenData = res.data
         })
         .catch((error) => {

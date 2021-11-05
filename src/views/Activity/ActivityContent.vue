@@ -140,7 +140,7 @@
           <h3 class="text-secondary mt-32 mb-3 fs-4">主辦單位</h3>
           <p class="text-dark mb-1">{{ getActivityInfo.OrganizerName }}</p>
           <p class="text-dark mb-1">{{ getActivityInfo.OrganizerPhone }}</p>
-          <p class="text-dark mb-1">{{ getActivityInfo.OrganizerMail }}</p>
+          <a :href="getOrganizerInfo.OrganizerMail" class="text-dark mb-1">{{ getActivityInfo.OrganizerMail }}</a>
           <h3 class="text-secondary mt-32 mb-3 fs-4">活動備註</h3>
           <p class="text-dark mb-32">
             {{ getActivityInfo.PleaseNote }}
@@ -241,8 +241,8 @@
                 {{ getActivityInfo.transEndTime }}
               </p>
             </div>
-            <h4 class="mt-32 mb-3">{{ getActivityInfo.Name }}</h4>
-            <p class="fw-light">費用：${{ getActivityInfo.Price }} / 人</p>
+            <h4 class="mt-32 mb-3"></h4>
+            <p class="fw-light">費用：{{ getActivityInfo.Price }} / 人</p>
             <p class="fw-light">線上：{{ getActivityInfo.Software }}</p>
             <p class="fw-light">實體：台南市幸福區快樂街 123 號 2 樓</p>
           </div>
@@ -257,19 +257,24 @@
           >
             <div class="d-flex align-items-center mb-4">
               <img
-                src="https://fakeimg.pl/56/"
+                :src="getOrganizerInfo.Image"
                 alt="memberPhoto"
                 class="rounded-pill memberPhoto-56 me-4"
               />
-              <p class="m-0 fw-bold">{{ getOrganizerInfo.Name }} ｜ {{ getOrganizerInfo.NickName }}</p>
+              <p class="m-0 fw-bold">
+                {{ getOrganizerInfo.Name }} ｜ {{ getOrganizerInfo.NickName }}
+              </p>
             </div>
             <p>
-              王小明畢業於高雄貓咪大學，主修貓咪行為學，畢業後於火箭隊獸醫院擔任貓咪行為醫生，目前任職將近
-              5 年。王小明的介紹王小明的介紹王小明的介紹。
+              {{ getOrganizerInfo.AboutMe }}
             </p>
             <div class="d-flex border-top border-secondary pt-3">
-              <i class="bi bi-facebook me-4"></i>
-              <i class="bi bi-instagram me-4"></i>
+              <a :href="getOrganizerInfo.FacebookLink"
+                ><i class="fab fa-facebook-square me-4"></i
+              ></a>
+              <a :href="getOrganizerInfo.InstagramLink"
+                ><i class="fab fa-instagram me-4"></i
+              ></a>
             </div>
           </div>
         </div>
@@ -402,7 +407,7 @@
               </p>
               <div class="border-top border-secondary pt-4">
                 <p class="text-secondary border-secondary">
-                  已有 10 人參加｜30 人收藏
+                  已有 {{ getActivityInfo.ApplicantNumber }} 人參加｜{{ getActivityInfo.CollectNumber }} 人收藏
                 </p>
                 <div class="d-flex">
                   <button
@@ -525,13 +530,13 @@
                     <p class="text-secondary">活動資訊</p>
                     <ul class="list-unstyled">
                       <li class="text-dark">
-                        活動名稱｜《新手貓奴必看》讀書會
+                        活動名稱｜{{ getActivityInfo.Name }}
                       </li>
-                      <li class="text-dark">活動方式｜線上</li>
-                      <li class="text-dark">視訊軟體｜Zoom</li>
-                      <li class="text-dark">活動日期｜2021 / 12 / 23 （四）</li>
-                      <li class="text-dark">活動時間｜15：00 - 18：00</li>
-                      <li class="text-dark">活動費用｜$100</li>
+                      <li class="text-dark">活動方式｜{{ getActivityInfo.ActivityType }}</li>
+                      <li class="text-dark">視訊軟體｜{{ getActivityInfo.Software }}</li>
+                      <li class="text-dark">活動日期｜{{ getActivityInfo.transStartDate }} （四）</li>
+                      <li class="text-dark">活動時間｜{{ getActivityInfo.transStartTime }} - {{ getActivityInfo.transEndTime }}</li>
+                      <li class="text-dark">活動費用｜${{ getActivityInfo.Price }}</li>
                     </ul>
                   </div>
                   <div class="col-6 border-start border-secondary">
@@ -551,7 +556,7 @@
                           <label for="name" class="form-label">姓名</label>
                           <div class="input-group">
                             <input
-                              type="password"
+                              type="text"
                               class="
                                 form-control-darkGray
                                 rounded-pill
@@ -560,6 +565,7 @@
                               "
                               id="name"
                               placeholder="陳小明"
+                              v-model="getUsersAttendData.Name"
                             />
                           </div>
                         </li>
@@ -569,7 +575,7 @@
                           >
                           <div class="input-group">
                             <input
-                              type="password"
+                              type="text"
                               class="
                                 form-control-darkGray
                                 rounded-pill
@@ -578,14 +584,15 @@
                               "
                               id="cellphone"
                               placeholder="0912-345-678"
+                              v-model="getUsersAttendData.MobilePhone"
                             />
                           </div>
                         </li>
-                        <li class="text-dark">
+                        <li class="text-dark disabled">
                           <label for="email" class="form-label">電子信箱</label>
                           <div class="input-group">
                             <input
-                              type="password"
+                              type="email"
                               class="
                                 form-control-darkGray
                                 rounded-pill
@@ -594,6 +601,7 @@
                               "
                               id="email"
                               placeholder="chansiuming@email.com"
+                              v-model="getUsersAttendData.Account"
                             />
                           </div>
                         </li>
@@ -627,7 +635,6 @@
                 手續費。若在活動開始的 10
                 日內取消報名，恕無法退還所有報名費用。煩請各位參加者事先預留活動之時間，希望大家可以好好享受活動的樂趣。
               </p>
-
               <!-- 按鈕 -->
               <div class="d-flex">
                 <button
@@ -641,6 +648,7 @@
                   type="submit"
                   class="btn btn-dark rounded-pill w-100"
                   data-bs-dismiss="offcanvas"
+                  @click="sendApply"
                 >
                   確認報名
                 </button>
@@ -655,29 +663,55 @@
 
 <script>
 export default {
-  props: ['Id'],
+  props: ['Id', 'UserId'],
   data () {
     return {
       getActivityInfo: {},
-      getOrganizerInfo: {}
+      getOrganizerInfo: {},
+      getUsersAttendData: {
+        // Account: 'draw136also761@gmail.com',
+        // Id: 9,
+        // MobilePhone: null,
+        // Name: null
+      },
+      giveUserInfo: {
+        ActivityId: '',
+        ActivityPrice: '',
+        UserId: '',
+        UserName: '',
+        UserMobilePhone: '',
+        UserAccount: ''
+      }
     }
   },
   created () {
+    console.log(this.$route.params)
     const Id = this.Id
     this.$apiHelper.get(`api/activity/id/${Id}`).then((res) => {
       if (res.data.Status) {
+        const userImgUrl = `${process.env.VUE_APP_USERIMG}/${res.data.Data.OrganizerData.Image}?2021`
         // console.log(res.data)
-        const getInfo = res.data.Data
-        this.transDate(getInfo)
-        console.log(getInfo)
-        this.getActivityInfo = getInfo
+        // 活動
+        const oriActivityInfo = res.data.Data.ActivityData
+        this.transDate(oriActivityInfo)
+        this.getActivityInfo = oriActivityInfo
+        console.log(this.getActivityInfo)
+        // 講者
+        const oriOrganizerInfo = res.data.Data.OrganizerData
+        this.getOrganizerInfo = oriOrganizerInfo
+        console.log(this.getOrganizerInfo)
+        this.getOrganizerInfo.Image = userImgUrl
       }
     })
-    this.$apiHelper.get(`api/organizer/activity/id/${Id}`).then((res) => {
+    // 6-1 報名活動 - 個資帶入
+    const Token = localStorage.getItem('JwtToken')
+    this.$apiHelper.post('api/users/attend-data', Token).then((res) => {
+      console.log(res)
       if (res.data.Status) {
-        // console.log(res.data)
-        this.getOrganizerInfo = res.data.Data
-        console(this.getOrganizerInfo)
+        const getJwtToken = res.data.JwtToken
+        localStorage.setItem('JwtToken', getJwtToken)
+        this.getUsersAttendData = res.data.Data
+        console.log(this.getUsersAttendData)
       }
     })
   },
@@ -713,6 +747,28 @@ export default {
         (Time.getMinutes() < 10 ? '0' : '') + Time.getMinutes()
       }`
       return { splitFinalDate, splitFinalTime }
+    },
+    sendApply () {
+      this.giveUserInfo = {
+        ActivityId: this.getActivityInfo.Id,
+        ActivityPrice: this.getActivityInfo.Price,
+        UserId: this.getUsersAttendData.Id,
+        UserName: this.getUsersAttendData.Name,
+        UserMobilePhone: this.getUsersAttendData.MobilePhone,
+        UserAccount: this.getUsersAttendData.Account
+      }
+      console.log(this.giveUserInfo)
+      // 6-2 報名活動 - 免費＋發信
+      // const Token = localStorage.getItem('JwtToken')
+      this.$apiHelper
+        .post('api/users/activity/free/attend', this.giveUserInfo)
+        .then((res) => {
+          console.log(res)
+          if (res.data.Status) {
+            const getJwtToken = res.data.JwtToken
+            localStorage.setItem('JwtToken', getJwtToken)
+          }
+        })
     }
   }
 }
