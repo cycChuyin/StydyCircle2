@@ -57,6 +57,29 @@ const routes = [
     ]
   },
   {
+    path: '/activity',
+    name: 'Activity',
+    redirect: '/activity/online',
+    component: () => import('../views/Activity/ThreeThemeActivity.vue'),
+    children: [
+      {
+        path: 'online',
+        name: 'Online',
+        component: () => import('../views/Activity/OnlineActivity.vue')
+      },
+      {
+        path: 'entity',
+        name: 'Entity',
+        component: () => import('../views/Activity/EntityActivity.vue')
+      },
+      {
+        path: 'workshop',
+        name: 'Workshop',
+        component: () => import('../views/Activity/WorkShop.vue')
+      }
+    ]
+  },
+  {
     path: '/profile',
     name: 'Profile',
     redirect: '/profile/my-activity/coming-soon',

@@ -227,13 +227,14 @@ export default {
   },
   methods: {
     logIn () {
-      console.log('login')
       // POST請求
+      // 2-2 會員登入（ * 取得刷新的 Token ）
       this.$apiHelper
         .post('api/users/login', this.user)
         .then((res) => {
           // console.log(res.data.Status)
           if (res.data.Status) {
+            // console.log('login')
             this.userTokenData = res.data
             const getJwtToken = res.data.JwtToken
             // console.log(this.userTokenData)

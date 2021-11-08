@@ -85,7 +85,7 @@
                 aria-expanded="false"
               >
                 <img
-                  src="https://fakeimg.pl/40/"
+                  :src="UserInfoData.UserImgUrl"
                   alt="memberPhoto"
                   class="rounded-pill memberPhoto-40"
                 />
@@ -174,8 +174,8 @@
 export default {
   data () {
     return {
-      getJwtToken: '',
       lostTokenData: {},
+      UserInfoData: {},
       isLogin: false,
       isSighOut: true
     }
@@ -185,13 +185,20 @@ export default {
     if (isLoggin) {
       this.isLogin = true
       this.isSighOut = false
-      // GET請求
+      // 1-8 GET請求 - Navbar 個人資料+頭貼 (JWT)
       this.$apiHelper.get('api/users/profile-data').then((res) => {
         console.log(res)
-        const token = res.data.JwtToken
-        console.log(token)
-        this.getJwtToken = token
-        localStorage.setItem('JwtToken', this.getJwtToken)
+        if (res.data.Status) {
+          const token = res.data.JwtToken
+          localStorage.setItem('JwtToken', token)
+          // 將使用者基本資料存入 UserInfoData
+          this.UserInfoData = res.data.Data
+
+          // 頭貼路徑
+          const UserImgUrl = `${process.env.VUE_APP_USERIMG}/${res.data.Data.Image}?2021`
+          this.UserInfoData.UserImgUrl = UserImgUrl
+          console.log(this.UserInfoData)
+        }
       })
     } else {
       this.isLogin = false

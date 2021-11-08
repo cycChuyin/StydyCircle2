@@ -1,8 +1,8 @@
 <template>
   <!-- banner -->
   <div
-    class="banner bg-dark"
-    src="@/assets/photo/ludemeula-fernandes-9UUoGaaHtNE-unsplash.jpg"
+    class="banner"
+    :style="{ backgroundImage: 'url(' + getActivityInfo.Image + ')' }"
   >
     <div class="container">
       <div class="row">
@@ -30,6 +30,7 @@
     <div class="container">
       <!-- 活動詳情 - 標題區塊 -->
       <h2 class="text-secondary fw-bold mb-4">
+        <!-- {{ getActivityInfo.ActivityType }} - {{ getActivityInfo.Name }} -->
         {{ getActivityInfo.ActivityType }} - 活動詳情
       </h2>
       <div class="d-flex">
@@ -140,7 +141,9 @@
           <h3 class="text-secondary mt-32 mb-3 fs-4">主辦單位</h3>
           <p class="text-dark mb-1">{{ getActivityInfo.OrganizerName }}</p>
           <p class="text-dark mb-1">{{ getActivityInfo.OrganizerPhone }}</p>
-          <a :href="getOrganizerInfo.OrganizerMail" class="text-dark mb-1">{{ getActivityInfo.OrganizerMail }}</a>
+          <a :href="getOrganizerInfo.OrganizerMail" class="text-dark mb-1">{{
+            getActivityInfo.OrganizerMail
+          }}</a>
           <h3 class="text-secondary mt-32 mb-3 fs-4">活動備註</h3>
           <p class="text-dark mb-32">
             {{ getActivityInfo.PleaseNote }}
@@ -407,7 +410,10 @@
               </p>
               <div class="border-top border-secondary pt-4">
                 <p class="text-secondary border-secondary">
-                  已有 {{ getActivityInfo.ApplicantNumber }} 人參加｜{{ getActivityInfo.CollectNumber }} 人收藏
+                  已有 {{ getActivityInfo.ApplicantNumber }} 人參加｜{{
+                    getActivityInfo.CollectNumber
+                  }}
+                  人收藏
                 </p>
                 <div class="d-flex">
                   <button
@@ -532,11 +538,22 @@
                       <li class="text-dark">
                         活動名稱｜{{ getActivityInfo.Name }}
                       </li>
-                      <li class="text-dark">活動方式｜{{ getActivityInfo.ActivityType }}</li>
-                      <li class="text-dark">視訊軟體｜{{ getActivityInfo.Software }}</li>
-                      <li class="text-dark">活動日期｜{{ getActivityInfo.transStartDate }} （四）</li>
-                      <li class="text-dark">活動時間｜{{ getActivityInfo.transStartTime }} - {{ getActivityInfo.transEndTime }}</li>
-                      <li class="text-dark">活動費用｜${{ getActivityInfo.Price }}</li>
+                      <li class="text-dark">
+                        活動方式｜{{ getActivityInfo.ActivityType }}
+                      </li>
+                      <li class="text-dark">
+                        視訊軟體｜{{ getActivityInfo.Software }}
+                      </li>
+                      <li class="text-dark">
+                        活動日期｜{{ getActivityInfo.transStartDate }} （四）
+                      </li>
+                      <li class="text-dark">
+                        活動時間｜{{ getActivityInfo.transStartTime }} -
+                        {{ getActivityInfo.transEndTime }}
+                      </li>
+                      <li class="text-dark">
+                        活動費用｜${{ getActivityInfo.Price }}
+                      </li>
                     </ul>
                   </div>
                   <div class="col-6 border-start border-secondary">
@@ -597,6 +614,7 @@
                                 form-control-darkGray
                                 rounded-pill
                                 position-relative
+                                disabled
                                 ps-3
                               "
                               id="email"
@@ -663,17 +681,12 @@
 
 <script>
 export default {
-  props: ['Id', 'UserId'],
+  props: ['Id'],
   data () {
     return {
       getActivityInfo: {},
       getOrganizerInfo: {},
-      getUsersAttendData: {
-        // Account: 'draw136also761@gmail.com',
-        // Id: 9,
-        // MobilePhone: null,
-        // Name: null
-      },
+      getUsersAttendData: {},
       giveUserInfo: {
         ActivityId: '',
         ActivityPrice: '',
@@ -689,14 +702,16 @@ export default {
     const Id = this.Id
     this.$apiHelper.get(`api/activity/id/${Id}`).then((res) => {
       if (res.data.Status) {
-        const userImgUrl = `${process.env.VUE_APP_USERIMG}/${res.data.Data.OrganizerData.Image}?2021`
         // console.log(res.data)
         // 活動
         const oriActivityInfo = res.data.Data.ActivityData
+        const activityImgUrl = `${process.env.VUE_APP_ACTIVITYIMG}/${res.data.Data.ActivityData.Image}?2021`
         this.transDate(oriActivityInfo)
         this.getActivityInfo = oriActivityInfo
+        this.getActivityInfo.Image = activityImgUrl
         console.log(this.getActivityInfo)
         // 講者
+        const userImgUrl = `${process.env.VUE_APP_USERIMG}/${res.data.Data.OrganizerData.Image}?2021`
         const oriOrganizerInfo = res.data.Data.OrganizerData
         this.getOrganizerInfo = oriOrganizerInfo
         console.log(this.getOrganizerInfo)
@@ -767,6 +782,7 @@ export default {
           if (res.data.Status) {
             const getJwtToken = res.data.JwtToken
             localStorage.setItem('JwtToken', getJwtToken)
+            this.$router.push('/profile')
           }
         })
     }

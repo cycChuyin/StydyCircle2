@@ -20,25 +20,34 @@
             <div class="col-xl-6 col-md-8">
               <h5 class="text-secondary">聯絡我們</h5>
               <div class="border-bottom border-secondary">
-                <div class="row align-items-center">
+                <form
+                  @submit.prevent="contactUs"
+                  class="row align-items-center"
+                >
                   <div class="col-8">
                     <input
                       type="text"
                       class="form-control border-0 rounded-0 w-100"
                       placeholder="# 想留言跟我說什麼 ..."
+                      v-model="user.Message"
                     />
                   </div>
                   <div class="col-4 mb-2 d-flex justify-content-end">
-                    <!-- <button type="button" class="btn btn-outline-secondary rounded-pill">傳送</button> -->
-                    <!-- <button type="button" class="btn btn-outline-secondary rounded-pill disabled">傳送中</button> -->
                     <button
-                      type="button"
+                      type="submit"
+                      class="btn btn-outline-secondary rounded-pill"
+                    >
+                      傳送
+                    </button>
+                    <!-- <button type="submit" class="btn btn-outline-secondary rounded-pill disabled">傳送中</button> -->
+                    <!-- <button
+                      type="submit"
                       class="btn btn-dark text-white rounded-pill disabled"
                     >
                       已傳送
-                    </button>
+                    </button> -->
                   </div>
-                </div>
+                </form>
               </div>
               <ul class="list-unstyled d-flex">
                 <li class="nav-item">
@@ -170,6 +179,9 @@ export default {
         FacebookLink: 'Facebook',
         InstagramLink: 'Instagram',
         LineLink: 'Line'
+      },
+      user: {
+        Message: ''
       }
     }
   },
@@ -178,10 +190,26 @@ export default {
   },
   methods: {
     getCompanyData () {
-      // const api = `${process.env.VUE_APP_API}/api/company/infoes`
+      // 1-6 公司資料
       this.$apiHelper.get('api/company/infoes').then((res) => {
         console.log(res)
-        this.companyInfoes = res.data
+        if (res.data.Status) {
+          this.companyInfoes = res.data.Data
+        }
+      })
+    },
+    contactUs () {
+      console.log('聯絡我')
+      const Token = localStorage.getItem('JwtToken')
+      console.log(Token)
+      // 1-5 聯絡我們功能（JWT）
+      this.$apiHelper.post('api/users/contact-us', this.user).then((res) => {
+        // const Token = localStorage.getItem('JwtToken')
+        console.log(res)
+        if (res.data.Status) {
+          const getJwtToken = res.data.JwtToken
+          localStorage.setItem('JwtToken', getJwtToken)
+        }
       })
     }
   }
