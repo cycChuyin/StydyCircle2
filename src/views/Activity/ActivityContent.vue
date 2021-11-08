@@ -305,24 +305,30 @@
         <!-- 評論卡片區塊 -->
         <div class="row row-cols-1 row-cols-md-4 g-4">
           <!-- 左邊評論-->
-          <div class="col-md-8">
-            <div class="card mb-3 rounded-4 bg-white px-32 py-32">
+          <ul class="col-md-8">
+            <li
+              class="card mb-3 rounded-4 bg-white px-32 py-32"
+              v-for="item in getOpinionData"
+              :key="item.Id"
+            >
               <div class="row g-0">
                 <div class="col-md-2">
                   <div class="d-flex flex-column align-items-center">
                     <img
-                      src="https://fakeimg.pl/64/"
+                      :src="item.userImgUrl"
                       alt="memberPhoto"
                       class="rounded-pill memberPhoto-64 mb-2"
                     />
-                    <p class="text-secondary m-0 mb-1 text-center">陳小麗</p>
+                    <p class="text-secondary m-0 mb-1 text-center">
+                      {{ item.Name }}
+                    </p>
                   </div>
                 </div>
                 <div class="col-md-10">
                   <div class="card-body p-0">
                     <h5 class="card-title">
                       <p class="card-text text-secondary mb-2">
-                        2021 - 08 - 02
+                        {{ item.transCreatDate }}
                       </p>
                       <div class="d-flex align-items-center">
                         <span class="material-icons fs-4 text-primary me-1"
@@ -343,56 +349,13 @@
                       </div>
                     </h5>
                     <p class="card-text text-secondary lh-base">
-                      我覺得活動的內容超棒的，超喜歡活動的安排。我覺得活動的內容超棒的，超喜歡活動的安排。我覺得活動的內容超棒的，超喜歡活動的安排。我覺得活動的內容超棒的，超喜歡活動的安排。我覺得活動的內容超棒的，超喜歡活動的安排。我覺得活動的內容超棒的，超喜歡活動的安排。我覺得活動的內容超棒的，超喜歡活動的安排。我覺得活動的內容超棒的，超喜歡活動的安排。我覺得活動的內容超棒的，超喜歡活動的安排。我覺得活動的內容超棒的，超喜歡活動的安排。
+                      {{ item.Opinion }}
                     </p>
                   </div>
                 </div>
               </div>
-            </div>
-            <div class="card mb-3 rounded-4 bg-white px-32 py-32">
-              <div class="row g-0">
-                <div class="col-md-2">
-                  <div class="d-flex flex-column align-items-center">
-                    <img
-                      src="https://fakeimg.pl/64/"
-                      alt="memberPhoto"
-                      class="rounded-pill memberPhoto-64 mb-2"
-                    />
-                    <p class="text-secondary m-0 mb-1 text-center">陳小麗</p>
-                  </div>
-                </div>
-                <div class="col-md-10">
-                  <div class="card-body p-0">
-                    <h5 class="card-title">
-                      <p class="card-text text-secondary mb-2">
-                        2021 - 08 - 02
-                      </p>
-                      <div class="d-flex align-items-center">
-                        <span class="material-icons fs-4 text-primary me-1"
-                          >star_rate</span
-                        >
-                        <span class="material-icons fs-4 text-primary me-1"
-                          >star_rate</span
-                        >
-                        <span class="material-icons fs-4 text-primary me-1"
-                          >star_rate</span
-                        >
-                        <span class="material-icons fs-4 text-primary me-1"
-                          >star_rate</span
-                        >
-                        <span class="material-icons fs-4 text-primary"
-                          >star_rate</span
-                        >
-                      </div>
-                    </h5>
-                    <p class="card-text text-secondary lh-base">
-                      我覺得活動的內容超棒的，超喜歡活動的安排。我覺得活動的內容超棒的，超喜歡活動的安排。我覺得活動的內容超棒的，超喜歡活動的安排。我覺得活動的內容超棒的，超喜歡活動的安排。我覺得活動的內容超棒的，超喜歡活動的安排。我覺得活動的內容超棒的，超喜歡活動的安排。我覺得活動的內容超棒的，超喜歡活動的安排。我覺得活動的內容超棒的，超喜歡活動的安排。我覺得活動的內容超棒的，超喜歡活動的安排。我覺得活動的內容超棒的，超喜歡活動的安排。
-                    </p>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
+            </li>
+          </ul>
           <!-- 右邊區塊-->
           <div class="col-md-4">
             <div
@@ -512,7 +475,6 @@
         </div>
 
         <!-- 畫布 - offcanvas -->
-
         <div
           class="offcanvas offcanvas-end px-5 py-8"
           tabindex="-1"
@@ -694,7 +656,8 @@ export default {
         UserName: '',
         UserMobilePhone: '',
         UserAccount: ''
-      }
+      },
+      getOpinionData: []
     }
   },
   created () {
@@ -718,6 +681,21 @@ export default {
         this.getOrganizerInfo.Image = userImgUrl
       }
     })
+
+    // 5-3 活動評價資料 + 分頁
+    this.$apiHelper.get(`api/activity/opinion/${Id}`).then((res) => {
+      if (res.data.Status) {
+        // console.log(res.data.Data)
+        const oriOpinionData = res.data.Data.Opinion
+        oriOpinionData.forEach((item) => {
+          const userUrl = `${process.env.VUE_APP_USERIMG}/${item.Image}?2021`
+          item.userImgUrl = userUrl
+          this.transDate(item)
+        })
+        this.getOpinionData = oriOpinionData
+        console.log(this.getOpinionData)
+      }
+    })
     // 6-1 報名活動 - 個資帶入
     const Token = localStorage.getItem('JwtToken')
     this.$apiHelper.post('api/users/attend-data', Token).then((res) => {
@@ -736,15 +714,19 @@ export default {
       // 取得開始、結束日期
       const startDate = item.ActivityStartDate
       const endDate = item.ActivityEndDate
+      const creatDate = item.CreatDate
       // 轉換日期格式,呼叫函式
       const transStartDateObj = this.splitDate(startDate)
       const transEndDateObj = this.splitDate(endDate)
+      const transCreatDateObj = this.splitDate(creatDate)
       // transDate:{splitFinalDate: '2021.12.12', splitFinalTime: '16:00'}
       // 將拆解好的時間加入陣列
       item.transStartDate = transStartDateObj.splitFinalDate
       item.transStartTime = transStartDateObj.splitFinalTime
       item.transEndDate = transEndDateObj.splitFinalDate
       item.transEndTime = transEndDateObj.splitFinalTime
+      item.transCreatDate = transCreatDateObj.splitFinalDate
+      item.transCreatTime = transCreatDateObj.splitFinalTime
       // 回傳每筆資料
       return item
     },
