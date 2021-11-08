@@ -2,13 +2,31 @@
   <!-- navbar 導覽列 -->
   <component-navbar></component-navbar>
   <!-- banner -->
-  <div class="banner bg-searchselect">
+  <div
+    :class="{
+      bannerOnlineUrl: isOnline,
+      bannerEntityUrl: isEntity,
+      bannerWorkshopUrl: isWorkShop
+    }"
+  >
     <div class="container">
       <div class="row">
-        <div class="col-md-5 py-9 pt-10">
-          <h6 class="text-secondary display-6 fw-bold mb-3">線上讀書會</h6>
-          <p class="text-secondary fs-4">
+        <div class="col-md-5 py-9 pt-10" :class="{ 'd-none': !isOnline }">
+          <h6 class="text-white display-6 fw-bold mb-3">線上讀書會</h6>
+          <p class="text-white fs-4">
             線上讀書會的宗旨是希望閱讀、分享不再局限於地點的距離，不論您是在地球的另一邊，我們都很歡迎大家一起來參加！
+          </p>
+        </div>
+        <div class="col-md-5 py-9 pt-10" :class="{ 'd-none': !isEntity }">
+          <h6 class="text-white display-6 fw-bold mb-3">實體讀書會</h6>
+          <p class="text-white fs-4">
+            實體讀書會就是最原始的宗旨，希望所有熱愛閱讀的讀者們，能夠找到就近又熱愛閱讀的讀友們一同分享與討論，讓讀書變得更有趣！
+          </p>
+        </div>
+        <div class="col-md-5 py-9 pt-10" :class="{ 'd-none': !isWorkShop }">
+          <h6 class="text-white display-6 fw-bold mb-3">活動工作坊</h6>
+          <p class="text-white fs-4">
+            活動工作坊有別於前兩者的讀書會，在活動工作坊中，我們希望可以籍由不同類型的書籍，舉辦更多興趣之活動，讓大家可以身在其中！
           </p>
         </div>
       </div>
@@ -26,8 +44,8 @@
             "
           >
             <li
-              class="nav-item rounded-4 rounded-bottom-0"
               :class="{ linkActive: isOnline }"
+              class="nav-item rounded-4 rounded-bottom-0"
               aria-current="true"
               aria-selected="true"
               @click="changeActive('online')"
@@ -84,6 +102,15 @@
   border-bottom: 0;
   font-weight: bold;
 }
+.bannerOnlineUrl {
+  background-image: url(https://studycircle.rocket-coding.com/upload/banner/online.jpg);
+}
+.bannerEntityUrl {
+  background-image: url(https://studycircle.rocket-coding.com/upload/banner/study.jpg);
+}
+.bannerWorkshopUrl {
+  background-image: url(https://studycircle.rocket-coding.com/upload/banner/activity.jpg);
+}
 </style>
 
 <script>
@@ -118,6 +145,9 @@ export default {
         this.isWorkShop = true
       }
     }
+  },
+  created () {
+    console.log(this.$route.parmas)
   }
 }
 </script>

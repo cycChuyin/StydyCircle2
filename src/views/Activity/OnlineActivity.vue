@@ -126,24 +126,27 @@
           </a>
         </div>
         <!-- 卡片區塊 -->
-        <div class="row row-cols-1 row-cols-md-3 g-4">
-          <div class="col">
+        <ul class="row row-cols-1 row-cols-md-3 g-4 list-unstyled">
+          <li class="col" v-for="item in newOnlineComingData" :key="item.Id">
             <div class="card h-100 rounded-5">
               <img
-                src="style/photo/ludemeula-fernandes-9UUoGaaHtNE-unsplash.jpg"
+                :src="item.imgUrl"
                 class="card-img-top card-img"
-                alt="..."
+                :alt="item.Image"
               />
-              <div class="card-img-overlay d-flex justify-content-between">
+              <div class="card-img-overlay d-flex justify-content-end">
                 <span class="material-icons text-white fs-1"
                   >bookmark_border</span
                 >
               </div>
               <div class="card-body p-4">
                 <h5 class="card-title mb-2 p-0 fs-4">
-                  <a href="#" class="stretched-link text-secondary"
-                    >《新手貓奴必看》</a
+                  <router-link
+                    :to="`/activity-content/${item.Id}`"
+                    class="stretched-link text-secondary"
                   >
+                    {{ item.Name }}
+                  </router-link>
                 </h5>
                 <div class="d-flex align-items-center mb-2">
                   <div class="d-flex align-items-center">
@@ -161,12 +164,15 @@
                     >
                     <span class="material-icons text-primary">star_rate</span>
                   </div>
-                  <p class="text-gray m-0 ps-2">5/5 (25則評論)</p>
+                  <p class="text-gray m-0 ps-2">
+                    {{ item.EvaluateStars }}/5 ({{ item.OpinionNumber }}則評論)
+                  </p>
                 </div>
                 <p class="text-secondary mb-4">
-                  <span class="pe-13">2021 / 10 / 12</span>｜<span class="px-13"
-                    >13:00 - 15:00</span
-                  >｜<span class="ps-13">王小明</span>
+                  <span class="pe-13">{{ item.transStartDate }}</span
+                  >｜<span class="px-13"
+                    >{{ item.transStartTime }} - {{ item.transEndTime }}</span
+                  >｜<span class="ps-13">{{ item.OrganizerName }}</span>
                 </p>
                 <div
                   class="
@@ -179,13 +185,16 @@
                     align-items-end
                   "
                 >
-                  <p class="text-secondary fs-8 m-0">10人參加 ｜ 25人收藏</p>
-                  <p class="text-secondary fs-4 m-0">NT$ 100</p>
+                  <p class="text-secondary fs-8 m-0">
+                    {{ item.ApplicantNumber }}人參加 ｜
+                    {{ item.CollectNumber }}人收藏
+                  </p>
+                  <p class="text-secondary fs-4 m-0">NT$ {{ item.Price }}</p>
                 </div>
               </div>
             </div>
-          </div>
-        </div>
+          </li>
+        </ul>
       </div>
       <!-- 最多人報名 -->
       <div class="mb-5">
@@ -200,64 +209,75 @@
           </a>
         </div>
         <!-- 卡片區塊 -->
-        <div class="row row-cols-1 row-cols-md-3 g-4">
-          <div class="card h-100 rounded-5">
-            <img
-              src="style/photo/ludemeula-fernandes-9UUoGaaHtNE-unsplash.jpg"
-              class="card-img-top card-img"
-              alt="..."
-            />
-            <div class="card-img-overlay d-flex justify-content-between">
-              <span class="material-icons text-white fs-1"
-                >bookmark_border</span
-              >
-            </div>
-            <div class="card-body p-4">
-              <h5 class="card-title mb-2 p-0 fs-4">
-                <a href="#" class="stretched-link text-secondary"
-                  >《新手貓奴必看》</a
+        <ul class="row row-cols-1 row-cols-md-3 g-4 list-unstyled">
+          <li class="col" v-for="item in newOnlineHotData" :key="item.Id">
+            <div class="card h-100 rounded-5">
+              <img
+                :src="item.imgUrl"
+                class="card-img-top card-img"
+                :alt="item.Image"
+              />
+              <div class="card-img-overlay d-flex justify-content-end">
+                <span class="material-icons text-white fs-1"
+                  >bookmark_border</span
                 >
-              </h5>
-              <div class="d-flex align-items-center mb-2">
-                <div class="d-flex align-items-center">
-                  <span class="material-icons text-primary me-1"
-                    >star_rate</span
-                  >
-                  <span class="material-icons text-primary me-1"
-                    >star_rate</span
-                  >
-                  <span class="material-icons text-primary me-1"
-                    >star_rate</span
-                  >
-                  <span class="material-icons text-primary me-1"
-                    >star_rate</span
-                  >
-                  <span class="material-icons text-primary">star_rate</span>
-                </div>
-                <p class="text-gray m-0 ps-2">5/5 (25則評論)</p>
               </div>
-              <p class="text-secondary mb-4">
-                <span class="pe-13">2021 / 10 / 12</span>｜<span class="px-13"
-                  >13:00 - 15:00</span
-                >｜<span class="ps-13">王小明</span>
-              </p>
-              <div
-                class="
-                  card-footer
-                  border-0
-                  bg-transparent
-                  p-0
-                  d-flex
-                  justify-content-between
-                  align-items-end
-                "
-              >
-                <p class="text-secondary fs-8 m-0">10人參加 ｜ 25人收藏</p>
-                <p class="text-secondary fs-4 m-0">NT$ 100</p>
+              <div class="card-body p-4">
+                <h5 class="card-title mb-2 p-0 fs-4">
+                  <router-link
+                    :to="`/activity-content/${item.Id}`"
+                    class="stretched-link text-secondary"
+                  >
+                    {{ item.Name }}
+                  </router-link>
+                </h5>
+                <div class="d-flex align-items-center mb-2">
+                  <div class="d-flex align-items-center">
+                    <span class="material-icons text-primary me-1"
+                      >star_rate</span
+                    >
+                    <span class="material-icons text-primary me-1"
+                      >star_rate</span
+                    >
+                    <span class="material-icons text-primary me-1"
+                      >star_rate</span
+                    >
+                    <span class="material-icons text-primary me-1"
+                      >star_rate</span
+                    >
+                    <span class="material-icons text-primary">star_rate</span>
+                  </div>
+                  <p class="text-gray m-0 ps-2">
+                    {{ item.EvaluateStars }}/5 ({{ item.OpinionNumber }}則評論)
+                  </p>
+                </div>
+                <p class="text-secondary mb-4">
+                  <span class="pe-13">{{ item.transStartDate }}</span
+                  >｜<span class="px-13"
+                    >{{ item.transStartTime }} - {{ item.transEndTime }}</span
+                  >｜<span class="ps-13">{{ item.OrganizerName }}</span>
+                </p>
+                <div
+                  class="
+                    card-footer
+                    border-0
+                    bg-transparent
+                    p-0
+                    d-flex
+                    justify-content-between
+                    align-items-end
+                  "
+                >
+                  <p class="text-secondary fs-8 m-0">
+                    {{ item.ApplicantNumber }}人參加 ｜
+                    {{ item.CollectNumber }}人收藏
+                  </p>
+                  <p class="text-secondary fs-4 m-0">NT$ {{ item.Price }}</p>
+                </div>
               </div>
             </div>
-          </div>
-        </div>
+          </li>
+        </ul>
       </div>
       <!-- 本週新推出 -->
       <div class="mb-5">
@@ -272,64 +292,75 @@
           </a>
         </div>
         <!-- 卡片區塊 -->
-        <div class="row row-cols-1 row-cols-md-3 g-4">
-          <div class="card h-100 rounded-5">
-            <img
-              src="style/photo/ludemeula-fernandes-9UUoGaaHtNE-unsplash.jpg"
-              class="card-img-top card-img"
-              alt="..."
-            />
-            <div class="card-img-overlay d-flex justify-content-between">
-              <span class="material-icons text-white fs-1"
-                >bookmark_border</span
-              >
-            </div>
-            <div class="card-body p-4">
-              <h5 class="card-title mb-2 p-0 fs-4">
-                <a href="#" class="stretched-link text-secondary"
-                  >《新手貓奴必看》</a
+        <ul class="row row-cols-1 row-cols-md-3 g-4 list-unstyled">
+          <li class="col" v-for="item in newOnlineNewData" :key="item.Id">
+            <div class="card h-100 rounded-5">
+              <img
+                :src="item.imgUrl"
+                class="card-img-top card-img"
+                :alt="item.Image"
+              />
+              <div class="card-img-overlay d-flex justify-content-end">
+                <span class="material-icons text-white fs-1"
+                  >bookmark_border</span
                 >
-              </h5>
-              <div class="d-flex align-items-center mb-2">
-                <div class="d-flex align-items-center">
-                  <span class="material-icons text-primary me-1"
-                    >star_rate</span
-                  >
-                  <span class="material-icons text-primary me-1"
-                    >star_rate</span
-                  >
-                  <span class="material-icons text-primary me-1"
-                    >star_rate</span
-                  >
-                  <span class="material-icons text-primary me-1"
-                    >star_rate</span
-                  >
-                  <span class="material-icons text-primary">star_rate</span>
-                </div>
-                <p class="text-gray m-0 ps-2">5/5 (25則評論)</p>
               </div>
-              <p class="text-secondary mb-4">
-                <span class="pe-13">2021 / 10 / 12</span>｜<span class="px-13"
-                  >13:00 - 15:00</span
-                >｜<span class="ps-13">王小明</span>
-              </p>
-              <div
-                class="
-                  card-footer
-                  border-0
-                  bg-transparent
-                  p-0
-                  d-flex
-                  justify-content-between
-                  align-items-end
-                "
-              >
-                <p class="text-secondary fs-8 m-0">10人參加 ｜ 25人收藏</p>
-                <p class="text-secondary fs-4 m-0">NT$ 100</p>
+              <div class="card-body p-4">
+                <h5 class="card-title mb-2 p-0 fs-4">
+                  <router-link
+                    :to="`/activity-content/${item.Id}`"
+                    class="stretched-link text-secondary"
+                  >
+                    {{ item.Name }}
+                  </router-link>
+                </h5>
+                <div class="d-flex align-items-center mb-2">
+                  <div class="d-flex align-items-center">
+                    <span class="material-icons text-primary me-1"
+                      >star_rate</span
+                    >
+                    <span class="material-icons text-primary me-1"
+                      >star_rate</span
+                    >
+                    <span class="material-icons text-primary me-1"
+                      >star_rate</span
+                    >
+                    <span class="material-icons text-primary me-1"
+                      >star_rate</span
+                    >
+                    <span class="material-icons text-primary">star_rate</span>
+                  </div>
+                  <p class="text-gray m-0 ps-2">
+                    {{ item.EvaluateStars }}/5 ({{ item.OpinionNumber }}則評論)
+                  </p>
+                </div>
+                <p class="text-secondary mb-4">
+                  <span class="pe-13">{{ item.transStartDate }}</span
+                  >｜<span class="px-13"
+                    >{{ item.transStartTime }} - {{ item.transEndTime }}</span
+                  >｜<span class="ps-13">{{ item.OrganizerName }}</span>
+                </p>
+                <div
+                  class="
+                    card-footer
+                    border-0
+                    bg-transparent
+                    p-0
+                    d-flex
+                    justify-content-between
+                    align-items-end
+                  "
+                >
+                  <p class="text-secondary fs-8 m-0">
+                    {{ item.ApplicantNumber }}人參加 ｜
+                    {{ item.CollectNumber }}人收藏
+                  </p>
+                  <p class="text-secondary fs-4 m-0">NT$ {{ item.Price }}</p>
+                </div>
               </div>
             </div>
-          </div>
-        </div>
+          </li>
+        </ul>
       </div>
 
       <div class="d-flex justify-content-center">
@@ -343,3 +374,104 @@
     </div>
   </div>
 </template>
+
+<script>
+export default {
+  data () {
+    return {
+      newOnlineComingData: [],
+      newOnlineHotData: [],
+      newOnlineNewData: []
+    }
+  },
+  created () {
+    // 4-1 即將截止（線上讀書會）
+    this.$apiHelper.get('api/activity/final/type/0/3/1').then((res) => {
+      if (res.data.Status) {
+        console.log(res.data)
+        const oriOnlineComingData = res.data.Data.Activity
+        console.log(oriOnlineComingData)
+        oriOnlineComingData.forEach((item) => {
+          this.transDate(item)
+
+          // 2. 加上圖片路徑
+          const imgUrl = `${process.env.VUE_APP_CARDIMG}/${item.Image}?2021`
+          item.imgUrl = imgUrl
+        })
+        this.newOnlineComingData = oriOnlineComingData
+        console.log(this.newOnlineComingData)
+      }
+    })
+
+    // 4-2 最多人報名（線上讀書會）
+    this.$apiHelper.get('api/activity/hot/type/0/3/1').then((res) => {
+      if (res.data.Status) {
+        console.log(res.data)
+        const oriOnlineHotData = res.data.Data.Activity
+        console.log(oriOnlineHotData)
+        oriOnlineHotData.forEach((item) => {
+          this.transDate(item)
+
+          // 2. 加上圖片路徑
+          const imgUrl = `${process.env.VUE_APP_CARDIMG}/${item.Image}?2021`
+          item.imgUrl = imgUrl
+        })
+        this.newOnlineHotData = oriOnlineHotData
+        console.log(this.newOnlineHotData)
+      }
+    })
+
+    // 4-3 新推出資料（線上讀書會）
+    this.$apiHelper.get('api/activity/new/type/0/3/1').then((res) => {
+      if (res.data.Status) {
+        console.log(res.data)
+        const oriOnlineNewData = res.data.Data.Activity
+        console.log(oriOnlineNewData)
+        oriOnlineNewData.forEach((item) => {
+          this.transDate(item)
+
+          // 2. 加上圖片路徑
+          const imgUrl = `${process.env.VUE_APP_CARDIMG}/${item.Image}?2021`
+          item.imgUrl = imgUrl
+        })
+        this.newOnlineNewData = oriOnlineNewData
+        console.log(this.newOnlineNewtData)
+      }
+    })
+  },
+  methods: {
+    splitDate (date) {
+      const Time = new Date(date)
+      Time.getFullYear()
+      Time.getMonth()
+      Time.getDate()
+      Time.getHours()
+      Time.getMinutes()
+      const splitFinalDate = `${Time.getFullYear()}.${
+        Time.getMonth() + 1
+      }.${Time.getDate()}`
+      const splitFinalTime = `${Time.getHours()}:${
+        (Time.getMinutes() < 10 ? '0' : '') + Time.getMinutes()
+      }`
+      return { splitFinalDate, splitFinalTime }
+    },
+    transDate (item) {
+      // 1. 針對日期格式進行轉換
+      // 取得開始、結束日期
+      const startDate = item.ActivityStartDate
+      const endDate = item.ActivityEndDate
+      // 轉換日期格式,呼叫函式
+      const transStartDateObj = this.splitDate(startDate)
+      const transEndDateObj = this.splitDate(endDate)
+      // transDate:{splitFinalDate: '2021.12.12', splitFinalTime: '16:00'}
+      // 將拆解好的時間加入陣列
+      item.transStartDate = transStartDateObj.splitFinalDate
+      item.transStartTime = transStartDateObj.splitFinalTime
+      item.transEndDate = transEndDateObj.splitFinalDate
+      item.transEndTime = transEndDateObj.splitFinalTime
+      // 回傳每筆資料
+      return item
+    }
+  }
+}
+</script>

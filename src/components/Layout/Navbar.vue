@@ -16,24 +16,34 @@
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
           <ul class="navbar-nav me-auto mb-2 mb-lg-0">
             <li class="nav-item">
-              <a
+              <router-link
+                to="/activity/online"
                 class="nav-link text-secondary active"
                 aria-current="page"
                 href="#"
-                >線上讀書會</a
               >
+                線上讀書會
+              </router-link>
             </li>
             <li class="nav-item">
-              <a class="nav-link text-secondary" href="#">實體讀書會</a>
-            </li>
-            <li class="nav-item">
-              <a
+              <router-link
+                to="/activity/entity"
                 class="nav-link text-secondary"
+                aria-current="page"
                 href="#"
-                tabindex="-1"
-                aria-disabled="true"
-                >活動工作坊</a
               >
+                實體讀書會
+              </router-link>
+            </li>
+            <li class="nav-item">
+              <router-link
+                to="/activity/workshop"
+                class="nav-link text-secondary"
+                aria-current="page"
+                href="#"
+              >
+                活動工作坊
+              </router-link>
             </li>
           </ul>
           <!-- 右側 -->
