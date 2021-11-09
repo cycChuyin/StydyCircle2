@@ -457,9 +457,9 @@ export default {
     // 4-3 新推出資料（線上讀書會）
     this.$apiHelper.get('api/activity/new/type/2/3/1').then((res) => {
       if (res.data.Status) {
-        console.log(res.data)
+        // console.log(res.data)
         const oriWorkshopNewData = res.data.Data.Activity
-        console.log(oriWorkshopNewData)
+        // console.log(oriWorkshopNewData)
         oriWorkshopNewData.forEach((item) => {
           this.transDate(item)
 
@@ -468,7 +468,7 @@ export default {
           item.imgUrl = imgUrl
         })
         this.newWorkshopNewData = oriWorkshopNewData
-        console.log(this.newWorkshopNewData)
+        // console.log(this.newWorkshopNewData)
       }
     })
   },

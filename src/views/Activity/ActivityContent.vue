@@ -764,7 +764,7 @@ export default {
           if (res.data.Status) {
             const getJwtToken = res.data.JwtToken
             localStorage.setItem('JwtToken', getJwtToken)
-            this.$router.push('/profile')
+            this.$router.push('/register-success')
           }
         })
     }

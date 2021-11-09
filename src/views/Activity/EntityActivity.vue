@@ -423,9 +423,9 @@ export default {
     // 4-1 即將截止（線上讀書會）
     this.$apiHelper.get('api/activity/final/type/1/3/1').then((res) => {
       if (res.data.Status) {
-        console.log(res.data)
+        // console.log(res.data)
         const oriEntityComingData = res.data.Data.Activity
-        console.log(oriEntityComingData)
+        // console.log(oriEntityComingData)
         oriEntityComingData.forEach((item) => {
           this.transDate(item)
 
@@ -434,7 +434,7 @@ export default {
           item.imgUrl = imgUrl
         })
         this.newEntityComingData = oriEntityComingData
-        console.log(this.newEntityComingData)
+        // console.log(this.newEntityComingData)
       }
     })
 
@@ -443,7 +443,7 @@ export default {
       if (res.data.Status) {
         console.log(res.data)
         const oriEntityHotData = res.data.Data.Activity
-        console.log(oriEntityHotData)
+        // console.log(oriEntityHotData)
         oriEntityHotData.forEach((item) => {
           this.transDate(item)
 
@@ -452,7 +452,7 @@ export default {
           item.imgUrl = imgUrl
         })
         this.newEntityHotData = oriEntityHotData
-        console.log(this.newEntityHotData)
+        // console.log(this.newEntityHotData)
       }
     })
 
@@ -461,7 +461,7 @@ export default {
       if (res.data.Status) {
         console.log(res.data)
         const oriEntityNewData = res.data.Data.Activity
-        console.log(oriEntityNewData)
+        // console.log(oriEntityNewData)
         oriEntityNewData.forEach((item) => {
           this.transDate(item)
 
@@ -470,7 +470,6 @@ export default {
           item.imgUrl = imgUrl
         })
         this.newEntityNewData = oriEntityNewData
-        console.log(this.newEntityNewtData)
       }
     })
   },

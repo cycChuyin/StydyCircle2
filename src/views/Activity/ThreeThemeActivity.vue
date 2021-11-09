@@ -1,6 +1,6 @@
 <template>
   <!-- navbar 導覽列 -->
-  <component-navbar></component-navbar>
+  <component-navbar :emit-changetype="changeActive(type)"></component-navbar>
   <!-- banner -->
   <div
     :class="{
@@ -48,7 +48,7 @@
               class="nav-item rounded-4 rounded-bottom-0"
               aria-current="true"
               aria-selected="true"
-              @click="changeActive('online')"
+              @click="changeActive('Online')"
             >
               <router-link
                 class="nav-link px-32 py-3 rounded-4 rounded-bottom-0"
@@ -61,7 +61,7 @@
               class="nav-item rounded-4 rounded-bottom-0"
               :class="{ linkActive: isEntity }"
               aria-selected="false"
-              @click="changeActive('entity')"
+              @click="changeActive('Entity')"
             >
               <router-link
                 class="nav-link px-32 py-3 rounded-4 rounded-bottom-0"
@@ -74,7 +74,7 @@
               class="nav-item rounded-4 rounded-bottom-0"
               :class="{ linkActive: isWorkShop }"
               aria-selected="false"
-              @click="changeActive('workshop')"
+              @click="changeActive('Workshop')"
             >
               <router-link
                 class="nav-link px-32 py-3 rounded-4 rounded-bottom-0"
@@ -118,6 +118,7 @@ import componentNavbar from '@/components/Layout/Navbar.vue'
 import componentFooter from '@/components/Layout/Footer.vue'
 
 export default {
+  props: ['type'],
   data () {
     return {
       isOnline: true,
@@ -131,23 +132,43 @@ export default {
   },
   methods: {
     changeActive (type) {
-      if (type === 'online') {
+      console.log(type)
+      console.log('我有被觸發喔！')
+      if (type === 'Online') {
         this.isOnline = true
         this.isEntity = false
         this.isWorkShop = false
-      } else if (type === 'entity') {
+      } else if (type === 'Entity') {
         this.isOnline = false
         this.isEntity = true
         this.isWorkShop = false
-      } else if (type === 'workshop') {
+      } else if (type === 'Workshop') {
         this.isOnline = false
         this.isEntity = false
         this.isWorkShop = true
       }
     }
   },
+  // watch: {
+  //   Type (n, old) {
+  //     console.log(n, old)
+  //   }
+  // },
   created () {
-    console.log(this.$route.parmas)
+    const type = this.type
+    if (type === 'Online') {
+      this.isOnline = true
+      this.isEntity = false
+      this.isWorkShop = false
+    } else if (type === 'Entity') {
+      this.isOnline = false
+      this.isEntity = true
+      this.isWorkShop = false
+    } else if (type === 'Workshop') {
+      this.isOnline = false
+      this.isEntity = false
+      this.isWorkShop = true
+    }
   }
 }
 </script>

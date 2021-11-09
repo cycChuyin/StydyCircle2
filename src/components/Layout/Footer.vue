@@ -118,13 +118,19 @@
               <h6 class="text-secondary fw-bold">探索活動</h6>
               <ul class="list-group border-0">
                 <li class="list-group-item ps-0 border-0">
-                  <a href="#" class="link-secondary">線上讀書會</a>
+                  <router-link class="link-secondary" :to="`/activity/online`"
+                    >線上讀書會</router-link
+                  >
                 </li>
                 <li class="list-group-item ps-0 border-0">
-                  <a href="#" class="link-secondary">實體讀書會</a>
+                  <router-link class="link-secondary" :to="`/activity/entity`"
+                    >實體讀書會</router-link
+                  >
                 </li>
                 <li class="list-group-item ps-0 border-0">
-                  <a href="#" class="link-secondary">活動工作坊</a>
+                  <router-link class="link-secondary" :to="`/activity/workshop`"
+                    >活動工作坊</router-link
+                  >
                 </li>
               </ul>
             </div>
@@ -192,7 +198,7 @@ export default {
     getCompanyData () {
       // 1-6 公司資料
       this.$apiHelper.get('api/company/infoes').then((res) => {
-        console.log(res)
+        // console.log(res)
         if (res.data.Status) {
           this.companyInfoes = res.data.Data
         }
@@ -211,6 +217,12 @@ export default {
           localStorage.setItem('JwtToken', getJwtToken)
         }
       })
+    },
+    // 向三個主題頁面傳遞狀態觸發事件
+    changeType (type) {
+      console.log('changeType')
+      console.log(type)
+      this.$emit('emit-changetype', type)
     }
   }
 }

@@ -377,6 +377,7 @@
 
 <script>
 export default {
+  // props: ['type'],
   data () {
     return {
       newOnlineComingData: [],
@@ -385,6 +386,8 @@ export default {
     }
   },
   created () {
+    // console.log(this.$route.params)
+    // const type = this.type
     // 4-1 即將截止（線上讀書會）
     this.$apiHelper.get('api/activity/final/type/0/3/1').then((res) => {
       if (res.data.Status) {
@@ -406,9 +409,9 @@ export default {
     // 4-2 最多人報名（線上讀書會）
     this.$apiHelper.get('api/activity/hot/type/0/3/1').then((res) => {
       if (res.data.Status) {
-        console.log(res.data)
+        // console.log(res.data)
         const oriOnlineHotData = res.data.Data.Activity
-        console.log(oriOnlineHotData)
+        // console.log(oriOnlineHotData)
         oriOnlineHotData.forEach((item) => {
           this.transDate(item)
 
@@ -417,16 +420,16 @@ export default {
           item.imgUrl = imgUrl
         })
         this.newOnlineHotData = oriOnlineHotData
-        console.log(this.newOnlineHotData)
+        // console.log(this.newOnlineHotData)
       }
     })
 
     // 4-3 新推出資料（線上讀書會）
     this.$apiHelper.get('api/activity/new/type/0/3/1').then((res) => {
       if (res.data.Status) {
-        console.log(res.data)
+        // console.log(res.data)
         const oriOnlineNewData = res.data.Data.Activity
-        console.log(oriOnlineNewData)
+        // console.log(oriOnlineNewData)
         oriOnlineNewData.forEach((item) => {
           this.transDate(item)
 
@@ -435,7 +438,6 @@ export default {
           item.imgUrl = imgUrl
         })
         this.newOnlineNewData = oriOnlineNewData
-        console.log(this.newOnlineNewtData)
       }
     })
   },

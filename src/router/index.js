@@ -53,12 +53,23 @@ const routes = [
             Id: route.params.id
           }
         }
+      },
+      {
+        path: 'register-success',
+        name: 'RegisterSuccess',
+        component: () => import('../views/Activity/RegisterSuccess.vue')
       }
     ]
   },
   {
     path: '/activity',
     name: 'Activity',
+    props: (route) => {
+      console.log(route)
+      return {
+        type: route.name
+      }
+    },
     redirect: '/activity/online',
     component: () => import('../views/Activity/ThreeThemeActivity.vue'),
     children: [

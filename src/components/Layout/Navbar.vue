@@ -17,30 +17,30 @@
           <ul class="navbar-nav me-auto mb-2 mb-lg-0">
             <li class="nav-item">
               <router-link
-                to="/activity/online"
+                :to="`/activity/online`"
                 class="nav-link text-secondary active"
                 aria-current="page"
-                href="#"
+                @click="changeType('nline')"
               >
                 線上讀書會
               </router-link>
             </li>
             <li class="nav-item">
               <router-link
-                to="/activity/entity"
+                :to="`/activity/entity`"
                 class="nav-link text-secondary"
                 aria-current="page"
-                href="#"
+                @click="changeType('entity')"
               >
                 實體讀書會
               </router-link>
             </li>
             <li class="nav-item">
               <router-link
-                to="/activity/workshop"
+                :to="`/activity/workshop`"
                 class="nav-link text-secondary"
                 aria-current="page"
-                href="#"
+                @click="changeType('workshop')"
               >
                 活動工作坊
               </router-link>
@@ -161,8 +161,8 @@
                     class="dropdown-item py-3"
                     href="#"
                     @click.prevent="signOut"
-                    >登出</a
-                  >
+                    >登出
+                  </a>
                 </li>
               </ul>
             </li>
@@ -197,7 +197,7 @@ export default {
       this.isSighOut = false
       // 1-8 GET請求 - Navbar 個人資料+頭貼 (JWT)
       this.$apiHelper.get('api/users/profile-data').then((res) => {
-        console.log(res)
+        // console.log(res)
         if (res.data.Status) {
           const token = res.data.JwtToken
           localStorage.setItem('JwtToken', token)
@@ -207,7 +207,7 @@ export default {
           // 頭貼路徑
           const UserImgUrl = `${process.env.VUE_APP_USERIMG}/${res.data.Data.Image}?2021`
           this.UserInfoData.UserImgUrl = UserImgUrl
-          console.log(this.UserInfoData)
+          // console.log(this.UserInfoData)
         }
       })
     } else {
@@ -223,7 +223,7 @@ export default {
       this.$apiHelper
         .delete('api/users/logout')
         .then((res) => {
-          console.log(res.data.JwtToken)
+          // console.log(res.data.JwtToken)
           // const lostToken = res.data.JwtToken
           // localStorage.setItem('JwtToken', lostToken)
           this.lostTokenData = res.data
@@ -233,8 +233,14 @@ export default {
         })
       this.isLogin = !this.isLogin
       this.isSighOut = !this.isSighOut
-      console.log(this.isLogin, this.isSighOut)
+      // console.log(this.isLogin, this.isSighOut)
       this.$router.push('/study-circle')
+    },
+    // 向三個主題頁面傳遞狀態觸發事件
+    changeType (type) {
+      console.log('changeType')
+      console.log(type)
+      this.$emit('emit-changetype', type)
     }
   },
   mounted () {}
