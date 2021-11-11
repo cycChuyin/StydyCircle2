@@ -50,5 +50,17 @@
       >
     </li>
   </ul>
-    <router-view></router-view>
+  <router-view></router-view>
 </template>
+
+<script>
+export default {
+  data () {
+    return {}
+  },
+  created () {
+    console.log(this.$route)
+    // const UserId = this.$route.params.UserId
+  }
+}
+</script>

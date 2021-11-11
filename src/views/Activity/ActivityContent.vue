@@ -61,11 +61,12 @@
           data-bs-toggle="offcanvas"
           data-bs-target="#offcanvasRight"
           aria-controls="offcanvasRight"
+          :class="{ 'd-none': hadRegister }"
         >
           <span class="material-icons me-2">arrow_forward</span>立即參加
         </button>
         <!-- 5-2 活動頁_活動詳情_已報名 -->
-        <!-- <button
+        <button
           type="button"
           class="
             btn btn-primary
@@ -76,9 +77,10 @@
             align-items-center
             disabled
           "
+          :class="{ 'd-none': unRegister }"
         >
           <span class="material-icons me-2">check_circle_outline</span>已報名
-        </button> -->
+        </button>
         <!-- 5-3 活動頁_活動詳情_已結束 -->
         <!-- <button
           type="button"
@@ -182,11 +184,12 @@
               data-bs-toggle="offcanvas"
               data-bs-target="#offcanvasRight"
               aria-controls="offcanvasRight"
+              :class="{ 'd-none': hadRegister }"
             >
               <span class="material-icons me-2">arrow_forward</span>立即參加
             </button>
             <!-- 5-2 活動頁_活動詳情_已報名 -->
-            <!-- <button
+            <button
               type="button"
               class="
                 btn btn-primary
@@ -197,10 +200,11 @@
                 align-items-center
                 disabled
               "
+              :class="{ 'd-none': unRegister }"
             >
               <span class="material-icons me-2">check_circle_outline</span
               >已報名
-            </button> -->
+            </button>
             <!-- 5-3 活動頁_活動詳情_已結束 -->
             <!-- <button
               type="button"
@@ -394,6 +398,7 @@
                     <span class="material-icons me-2">bookmark_border</span
                     >收藏活動
                   </button>
+                  <!-- 5-2 活動頁_活動詳情_尚未報名 -->
                   <button
                     type="button"
                     class="
@@ -407,9 +412,27 @@
                     data-bs-toggle="offcanvas"
                     data-bs-target="#offcanvasRight"
                     aria-controls="offcanvasRight"
+                    :class="{ 'd-none': hadRegister }"
                   >
                     <span class="material-icons me-2">arrow_forward</span
                     >立即參加
+                  </button>
+                  <!-- 5-2 活動頁_活動詳情_已報名 -->
+                  <button
+                    type="button"
+                    class="
+                      btn btn-primary
+                      nav-link
+                      rounded-pill
+                      text-dark
+                      d-flex
+                      align-items-center
+                      disabled
+                    "
+                    :class="{ 'd-none': unRegister }"
+                  >
+                    <span class="material-icons me-2">check_circle_outline</span
+                    >已報名
                   </button>
                 </div>
               </div>
@@ -657,12 +680,20 @@ export default {
         UserMobilePhone: '',
         UserAccount: ''
       },
-      getOpinionData: []
+      getOpinionData: [],
+      putViews: {
+        ActivityId: ''
+      },
+      // 已經報名的話，則 hadRegister 為 ture ，讓 d-none 效果觸發
+      hadRegister: false,
+      unRegister: true
     }
   },
   created () {
     console.log(this.$route.params)
     const Id = this.Id
+    this.putViews.ActivityId = Id
+    // 5-1 活動+舉辦者資料
     this.$apiHelper.get(`api/activity/id/${Id}`).then((res) => {
       if (res.data.Status) {
         // console.log(res.data)
@@ -681,6 +712,14 @@ export default {
         this.getOrganizerInfo.Image = userImgUrl
       }
     })
+    // 5-2增加活動瀏覽次數
+    this.$apiHelper
+      .put('api/organizer/activity/views', this.putViews)
+      .then((res) => {
+        if (res.data.Status) {
+          console.log(res.data.Message)
+        }
+      })
 
     // 5-3 活動評價資料 + 分頁
     this.$apiHelper.get(`api/activity/opinion/${Id}`).then((res) => {
@@ -696,8 +735,32 @@ export default {
         console.log(this.getOpinionData)
       }
     })
-    // 6-1 報名活動 - 個資帶入
+
     const Token = localStorage.getItem('JwtToken')
+    // 5-4 確認是否已報名過活動 (JWT)
+    if (!Token || Token === 'undefined') {
+      console.log('沒有登入喔！')
+      this.hadRegister = false
+      this.unRegister = true
+    } else if (Token) {
+      this.$apiHelper
+        .get(`api/users/activity/attend/status/${Id}`)
+        .then((res) => {
+          const status = res.data.Status
+          if (status === true) {
+            console.log('有登入而且有報名了！')
+            localStorage.setItem('JwtToken', res.data.JwtToken)
+            this.hadRegister = true
+            this.unRegister = false
+          } else {
+            console.log('尚未報名唷！')
+            localStorage.setItem('JwtToken', res.data.JwtToken)
+            this.hadRegister = false
+            this.unRegister = true
+          }
+        })
+    }
+    // 6-1 報名活動 - 個資帶入
     this.$apiHelper.post('api/users/attend-data', Token).then((res) => {
       console.log(res)
       if (res.data.Status) {

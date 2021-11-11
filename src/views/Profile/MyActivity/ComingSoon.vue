@@ -162,34 +162,31 @@ export default {
       getCommingData: []
     }
   },
+  // inject: ['self'],
   created () {
-    const getToken = localStorage.getItem('JwtToken')
-    // 判斷是否有 JwtToken ，無則請使用者登入
-    if (getToken === false || getToken === 'undefined') {
-      this.$router.push('/login')
-    } else {
-      this.$apiHelper
-        .get('api/users/activity/attend/info/6/2', getToken)
-        .then((res) => {
-          console.log(res.data)
-          if (res.data.Status === true) {
-            const getJwtToken = res.data.JwtToken
-            localStorage.setItem('JwtToken', getJwtToken)
-            const oriCommingData = res.data.Data.MyActivity
+    console.log(this.$route)
+    // const getUserId = localStorage.getItem('UserId')
+    const UserId = this.$route.params.UserId
+    // 7-7 即將到臨活動資料+分頁
+    this.$apiHelper
+      .get(`api/users/activity/attend/coming/${UserId}/5/1`)
+      .then((res) => {
+        console.log(res.data)
+        if (res.data.Status === true) {
+          const oriCommingData = res.data.Data.MyActivity
 
-            oriCommingData.forEach((item) => {
-              this.transDate(item)
-              // 2. 加上圖片路徑
-              const imgUrl = `${process.env.VUE_APP_CARDIMG}/${item.Image}?2021`
-              item.imgUrl = imgUrl
-              // 加上 class 狀態切換
-              item.isCollapse = false
-            })
-            this.getCommingData = oriCommingData
-            console.log(this.getCommingData)
-          }
-        })
-    }
+          oriCommingData.forEach((item) => {
+            this.transDate(item)
+            // 2. 加上圖片路徑
+            const imgUrl = `${process.env.VUE_APP_CARDIMG}/${item.Image}?2021`
+            item.imgUrl = imgUrl
+            // 加上 class 狀態切換
+            item.isCollapse = false
+          })
+          this.getCommingData = oriCommingData
+          console.log(this.getCommingData)
+        }
+      })
   },
   methods: {
     changeTopImg (id) {

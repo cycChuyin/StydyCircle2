@@ -20,7 +20,7 @@
                 :to="`/activity/online`"
                 class="nav-link text-secondary active"
                 aria-current="page"
-                @click="changeType('nline')"
+                @click="changeType('online')"
               >
                 線上讀書會
               </router-link>
@@ -110,7 +110,7 @@
               >
                 <li class="text-center text-secondary">
                   <router-link
-                    to="/profile"
+                    :to="`/profile/my-activity/coming-soon/${UserInfoData.Id}`"
                     class="
                       dropdown-item
                       py-3
@@ -191,28 +191,37 @@ export default {
     }
   },
   created () {
+    console.log(this.$route)
     const isLoggin = localStorage.getItem('JwtToken')
-    if (isLoggin) {
-      this.isLogin = true
-      this.isSighOut = false
+    console.log(typeof isLoggin)
+    if (!isLoggin || isLoggin === 'undefined') {
+      this.isLogin = false
+      this.isSighOut = true
+    } else {
       // 1-8 GET請求 - Navbar 個人資料+頭貼 (JWT)
       this.$apiHelper.get('api/users/profile-data').then((res) => {
-        // console.log(res)
+        console.log(res)
         if (res.data.Status) {
+          console.log(res.data)
           const token = res.data.JwtToken
           localStorage.setItem('JwtToken', token)
+          // 使用者 Id 存到 localStorage，等在個人檔案時可取出
+          const UserId = res.data.Data.Id
+          localStorage.setItem('UserId', UserId)
           // 將使用者基本資料存入 UserInfoData
           this.UserInfoData = res.data.Data
+          console.log(this.UserInfoData)
 
           // 頭貼路徑
           const UserImgUrl = `${process.env.VUE_APP_USERIMG}/${res.data.Data.Image}?2021`
           this.UserInfoData.UserImgUrl = UserImgUrl
           // console.log(this.UserInfoData)
+
+          // 狀態切換
+          this.isLogin = true
+          this.isSighOut = false
         }
       })
-    } else {
-      this.isLogin = false
-      this.isSighOut = true
     }
   },
   methods: {

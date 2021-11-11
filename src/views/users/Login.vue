@@ -239,7 +239,8 @@ export default {
             const getJwtToken = res.data.JwtToken
             // console.log(this.userTokenData)
             localStorage.setItem('JwtToken', getJwtToken)
-            this.$router.push('/study-circle')
+            // this.$router.push('/study-circle')
+            location.href = '/'
           }
         })
         .catch((error) => {
