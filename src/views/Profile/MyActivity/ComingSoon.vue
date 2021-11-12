@@ -162,8 +162,10 @@ export default {
       getCommingData: []
     }
   },
+  props: ['UserId'],
   // inject: ['self'],
   created () {
+    console.log(this.UserId)
     console.log(this.$route)
     // const getUserId = localStorage.getItem('UserId')
     const UserId = this.$route.params.UserId

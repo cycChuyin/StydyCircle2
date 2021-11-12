@@ -187,11 +187,14 @@ export default {
       lostTokenData: {},
       UserInfoData: {},
       isLogin: false,
-      isSighOut: true
+      isSighOut: true,
+      UserId: ''
     }
   },
   created () {
     console.log(this.$route)
+    // this.UserId = JSON.parse(localStorage.getItem('UserId'))
+    this.UserId = this.$route.params.UserId
     const isLoggin = localStorage.getItem('JwtToken')
     console.log(typeof isLoggin)
     if (!isLoggin || isLoggin === 'undefined') {
@@ -228,6 +231,7 @@ export default {
     signOut () {
       console.log('signOut')
       localStorage.removeItem('JwtToken')
+      localStorage.removeItem('UserId')
       //   DEL請求
       this.$apiHelper
         .delete('api/users/logout')

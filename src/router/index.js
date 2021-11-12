@@ -93,13 +93,13 @@ const routes = [
   {
     path: '/profile',
     name: 'Profile',
-    redirect: '/profile/my-activity/coming-soon/:UserId',
+    // redirect: '/profile/my-activity/coming-soon/:UserId',
     component: () => import('../views/Profile/ProfileOverview.vue'),
     children: [
       {
         path: 'my-activity',
         name: 'MyActivityOverview',
-        redirect: '/profile/my-activity/coming-soon',
+        // redirect: '/profile/my-activity/coming-soon/:UserId',
         component: () =>
           import('../views/Profile/MyActivity/MyActivityOverview.vue'),
         children: [
@@ -110,6 +110,9 @@ const routes = [
               import('../views/Profile/MyActivity/ComingSoon.vue'),
             props: (route) => {
               console.log(route)
+              return {
+                UserId: route.params.UserId
+              }
             }
           },
           {

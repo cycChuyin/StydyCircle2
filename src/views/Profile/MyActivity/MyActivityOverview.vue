@@ -1,5 +1,5 @@
 <template>
-  <ul
+  <!-- <ul
     class="
       nav nav-pills nav-justified
       mb-32
@@ -17,7 +17,11 @@
         >即將到臨的活動</router-link
       >
     </li>
-    <li class="nav-item" role="presentation">
+    <li
+      class="nav-item"
+      role="presentation"
+      :class="{ 'd-none': !userAttendObj.Status }"
+    >
       <router-link
         to="/profile/my-activity/un-opinion"
         type="button"
@@ -50,17 +54,43 @@
       >
     </li>
   </ul>
-  <router-view></router-view>
+  <router-view></router-view> -->
+  <div>a</div>
 </template>
 
 <script>
 export default {
   data () {
-    return {}
+    return {
+      userAttendObj: {}
+    }
   },
   created () {
     console.log(this.$route)
-    // const UserId = this.$route.params.UserId
+
+    const UserId = this.$route.params.UserId
+    // 7-1 確認是否為本人瀏覽 (JWT)
+    this.$apiHelper
+      .get(`api/users/activity/attend/profile/status/${UserId}`)
+      .then((res) => {
+        this.userAttendObj = res.data
+        // if (res.data.Status) {
+        //   console.log(res.data.Message)
+        //   localStorage.setItem('JwtToken', getJwtToken)
+        // } else {
+        //   console.log(res.data.Message)
+        //   const apiMessage = res.data.Message
+        //   if (apiMessage === '非本人資料') {
+        //     localStorage.setItem('JwtToken', getJwtToken)
+        //     if (res.data.Following === true) {
+        //       this.userAttendObj.Fallowed = '已追蹤'
+        //     } else {
+        //       this.userAttendObj.Fallowed = '追蹤我'
+        //     }
+        //   }
+        // }
+        console.log(this.userAttendObj)
+      })
   }
 }
 </script>

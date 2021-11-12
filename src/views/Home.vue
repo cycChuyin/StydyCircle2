@@ -7,6 +7,7 @@
     <router-link to="/layout">Layout</router-link>｜
     <router-link to="/searchActivity">searchActivity</router-link> ｜
   </div> -->
+  <opinion-modal ref="opinionmodal"></opinion-modal>
   <router-view></router-view>
   <component-footer></component-footer>
 </template>

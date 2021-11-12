@@ -12,11 +12,13 @@
               alt="memberPhoto"
               class="rounded-pill memberPhoto-120 mb-4 text-center"
             />
-            <h2 class="text-center text-secondary mb-2 fw-normal">
-              {{ profileObj.Name }}<br />
-              {{ profileObj.NickName }}
+            <h2 class="text-center text-secondary mb-1 fw-bold fs-4 lh-36">
+              {{ profileObj.Name }}
             </h2>
-            <p class="text-secondary fw-light">
+            <p class="text-center text-secondary mb-3 fw-bold fs-4 lh-36">
+              {{ profileObj.NickName }}
+            </p>
+            <p class="text-secondary fw-light lh-base mb-3">
               {{ profileObj.FollowersNumber }} 追蹤者｜{{
                 profileObj.FollowingNumber
               }}
@@ -36,9 +38,10 @@
                 fs-7
                 mb-32
               "
+              :class="{ 'd-none': userAttendObj.Status }"
             >
               <span class="material-icons fs-6 me-2">done_outline</span>
-              追蹤我
+              {{ userAttendObj.Fallowed }}
             </button>
             <button
               type="button"
@@ -54,27 +57,10 @@
                 fs-7
                 mb-32
               "
+              :class="{ 'd-none': !userAttendObj.Status }"
             >
               <span class="material-icons fs-6 me-2">edit</span>
               編輯個人檔案
-            </button>
-            <button
-              type="button"
-              class="
-                btn btn-secondary
-                fw-light
-                rounded-pill
-                d-flex
-                align-items-center
-                text-center
-                mx-auto
-                text-white
-                fs-7
-                mb-32
-              "
-            >
-              <span class="material-icons fs-6 me-2">download_done</span>
-              儲存編輯
             </button>
           </div>
           <!-- 地點 -->
@@ -142,9 +128,11 @@
               fw-light
             "
           >
-            於 {{profileObj.transCreatDate}} 加入
+            於 {{ profileObj.transCreatDate }} 加入
           </p>
-          <p class="text-secondary fw-light">瀏覽次數：{{profileObj.Views}}</p>
+          <p class="text-secondary fw-light">
+            瀏覽次數：{{ profileObj.Views }}
+          </p>
         </div>
       </div>
       <div class="col-md-9 px-13">
@@ -175,6 +163,7 @@ import componentFooter from '@/components/Layout/Footer.vue'
 export default {
   data () {
     return {
+      userAttendObj: {},
       profileObj: {}
     }
   },
@@ -186,28 +175,32 @@ export default {
     console.log(this.$route)
     const UserId = this.$route.params.UserId
     // 7-1 確認是否為本人瀏覽 (JWT)
-    const Token = localStorage.getItem('JwtToken')
-    if (!Token || Token === 'undefinded') {
-      this.isSelf = false
-    } else {
-      // 7-1
-      this.$apiHelper
-        .get(`api/users/activity/attend/profile/status/${UserId}`)
-        .then((res) => {
-          if (res.data.Status) {
-            console.log(res.data.Message)
-            const getJwtToken = res.data.JwtToken
+    this.$apiHelper
+      .get(`api/users/activity/attend/profile/status/${UserId}`)
+      .then((res) => {
+        const getJwtToken = res.data.JwtToken
+        this.userAttendObj = res.data
+        if (res.data.Status) {
+          console.log(res.data.Message)
+          localStorage.setItem('JwtToken', getJwtToken)
+        } else {
+          console.log(res.data.Message)
+          const apiMessage = res.data.Message
+          // 已登入狀態下判斷有無追蹤
+          if (apiMessage === '非本人資料') {
             localStorage.setItem('JwtToken', getJwtToken)
-            this.isSelf = true
-            console.log('是本人資料', this.isSelf)
+            if (res.data.Following === true) {
+              this.userAttendObj.Fallowed = '已追蹤'
+            } else {
+              this.userAttendObj.Fallowed = '追蹤我'
+            }
           } else {
-            console.log(res.data.Message)
-            const getJwtToken = res.data.JwtToken
-            localStorage.setItem('JwtToken', getJwtToken)
-            this.isSelf = false
+            // 沒有登入狀態下的「追蹤我」
+            this.userAttendObj.Fallowed = '追蹤我'
           }
-        })
-    }
+        }
+        console.log(this.userAttendObj)
+      })
 
     // 7-2 取得個人檔案
     this.$apiHelper.get(`api/users/profile/${UserId}`).then((res) => {
