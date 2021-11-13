@@ -161,10 +161,10 @@
         <!-- 卡片區塊 -->
         <ul class="row row-cols-1 row-cols-md-3 g-4 list-unstyled">
           <li class="col" v-for="item in newEntityComingData" :key="item.Id">
-            <div class="card h-100 rounded-5">
+            <div class="card h-100 rounded-4">
               <img
                 :src="item.imgUrl"
-                class="card-img-top card-img"
+                class="card-img-top card-img rounded-top-4"
                 :alt="item.Image"
               />
               <div class="card-img-overlay d-flex justify-content-end">
@@ -244,10 +244,10 @@
         <!-- 卡片區塊 -->
         <ul class="row row-cols-1 row-cols-md-3 g-4 list-unstyled">
           <li class="col" v-for="item in newEntityHotData" :key="item.Id">
-            <div class="card h-100 rounded-5">
+            <div class="card h-100 rounded-4">
               <img
                 :src="item.imgUrl"
-                class="card-img-top card-img"
+                class="card-img-top card-img rounded-top-4"
                 :alt="item.Image"
               />
               <div class="card-img-overlay d-flex justify-content-end">
@@ -327,10 +327,10 @@
         <!-- 卡片區塊 -->
           <ul class="row row-cols-1 row-cols-md-3 g-4 list-unstyled">
             <li class="col" v-for="item in newEntityNewData" :key="item.Id">
-              <div class="card h-100 rounded-5">
+              <div class="card h-100 rounded-4">
                 <img
                   :src="item.imgUrl"
-                  class="card-img-top card-img"
+                  class="card-img-top card-img rounded-top-4"
                   :alt="item.Image"
                 />
                 <div class="card-img-overlay d-flex justify-content-end">

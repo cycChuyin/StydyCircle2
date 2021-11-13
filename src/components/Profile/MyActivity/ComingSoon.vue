@@ -7,7 +7,7 @@
           <div class="card text-secondary fw-light border-secondary rounded-7">
             <img
               :src="item.imgUrl"
-              alt="..."
+              :alt="item.Image"
               class="card-img-top rounded-7 rounded-bottom-0"
               style="height: 220px"
               v-if="item.isCollapse"
@@ -16,7 +16,7 @@
               <div class="col-md-4">
                 <img
                   :src="item.imgUrl"
-                  alt="..."
+                  :alt="item.Image"
                   class="card-img-top rounded-7 rounded-end-0"
                 />
               </div>
@@ -127,6 +127,7 @@
                         ms-3
                       "
                       type="button"
+                      @click="deletedRegister(item.ActivityId)"
                     >
                       取消報名
                     </button>
@@ -156,22 +157,24 @@
 
 <script>
 export default {
+  props: ['UserId'],
   data () {
     return {
-      // isCollapse: false,
-      getCommingData: []
+      getCommingData: [],
+      routeUserId: ''
     }
   },
-  props: ['UserId'],
-  // inject: ['self'],
+  watch: {
+    '$route.params.UserId': 'changePath'
+  },
   created () {
     console.log(this.UserId)
     console.log(this.$route)
     // const getUserId = localStorage.getItem('UserId')
-    const UserId = this.$route.params.UserId
+    this.routeUserId = this.$route.params.UserId
     // 7-7 即將到臨活動資料+分頁
     this.$apiHelper
-      .get(`api/users/activity/attend/coming/${UserId}/5/1`)
+      .get(`api/users/activity/attend/coming/${this.routeUserId}/5/1`)
       .then((res) => {
         console.log(res.data)
         if (res.data.Status === true) {
@@ -191,6 +194,47 @@ export default {
       })
   },
   methods: {
+    // 當路由變化時，更新資料
+    changePath () {
+      console.log(this.$route)
+      this.routeUserId = this.$route.params.UserId
+
+      // 7-7 即將到臨活動資料+分頁
+      this.$apiHelper
+        .get(`api/users/activity/attend/coming/${this.routeUserId}/5/1`)
+        .then((res) => {
+          console.log(res.data)
+          if (res.data.Status === true) {
+            const oriCommingData = res.data.Data.MyActivity
+
+            oriCommingData.forEach((item) => {
+              this.transDate(item)
+              // 2. 加上圖片路徑
+              const imgUrl = `${process.env.VUE_APP_CARDIMG}/${item.Image}?2021`
+              item.imgUrl = imgUrl
+              // 加上 class 狀態切換
+              item.isCollapse = false
+            })
+            this.getCommingData = oriCommingData
+            console.log(this.getCommingData)
+          }
+        })
+    },
+    deletedRegister (ActivityId) {
+      const deleteActivity = {}
+      deleteActivity.ActivityId = ActivityId
+      // 7-12 取消報名功能 (JWT)
+      this.$apiHelper
+        .put('api/users/activity/attend/cancel/state', deleteActivity)
+        .then((res) => {
+          console.log(res.data)
+          if (res.data.Status === true) {
+            const token = res.data.JwtToken
+            localStorage.setItem('JwtToken', token)
+            console.log(res.data.Message)
+          }
+        })
+    },
     changeTopImg (id) {
       this.getCommingData.forEach((item) => {
         if (item.ActivityId === id) {

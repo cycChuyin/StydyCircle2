@@ -93,58 +93,67 @@ const routes = [
   {
     path: '/profile',
     name: 'Profile',
-    // redirect: '/profile/my-activity/coming-soon/:UserId',
+    redirect: '/profile/my-activity/:UserId',
+    props: (route) => {
+      console.log(route)
+      return {
+        UserId: route.params.UserId
+      }
+    },
     component: () => import('../views/Profile/ProfileOverview.vue'),
     children: [
       {
-        path: 'my-activity',
+        path: 'my-activity/:UserId',
         name: 'MyActivityOverview',
-        // redirect: '/profile/my-activity/coming-soon/:UserId',
-        component: () =>
-          import('../views/Profile/MyActivity/MyActivityOverview.vue'),
-        children: [
-          {
-            path: 'coming-soon/:UserId',
-            name: 'ComingSoon',
-            component: () =>
-              import('../views/Profile/MyActivity/ComingSoon.vue'),
-            props: (route) => {
-              console.log(route)
-              return {
-                UserId: route.params.UserId
-              }
-            }
-          },
-          {
-            path: 'un-opinion',
-            name: 'UnOpinion',
-            component: () => import('../views/Profile/MyActivity/UnOpinion.vue')
-          },
-          {
-            path: 'had-collected',
-            name: 'HadCollected',
-            component: () =>
-              import('../views/Profile/MyActivity/HadCollected.vue')
-          },
-          {
-            path: 'had-finished',
-            name: 'HadFinished',
-            component: () =>
-              import('../views/Profile/MyActivity/HadFinished.vue')
-          },
-          {
-            path: 'had-deleted',
-            name: 'HadDeleted',
-            component: () =>
-              import('../views/Profile/MyActivity/HadDeleted.vue')
+        props: (route) => {
+          console.log(route)
+          return {
+            UserId: route.params.UserId
           }
-        ]
+        },
+        component: () => import('../views/Profile/MyActivityOverview.vue')
+        // children: [
+        //   {
+        //     path: 'coming-soon/:UserId',
+        //     name: 'ComingSoon',
+        //     component: () =>
+        //       import('../views/Profile/MyActivity/ComingSoon.vue'),
+        //     props: (route) => {
+        //       console.log(route)
+        //       return {
+        //         UserId: route.params.UserId
+        //       }
+        //     }
+        //   },
+        //   {
+        //     path: 'un-opinion',
+        //     name: 'UnOpinion',
+        //     component: () => import('../views/Profile/MyActivity/UnOpinion.vue')
+        //   },
+        //   {
+        //     path: 'had-collected',
+        //     name: 'HadCollected',
+        //     component: () =>
+        //       import('../views/Profile/MyActivity/HadCollected.vue')
+        //   },
+        //   {
+        //     path: 'had-finished',
+        //     name: 'HadFinished',
+        //     component: () =>
+        //       import('../views/Profile/MyActivity/HadFinished.vue')
+        //   },
+        //   {
+        //     path: 'had-deleted',
+        //     name: 'HadDeleted',
+        //     component: () =>
+        //       import('../views/Profile/MyActivity/HadDeleted.vue')
+        //   }
+        // ]
       },
       {
         path: 'study-partner',
         name: 'StudyPartnerOverview',
-        component: () =>
-          import('../views/Profile/StudyPartner/StudyPartnerOverview.vue')
+        component: () => import('../views/Profile/StudyPartnerOverview.vue')
       }
     ]
   },

@@ -39,6 +39,7 @@
                 mb-32
               "
               :class="{ 'd-none': userAttendObj.Status }"
+              @click="changeFollowStatus(profileObj.Id)"
             >
               <span class="material-icons fs-6 me-2">done_outline</span>
               {{ userAttendObj.Fallowed }}
@@ -137,7 +138,7 @@
       </div>
       <div class="col-md-9 px-13">
         <router-link
-          to="/profile/my-activity"
+          :to="`/profile/my-activity/${this.routeUserId}`"
           class="mb-32 fw-bold fs-4 text-secondary me-4"
           type="button"
           >我的活動</router-link
@@ -161,22 +162,45 @@ import componentFooter from '@/components/Layout/Footer.vue'
 // import { createApp } from '@vue/runtime-dom'
 
 export default {
+  props: ['UserId'],
   data () {
     return {
       userAttendObj: {},
-      profileObj: {}
+      profileObj: {},
+      routeUserId: '',
+      putFollowStaus: {
+        FollowingUserId: ''
+      }
     }
   },
   components: {
     componentNavbar,
     componentFooter
   },
+  watch: {
+    '$route.params.UserId': 'changePath'
+  },
   created () {
     console.log(this.$route)
-    const UserId = this.$route.params.UserId
+    // this.UserId = this.$route.params.UserId
+    console.log(this.UserId)
+    // 7-2 取得個人檔案
+    this.$apiHelper.get(`api/users/profile/${this.UserId}`).then((res) => {
+      if (res.data.Status) {
+        console.log(res.data)
+        const oriProfileObj = res.data.Data
+        // 頭貼路徑
+        const UserImgUrl = `${process.env.VUE_APP_USERIMG}/${res.data.Data.Image}?2021`
+        oriProfileObj.UserImgUrl = UserImgUrl
+        // 創建日期
+        this.transDate(oriProfileObj)
+        this.profileObj = oriProfileObj
+        console.log(this.profileObj)
+      }
+    })
     // 7-1 確認是否為本人瀏覽 (JWT)
     this.$apiHelper
-      .get(`api/users/activity/attend/profile/status/${UserId}`)
+      .get(`api/users/activity/attend/profile/status/${this.UserId}`)
       .then((res) => {
         const getJwtToken = res.data.JwtToken
         this.userAttendObj = res.data
@@ -201,23 +225,64 @@ export default {
         }
         console.log(this.userAttendObj)
       })
-
-    // 7-2 取得個人檔案
-    this.$apiHelper.get(`api/users/profile/${UserId}`).then((res) => {
+    // 7-3 增加個人頁瀏覽人數
+    // PUT 請求
+    this.$apiHelper.put(`api/users/profile/views/${this.UserId}`).then((res) => {
       if (res.data.Status) {
-        console.log(res.data)
-        const oriProfileObj = res.data.Data
-        // 頭貼路徑
-        const UserImgUrl = `${process.env.VUE_APP_USERIMG}/${res.data.Data.Image}?2021`
-        oriProfileObj.UserImgUrl = UserImgUrl
-        // 創建日期
-        this.transDate(oriProfileObj)
-        this.profileObj = oriProfileObj
-        console.log(this.profileObj)
+        console.log(res.data.Message)
       }
     })
   },
   methods: {
+    // 當路由變化時，更新資料
+    changePath () {
+      console.log(this.$route)
+      this.routeUserId = this.$route.params.UserId
+      // 7-1 確認是否為本人瀏覽 (JWT)
+      this.$apiHelper
+        .get(`api/users/activity/attend/profile/status/${this.routeUserId}`)
+        .then((res) => {
+          const getJwtToken = res.data.JwtToken
+          this.userAttendObj = res.data
+          if (res.data.Status) {
+            console.log(res.data.Message)
+            localStorage.setItem('JwtToken', getJwtToken)
+          } else {
+            console.log(res.data.Message)
+            const apiMessage = res.data.Message
+            // 已登入狀態下判斷有無追蹤
+            if (apiMessage === '非本人資料') {
+              localStorage.setItem('JwtToken', getJwtToken)
+              if (res.data.Following === true) {
+                this.userAttendObj.Fallowed = '已追蹤'
+              } else {
+                this.userAttendObj.Fallowed = '追蹤我'
+              }
+            } else {
+              // 沒有登入狀態下的「追蹤我」
+              this.userAttendObj.Fallowed = '追蹤我'
+            }
+          }
+          console.log(this.userAttendObj)
+        })
+
+      // 7-2 取得個人檔案
+      this.$apiHelper
+        .get(`api/users/profile/${this.routeUserId}`)
+        .then((res) => {
+          if (res.data.Status) {
+            console.log(res.data)
+            const oriProfileObj = res.data.Data
+            // 頭貼路徑
+            const UserImgUrl = `${process.env.VUE_APP_USERIMG}/${res.data.Data.Image}?2021`
+            oriProfileObj.UserImgUrl = UserImgUrl
+            // 創建日期
+            this.transDate(oriProfileObj)
+            this.profileObj = oriProfileObj
+            console.log(this.profileObj)
+          }
+        })
+    },
     transDate (item) {
       // 1. 針對日期格式進行轉換
       // 取得開始、結束日期
@@ -245,6 +310,33 @@ export default {
         (Time.getMinutes() < 10 ? '0' : '') + Time.getMinutes()
       }`
       return { splitFinalDate, splitFinalTime }
+    },
+    // 7-4 追蹤、取消追蹤
+    changeFollowStatus (followerId) {
+      console.log('followerId', followerId)
+      this.putFollowStaus.FollowingUserId = followerId
+      // 7-4 追蹤/取消追蹤功能 (JWT)
+      this.$apiHelper
+        .put('api/users/follow/someone', this.putFollowStaus)
+        .then((res) => {
+          const getJwtToken = res.data.JwtToken
+          if (res.data.Status) {
+            console.log(res.data.Message)
+            // 追蹤、取消追蹤成功的話，就更新得到的 Token
+            localStorage.setItem('JwtToken', getJwtToken)
+            // 按鈕畫面變化
+            if (this.userAttendObj.Fallowed === '已追蹤') {
+              this.userAttendObj.Fallowed = '追蹤我'
+            } else if (this.userAttendObj.Fallowed === '追蹤我') {
+              this.userAttendObj.Fallowed = '已追蹤'
+            }
+          } else {
+            console.log(res.data.Message)
+            // 如果沒有登入的話，就跳轉到登入頁請他登入
+            this.$route.push('login')
+          }
+          console.log(this.userAttendObj)
+        })
     }
   }
 }

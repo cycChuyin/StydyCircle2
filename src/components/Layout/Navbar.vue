@@ -110,7 +110,7 @@
               >
                 <li class="text-center text-secondary">
                   <router-link
-                    :to="`/profile/my-activity/coming-soon/${UserInfoData.Id}`"
+                    :to="`/profile/my-activity/${UserInfoData.Id}`"
                     class="
                       dropdown-item
                       py-3
