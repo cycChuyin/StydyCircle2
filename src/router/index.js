@@ -105,55 +105,24 @@ const routes = [
       {
         path: 'my-activity/:UserId',
         name: 'MyActivityOverview',
+        component: () => import('../views/Profile/MyActivityOverview.vue'),
         props: (route) => {
           console.log(route)
           return {
             UserId: route.params.UserId
           }
-        },
-        component: () => import('../views/Profile/MyActivityOverview.vue')
-        // children: [
-        //   {
-        //     path: 'coming-soon/:UserId',
-        //     name: 'ComingSoon',
-        //     component: () =>
-        //       import('../views/Profile/MyActivity/ComingSoon.vue'),
-        //     props: (route) => {
-        //       console.log(route)
-        //       return {
-        //         UserId: route.params.UserId
-        //       }
-        //     }
-        //   },
-        //   {
-        //     path: 'un-opinion',
-        //     name: 'UnOpinion',
-        //     component: () => import('../views/Profile/MyActivity/UnOpinion.vue')
-        //   },
-        //   {
-        //     path: 'had-collected',
-        //     name: 'HadCollected',
-        //     component: () =>
-        //       import('../views/Profile/MyActivity/HadCollected.vue')
-        //   },
-        //   {
-        //     path: 'had-finished',
-        //     name: 'HadFinished',
-        //     component: () =>
-        //       import('../views/Profile/MyActivity/HadFinished.vue')
-        //   },
-        //   {
-        //     path: 'had-deleted',
-        //     name: 'HadDeleted',
-        //     component: () =>
-        //       import('../views/Profile/MyActivity/HadDeleted.vue')
-        //   }
-        // ]
+        }
       },
       {
-        path: 'study-partner',
+        path: 'study-partner/:UserId',
         name: 'StudyPartnerOverview',
-        component: () => import('../views/Profile/StudyPartnerOverview.vue')
+        component: () => import('../views/Profile/StudyPartnerOverview.vue'),
+        props: (route) => {
+          console.log(route)
+          return {
+            UserId: route.params.UserId
+          }
+        }
       }
     ]
   },

@@ -25,8 +25,8 @@
       <button
         type="button"
         class="nav-link rounded-pill py-13"
-        :class="{ active: open === 'unopion' }"
-        @click="open = 'unopion'"
+        :class="{ active: open === 'unopinion' }"
+        @click="open = 'unopinion'"
       >
         尚未評價的活動
       </button>
@@ -63,10 +63,11 @@
     </li>
   </ul>
   <coming-soon v-if="open === 'comingsoon'"></coming-soon>
-  <un-opinion v-else-if="open === 'unopion'"></un-opinion>
+  <un-opinion v-else-if="open === 'unopinion'"></un-opinion>
   <had-collected v-else-if="open === 'collected'"></had-collected>
   <had-finished v-else-if="open === 'finished'"></had-finished>
   <had-deleted v-else-if="open === 'deleted'"></had-deleted>
+
 </template>
 
 <script>
@@ -81,7 +82,8 @@ export default {
   data () {
     return {
       userAttendObj: {},
-      open: 'comingsoon'
+      open: 'comingsoon',
+      routeUserId: ''
     }
   },
   components: {
@@ -90,6 +92,9 @@ export default {
     hadFinished,
     hadCollected,
     hadDeleted
+  },
+  watch: {
+    '$route.params.UserId': 'changePath'
   },
   created () {
     console.log(this.$route)
@@ -100,23 +105,22 @@ export default {
       .get(`api/users/activity/attend/profile/status/${UserId}`)
       .then((res) => {
         this.userAttendObj = res.data
-        // if (res.data.Status) {
-        //   console.log(res.data.Message)
-        //   localStorage.setItem('JwtToken', getJwtToken)
-        // } else {
-        //   console.log(res.data.Message)
-        //   const apiMessage = res.data.Message
-        //   if (apiMessage === '非本人資料') {
-        //     localStorage.setItem('JwtToken', getJwtToken)
-        //     if (res.data.Following === true) {
-        //       this.userAttendObj.Fallowed = '已追蹤'
-        //     } else {
-        //       this.userAttendObj.Fallowed = '追蹤我'
-        //     }
-        //   }
-        // }
         console.log(this.userAttendObj)
       })
+  },
+  methods: {
+    // 當路由變化時，更新資料
+    changePath () {
+      console.log(this.$route)
+      this.routeUserId = this.$route.params.UserId
+      // 7-1 確認是否為本人瀏覽 (JWT)
+      this.$apiHelper
+        .get(`api/users/activity/attend/profile/status/${this.routeUserId}`)
+        .then((res) => {
+          this.userAttendObj = res.data
+          console.log(this.userAttendObj)
+        })
+    }
   }
 }
 </script>

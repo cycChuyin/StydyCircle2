@@ -144,7 +144,7 @@
           >我的活動</router-link
         >
         <router-link
-          to="/profile/study-partner"
+          :to="`/profile/study-partner/${this.routeUserId}`"
           class="mb-32 fw-bold fs-4 text-secondary me-4"
           type="button"
           >讀冊夥伴</router-link
@@ -182,7 +182,7 @@ export default {
   },
   created () {
     console.log(this.$route)
-    // this.UserId = this.$route.params.UserId
+    this.routeUserId = this.$route.params.UserId
     console.log(this.UserId)
     // 7-2 取得個人檔案
     this.$apiHelper.get(`api/users/profile/${this.UserId}`).then((res) => {
@@ -227,11 +227,13 @@ export default {
       })
     // 7-3 增加個人頁瀏覽人數
     // PUT 請求
-    this.$apiHelper.put(`api/users/profile/views/${this.UserId}`).then((res) => {
-      if (res.data.Status) {
-        console.log(res.data.Message)
-      }
-    })
+    this.$apiHelper
+      .put(`api/users/profile/views/${this.UserId}`)
+      .then((res) => {
+        if (res.data.Status) {
+          console.log(res.data.Message)
+        }
+      })
   },
   methods: {
     // 當路由變化時，更新資料

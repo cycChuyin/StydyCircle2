@@ -2,7 +2,7 @@
   <!-- 摺疊卡片 -->
   <div class="px-13 py-32">
     <ul class="row row-cols-1 list-unstyled">
-      <template v-for="(item, index) in getCommingData" :key="item.ActivityId">
+      <template v-for="(item, index) in newCommingData" :key="item.ActivityId">
         <li class="col mb-4">
           <div class="card text-secondary fw-light border-secondary rounded-7">
             <img
@@ -153,52 +153,35 @@
       </template>
     </ul>
   </div>
+  <!-- <opinion-modal ref="opinionModal"></opinion-modal> -->
 </template>
 
 <script>
+// import opinionModal from '../../Modal/OpinionModal.vue'
 export default {
   props: ['UserId'],
   data () {
     return {
-      getCommingData: [],
+      newCommingData: [],
       routeUserId: ''
     }
   },
+  // components: {
+  //   opinionModal
+  // },
   watch: {
     '$route.params.UserId': 'changePath'
   },
   created () {
-    console.log(this.UserId)
-    console.log(this.$route)
-    // const getUserId = localStorage.getItem('UserId')
-    this.routeUserId = this.$route.params.UserId
-    // 7-7 即將到臨活動資料+分頁
-    this.$apiHelper
-      .get(`api/users/activity/attend/coming/${this.routeUserId}/5/1`)
-      .then((res) => {
-        console.log(res.data)
-        if (res.data.Status === true) {
-          const oriCommingData = res.data.Data.MyActivity
-
-          oriCommingData.forEach((item) => {
-            this.transDate(item)
-            // 2. 加上圖片路徑
-            const imgUrl = `${process.env.VUE_APP_CARDIMG}/${item.Image}?2021`
-            item.imgUrl = imgUrl
-            // 加上 class 狀態切換
-            item.isCollapse = false
-          })
-          this.getCommingData = oriCommingData
-          console.log(this.getCommingData)
-        }
-      })
+    this.getCommingData()
   },
   methods: {
+    // 剛渲染時得取資料
     // 當路由變化時，更新資料
-    changePath () {
+    getCommingData () {
       console.log(this.$route)
+      // const getUserId = localStorage.getItem('UserId')
       this.routeUserId = this.$route.params.UserId
-
       // 7-7 即將到臨活動資料+分頁
       this.$apiHelper
         .get(`api/users/activity/attend/coming/${this.routeUserId}/5/1`)
@@ -215,8 +198,8 @@ export default {
               // 加上 class 狀態切換
               item.isCollapse = false
             })
-            this.getCommingData = oriCommingData
-            console.log(this.getCommingData)
+            this.newCommingData = oriCommingData
+            console.log(this.newCommingData)
           }
         })
     },
@@ -274,6 +257,10 @@ export default {
       item.transEndTime = transEndDateObj.splitFinalTime
       // 回傳每筆資料
       return item
+    },
+    openModal () {
+      console.log('打開 modal', this.$refs.opinionModal)
+      this.$refs.opinionModal.showModal()
     }
   }
 }

@@ -93,7 +93,8 @@ export default {
           const oriHadCollectedData = res.data.Data.MyActivity
           console.log(oriHadCollectedData)
           oriHadCollectedData.forEach((item) => {
-            // this.transDate(item)
+            // 拆解日期
+            this.transDate(item)
             // 2. 加上圖片路徑
             const imgUrl = `${process.env.VUE_APP_CARDIMG}/${item.Image}?2021`
             item.imgUrl = imgUrl
@@ -103,7 +104,7 @@ export default {
         }
       })
   },
-  method: {
+  methods: {
     splitDate (date) {
       const Time = new Date(date)
       Time.getFullYear()

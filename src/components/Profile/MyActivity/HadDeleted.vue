@@ -89,7 +89,8 @@ export default {
           const oriHadDeletedData = res.data.Data.MyActivity
           console.log(oriHadDeletedData)
           oriHadDeletedData.forEach((item) => {
-            // this.transDate(item)
+            // 拆解日期
+            this.transDate(item)
             // 2. 加上圖片路徑
             const imgUrl = `${process.env.VUE_APP_CARDIMG}/${item.Image}?2021`
             item.imgUrl = imgUrl
@@ -99,7 +100,7 @@ export default {
         }
       })
   },
-  method: {
+  methods: {
     splitDate (date) {
       const Time = new Date(date)
       Time.getFullYear()
@@ -131,6 +132,9 @@ export default {
       item.transEndTime = transEndDateObj.splitFinalTime
       // 回傳每筆資料
       return item
+    },
+    hiModal () {
+      console.log('打開 himodal')
     }
   }
 }

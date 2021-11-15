@@ -35,49 +35,131 @@
                 class="dropdown-menu text-dark fw-light p-0 border-0 rounded-3"
                 aria-labelledby="defaultDropdown"
               >
-                <li>
-                  <a class="dropdown-item py-2 text-center rounded-3" href="#"
-                    >所有分類</a
-                  >
+                <li
+                  class="dropdown-item py-2 text-center rounded-3"
+                  @click="selectClassify(-1)"
+                >
+                  所有分類
                 </li>
-                <li>
-                  <a class="dropdown-item py-2 text-center rounded-3" href="#"
-                    >商業理財</a
-                  >
+                <li
+                  class="dropdown-item py-2 text-center rounded-3"
+                  @click="selectClassify(0)"
+                >
+                  商業理財
                 </li>
-                <li>
-                  <a class="dropdown-item py-2 text-center rounded-3" href="#"
-                    >文學小說</a
-                  >
+
+                <li
+                  class="dropdown-item py-2 text-center rounded-3"
+                  @click="selectClassify(1)"
+                >
+                  文學小說
                 </li>
-                <li>
-                  <a class="dropdown-item py-2 text-center rounded-3" href="#"
-                    >人文史地</a
-                  >
+
+                <li
+                  class="dropdown-item py-2 text-center rounded-3"
+                  @click="selectClassify(2)"
+                >
+                  人文史地
                 </li>
-                <li>
-                  <a class="dropdown-item py-2 text-center rounded-3" href="#"
-                    >醫療保健</a
-                  >
+
+                <li
+                  class="dropdown-item py-2 text-center rounded-3"
+                  @click="selectClassify(3)"
+                >
+                  醫療保健
                 </li>
-                <li>
-                  <a class="dropdown-item py-2 text-center rounded-3" href="#"
-                    >生活風格</a
-                  >
+
+                <li
+                  class="dropdown-item py-2 text-center rounded-3"
+                  @click="selectClassify(4)"
+                >
+                  生活風格
                 </li>
-                <li>
-                  <a class="dropdown-item py-2 text-center rounded-3" href="#"
-                    >自然科學</a
-                  >
+
+                <li
+                  class="dropdown-item py-2 text-center rounded-3"
+                  @click="selectClassify(5)"
+                >
+                  自然科學
                 </li>
-                <li>
-                  <a class="dropdown-item py-2 text-center rounded-3" href="#"
-                    >電腦資訊</a
-                  >
+
+                <li
+                  class="dropdown-item py-2 text-center rounded-3"
+                  @click="selectClassify(6)"
+                >
+                  電腦資訊
                 </li>
               </ul>
+              <!-- <select
+                name="類別"
+                id="category"
+                class="
+                  btn btn-outline-secondary
+                  dropdown-toggle
+                  border-0
+                  text-dark
+                  fw-light
+                  border-end border-dark
+                  bg-transparent
+                  py-0
+                "
+              >
+                類別
+                <ul
+                  class="
+                    dropdown-menu
+                    text-dark
+                    fw-light
+                    p-0
+                    border-0
+                    rounded-3
+                  "
+                  aria-labelledby="defaultDropdown"
+                >
+                  <li>
+                    <option class="dropdown-item py-2 text-center rounded-3">
+                      所有分類
+                    </option>
+                  </li>
+                  <li>
+                    <option class="dropdown-item py-2 text-center rounded-3">
+                      商業理財
+                    </option>
+                  </li>
+                  <li>
+                    <option class="dropdown-item py-2 text-center rounded-3">
+                      文學小說
+                    </option>
+                  </li>
+                  <li>
+                    <option class="dropdown-item py-2 text-center rounded-3">
+                      人文史地
+                    </option>
+                  </li>
+                  <li>
+                    <option class="dropdown-item py-2 text-center rounded-3">
+                      醫療保健
+                    </option>
+                  </li>
+                  <li>
+                    <option class="dropdown-item py-2 text-center rounded-3">
+                      生活風格
+                    </option>
+                  </li>
+                  <li>
+                    <option class="dropdown-item py-2 text-center rounded-3">
+                      自然科學
+                    </option>
+                  </li>
+                  <li>
+                    <option class="dropdown-item py-2 text-center rounded-3">
+                      電腦資訊
+                    </option>
+                  </li>
+                </ul>
+              </select> -->
               <input
-                type="text"
+                type="search"
                 class="
                   form-control form-control-darkGray
                   border-0
@@ -87,7 +169,9 @@
                 "
                 aria-label="Text input with dropdown button"
                 placeholder="請輸入關鍵字搜尋（書籍名稱、活動名稱等）"
+                v-model="seachParams.query"
               />
+              {{ seachParams.query }}
             </div>
           </div>
         </div>
@@ -382,7 +466,16 @@ export default {
     return {
       newOnlineComingData: [],
       newOnlineHotData: [],
-      newOnlineNewData: []
+      newOnlineNewData: [],
+      seachParams: {
+        split: '',
+        page: '',
+        type: '-1',
+        classify: -1,
+        sorting: '',
+        query: ''
+      },
+      classify: -1
     }
   },
   created () {
@@ -442,6 +535,12 @@ export default {
     })
   },
   methods: {
+    // 選擇類別
+    selectClassify (classifyNum) {
+      console.log(classifyNum)
+      this.classify = classifyNum
+      console.log(this.classify)
+    },
     splitDate (date) {
       const Time = new Date(date)
       Time.getFullYear()

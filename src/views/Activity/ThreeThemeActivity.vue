@@ -103,13 +103,13 @@
   font-weight: bold;
 }
 .bannerOnlineUrl {
-  background-image: url(https://studycircle.rocket-coding.com/upload/banner/online.jpg);
+  background-image: url(https://thak-tsheh.rocket-coding.com/upload/banner/online.jpg);
 }
 .bannerEntityUrl {
-  background-image: url(https://studycircle.rocket-coding.com/upload/banner/study.jpg);
+  background-image: url(https://thak-tsheh.rocket-coding.com/upload/banner/study.jpg);
 }
 .bannerWorkshopUrl {
-  background-image: url(https://studycircle.rocket-coding.com/upload/banner/activity.jpg);
+  background-image: url(https://thak-tsheh.rocket-coding.com/upload/banner/activity.jpg);
 }
 </style>
 

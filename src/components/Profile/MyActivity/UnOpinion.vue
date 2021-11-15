@@ -66,7 +66,6 @@
           </div>
           <div
             class="
-              card-footer
               mx-3
               px-0
               py-3
@@ -88,6 +87,7 @@
                 fs-7
               "
               type="button"
+              @click="openModal"
             >
               <span class="material-icons me-2 fs-7">rate_review</span>
               我要評價
@@ -97,11 +97,11 @@
       </li>
     </ul>
   </div>
-  <opinion-modal ref="opinionModal"></opinion-modal>
+  <!-- <opinion-modal ref="opinionModal"></opinion-modal> -->
 </template>
 
 <script>
-// import opinionModal from '../../../components/Activity/OpinionModal.vue'
+// import opinionModal from '../../Modal/OpinionModal.vue'
 export default {
   data () {
     return {
@@ -111,14 +111,16 @@ export default {
         Opinion: '蒸蚌!抄蚌的!'
       },
       getUnOpionData: [],
-      routeUserId: ''
+      routeUserId: '',
+      modal: {}
     }
   },
-  components: {
-    // opinionModal
-  },
+  // components: {
+  //   opinionModal
+  // },
   created () {
     this.routeUserId = this.$route.params.UserId
+    console.log(this.routeUserId)
     // 7-8 尚未評價活動資料+分頁
     this.$apiHelper
       .get(`api/users/activity/attend/opinions/${this.routeUserId}/9/1`)
@@ -128,8 +130,8 @@ export default {
           const oriUnOpionData = res.data.Data.MyActivity
           console.log(oriUnOpionData)
           oriUnOpionData.forEach((item) => {
-            // 為什麼不能呼叫 transDate 方法呢？
-            // this.transDate(item)
+            // 拆解日期
+            this.transDate(item)
             // 2. 加上圖片路徑
             const imgUrl = `${process.env.VUE_APP_CARDIMG}/${item.Image}?2021`
             item.imgUrl = imgUrl
@@ -139,26 +141,33 @@ export default {
         }
       })
   },
-  method: {
-    sendOpinion () {
-      console.log('我要準備送出評價了')
-      // 7-13 填寫活動評價 (JWT)
-      // POST 請求
-      const Token = localStorage.getItem('JwtToken')
-      console.log(Token)
-      if (Token) {
-        this.$apiHelper
-          .post('api/users/activity/attend/opinion', this.opinionObj)
-          .then((res) => {
-            if (res.data.Status) {
-              const getJwtToken = res.data.JwtToken
-              localStorage.setItem('JwtToken', getJwtToken)
-              // 這個跳轉頁面還不確定，因為目前是彈跳視窗
-              this.$route.push('/profile/my-activity/un-opinion')
-              console.log('已送出評價')
-            }
-          })
-      }
+  methods: {
+    // // 填寫活動評價
+    // sendOpinion () {
+    //   console.log('我要準備送出評價了')
+    //   // 7-13 填寫活動評價 (JWT)
+    //   // POST 請求
+    //   const Token = localStorage.getItem('JwtToken')
+    //   console.log(Token)
+    //   if (Token) {
+    //     this.$apiHelper
+    //       .post('api/users/activity/attend/opinion', this.opinionObj)
+    //       .then((res) => {
+    //         if (res.data.Status) {
+    //           const getJwtToken = res.data.JwtToken
+    //           localStorage.setItem('JwtToken', getJwtToken)
+    //           // 這個跳轉頁面還不確定，因為目前是彈跳視窗
+    //           this.$route.push('/profile/my-activity/un-opinion')
+    //           console.log('已送出評價')
+    //         }
+    //       })
+    //   }
+    // },
+    // 打開 modal
+    openModal () {
+      console.log('打開 modal', this.$refs)
+      // const opinionModal = this.$refs.opinionModal
+      // opinionModal.showModal()
     },
     splitDate (date) {
       const Time = new Date(date)

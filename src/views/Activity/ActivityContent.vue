@@ -643,18 +643,70 @@
                 <button
                   type="button"
                   class="btn btn-outline-secondary rounded-pill w-100"
-                  data-bs-dismiss="offcanvas"
                 >
                   取消
                 </button>
                 <button
                   type="submit"
                   class="btn btn-dark rounded-pill w-100"
-                  data-bs-dismiss="offcanvas"
                   @click="sendApply"
                 >
                   確認報名
                 </button>
+              </div>
+            </form>
+            <!-- 藍新金流區塊 -->
+            <form
+              name="Newebpay"
+              method="post"
+              action="https://ccore.newebpay.com/MPG/mpg_gateway"
+            >
+              <!-- 設定 hidden 可以隱藏不用給使用者看的資訊 -->
+              <!-- 藍新金流商店代號 -->
+              <input
+                type="hidden"
+                id="MerchantID"
+                name="MerchantID"
+                :value="getPaymentData.MerchantID"
+              />
+              <!-- 交易資料透過 Key 及 IV 進行 AES 加密 -->
+              <input
+                type="hidden"
+                id="TradeInfo"
+                name="TradeInfo"
+                :value="getPaymentData.TradeInfo"
+              />
+              <!-- 經過上述 AES 加密過的字串，透過商店 Key 及 IV 進行 SHA256 加密 -->
+              <input
+                type="hidden"
+                id="TradeSha"
+                name="TradeSha"
+                :value="getPaymentData.TradeSha"
+              />
+              <!-- 串接程式版本 -->
+              <input
+                type="hidden"
+                id="Version"
+                name="Version"
+                :value="getPaymentData.Version"
+              />
+
+              <!-- 按鈕 -->
+              <div class="d-flex" :class="{ 'd-none': isSuccessPay }">
+                <button
+                  type="button"
+                  class="btn btn-outline-secondary rounded-pill w-100"
+                  data-bs-dismiss="offcanvas"
+                >
+                  取消
+                </button>
+                <!-- 直接執行送出 -->
+                <input
+                  type="submit"
+                  value="確認付款"
+                  class="btn btn-dark rounded-pill w-100"
+                  data-bs-dismiss="offcanvas"
+                />
               </div>
             </form>
           </div>
@@ -686,7 +738,10 @@ export default {
       },
       // 已經報名的話，則 hadRegister 為 ture ，讓 d-none 效果觸發
       hadRegister: false,
-      unRegister: true
+      unRegister: true,
+      // 藍新金流回傳的東西
+      getPaymentData: {},
+      isSuccessPay: true
     }
   },
   created () {
@@ -809,6 +864,7 @@ export default {
       return { splitFinalDate, splitFinalTime }
     },
     sendApply () {
+      // 先取得 api 要送的資料
       this.giveUserInfo = {
         ActivityId: this.getActivityInfo.Id,
         ActivityPrice: this.getActivityInfo.Price,
@@ -818,18 +874,36 @@ export default {
         UserAccount: this.getUsersAttendData.Account
       }
       console.log(this.giveUserInfo)
-      // 6-2 報名活動 - 免費＋發信
-      // const Token = localStorage.getItem('JwtToken')
-      this.$apiHelper
-        .post('api/users/activity/free/attend', this.giveUserInfo)
-        .then((res) => {
-          console.log(res)
-          if (res.data.Status) {
-            const getJwtToken = res.data.JwtToken
-            localStorage.setItem('JwtToken', getJwtToken)
-            this.$router.push('/register-success')
-          }
-        })
+      // 如果是免費的話，直接送 6-2
+      if (this.getActivityInfo.Price === 0) {
+        // 6-2 報名活動 - 免費＋發信
+        // const Token = localStorage.getItem('JwtToken')
+        this.$apiHelper
+          .post('api/users/activity/free/attend', this.giveUserInfo)
+          .then((res) => {
+            console.log(res)
+            if (res.data.Status) {
+              const getJwtToken = res.data.JwtToken
+              localStorage.setItem('JwtToken', getJwtToken)
+              this.$router.push('/register-success')
+            }
+          })
+      } else if (this.getActivityInfo.Price > 0) {
+        // 如果價錢不是免費的話
+        // 6-3 確認報名-付費活動-付款前 (JWT)
+        this.$apiHelper
+          .post('api/users/activity/charge/attend', this.giveUserInfo)
+          .then((res) => {
+            console.log(res)
+            if (res.data.Status) {
+              const getJwtToken = res.data.JwtToken
+              localStorage.setItem('JwtToken', getJwtToken)
+              // this.$router.push('/register-success')
+              this.getPaymentData = res.data.PaymentData
+              this.isSuccessPay = false
+            }
+          })
+      }
     }
   }
 }

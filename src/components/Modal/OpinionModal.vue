@@ -40,7 +40,7 @@
     tabindex="-1"
     aria-labelledby="staticBackdropLabel"
     aria-hidden="true"
-    ref="opinionModal"
+    ref="modal"
   >
     <div class="modal-dialog modal-dialog-xxl modal-dialog-centered">
       <div class="modal-content rounded-8">
@@ -165,19 +165,19 @@ import Modal from 'bootstrap/js/dist/modal'
 export default {
   data () {
     return {
-      opinionModal: {}
+      modal: {}
     }
   },
   mothods: {
     showModal () {
-      this.opinionModal.show()
+      this.modal.show()
     },
     hideModal () {
-      this.opinionModal.hide()
+      this.modal.hide()
     }
   },
   mounted () {
-    this.opinionModal = new Modal(this.$refs.opinionModal)
+    this.modal = new Modal(this.$refs.modal)
   }
 }
 </script>
