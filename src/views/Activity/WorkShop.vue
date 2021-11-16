@@ -3,149 +3,205 @@
   <div class="bg-white">
     <div class="container">
       <!-- 篩選搜尋區塊 -->
-      <div class="row py-5">
-        <div class="col-md-10">
-          <div
-            class="
-              rounded-pill
-              border border-secondary
-              d-flex
-              align-items-center
-            "
-          >
-            <div class="input-group px-4 py-13">
-              <button
-                class="
-                  btn btn-outline-secondary
-                  dropdown-toggle
-                  border-0
-                  text-dark
-                  fw-light
-                  border-end border-dark
-                  bg-transparent
-                  py-0
-                "
-                type="button"
-                data-bs-toggle="dropdown"
-                aria-expanded="false"
-              >
-                類別
-              </button>
-              <ul
-                class="dropdown-menu text-dark fw-light p-0 border-0 rounded-3"
-                aria-labelledby="defaultDropdown"
-              >
-                <li>
-                  <a class="dropdown-item py-2 text-center rounded-3" href="#"
-                    >所有分類</a
+      <form class="filterSearchBar py-5" @submit.prevent="searchNow">
+        <div class="row">
+          <div class="col-10">
+            <div
+              class="
+                categorySearchBar
+                rounded-pill
+                border border-secondary
+                d-flex
+                align-items-center
+              "
+            >
+              <div class="input-group px-4 py-13">
+                <!-- 類別 -->
+                <button
+                  class="
+                    btn btn-outline-secondary
+                    dropdown-toggle
+                    border-0
+                    text-dark
+                    fw-light
+                    border-end border-dark
+                    bg-transparent
+                    py-0
+                  "
+                  type="button"
+                  data-bs-toggle="dropdown"
+                  aria-expanded="false"
+                >
+                  {{ classifyText }}
+                </button>
+                <ul
+                  class="
+                    dropdown-menu
+                    text-dark
+                    fw-light
+                    p-0
+                    border-0
+                    rounded-3
+                  "
+                  aria-labelledby="defaultDropdown"
+                >
+                  <li
+                    class="dropdown-item py-2 text-center rounded-3"
+                    @click="selectClassify(-1, '所有分類')"
                   >
-                </li>
-                <li>
-                  <a class="dropdown-item py-2 text-center rounded-3" href="#"
-                    >商業理財</a
+                    所有分類
+                  </li>
+                  <li
+                    class="dropdown-item py-2 text-center rounded-3"
+                    @click="selectClassify(0, '商業理財')"
                   >
-                </li>
-                <li>
-                  <a class="dropdown-item py-2 text-center rounded-3" href="#"
-                    >文學小說</a
+                    商業理財
+                  </li>
+
+                  <li
+                    class="dropdown-item py-2 text-center rounded-3"
+                    @click="selectClassify(1, '文學小說')"
                   >
-                </li>
-                <li>
-                  <a class="dropdown-item py-2 text-center rounded-3" href="#"
-                    >人文史地</a
+                    文學小說
+                  </li>
+
+                  <li
+                    class="dropdown-item py-2 text-center rounded-3"
+                    @click="selectClassify(2, '人文史地')"
                   >
-                </li>
-                <li>
-                  <a class="dropdown-item py-2 text-center rounded-3" href="#"
-                    >醫療保健</a
+                    人文史地
+                  </li>
+
+                  <li
+                    class="dropdown-item py-2 text-center rounded-3"
+                    @click="selectClassify(3, '醫療保健')"
                   >
-                </li>
-                <li>
-                  <a class="dropdown-item py-2 text-center rounded-3" href="#"
-                    >生活風格</a
+                    醫療保健
+                  </li>
+
+                  <li
+                    class="dropdown-item py-2 text-center rounded-3"
+                    @click="selectClassify(4, '生活風格')"
                   >
-                </li>
-                <li>
-                  <a class="dropdown-item py-2 text-center rounded-3" href="#"
-                    >自然科學</a
+                    生活風格
+                  </li>
+
+                  <li
+                    class="dropdown-item py-2 text-center rounded-3"
+                    @click="selectClassify(5, '自然科學')"
                   >
-                </li>
-                <li>
-                  <a class="dropdown-item py-2 text-center rounded-3" href="#"
-                    >電腦資訊</a
+                    自然科學
+                  </li>
+
+                  <li
+                    class="dropdown-item py-2 text-center rounded-3"
+                    @click="selectClassify(6, '電腦資訊')"
                   >
-                </li>
-              </ul>
-              <button
-                class="
-                  btn btn-outline-secondary
-                  dropdown-toggle
-                  border-0
-                  text-dark
-                  fw-light
-                  border-end border-dark
-                  fs-6
-                  bg-transparent
-                  py-0
-                "
-                type="button"
-                data-bs-toggle="dropdown"
-                aria-expanded="false"
-              >
-                地點
-              </button>
-              <ul
-                class="dropdown-menu text-dark fw-light p-0 border-0 rounded-3"
-                aria-labelledby="defaultDropdown"
-              >
-                <li>
-                  <a class="dropdown-item py-2 text-center rounded-3" href="#"
-                    >基隆市</a
+                    電腦資訊
+                  </li>
+                </ul>
+                <!-- 地區 -->
+                <button
+                  class="
+                    btn btn-outline-secondary
+                    dropdown-toggle
+                    border-0
+                    text-dark
+                    fw-light
+                    border-end border-secondary
+                    fs-6
+                    bg-transparent
+                  "
+                  type="button"
+                  data-bs-toggle="dropdown"
+                  aria-expanded="false"
+                >
+                  {{ areaText }}
+                </button>
+                <ul
+                  class="
+                    dropdown-menu
+                    text-dark
+                    fw-light
+                    p-0
+                    border-0
+                    rounded-3
+                  "
+                  aria-labelledby="defaultDropdown"
+                >
+                  <li
+                    class="dropdown-item py-2 text-center rounded-3"
+                    @click="selectArea(-1, '所有地區')"
                   >
-                </li>
-                <li>
-                  <a class="dropdown-item py-2 text-center rounded-3" href="#"
-                    >台北市</a
+                    所有地區
+                  </li>
+                  <li
+                    class="dropdown-item py-2 text-center rounded-3"
+                    @click="selectArea(0, '北部')"
                   >
-                </li>
-              </ul>
-              <input
-                type="text"
-                class="
-                  form-control form-control-darkGray
-                  border-0
-                  position-relative
-                  ps-3
-                  bg-transparent
-                "
-                aria-label="Text input with dropdown button"
-                placeholder="請輸入關鍵字搜尋（書籍名稱、活動名稱等）"
-              />
+                    北部
+                  </li>
+                  <li
+                    class="dropdown-item py-2 text-center rounded-3"
+                    @click="selectArea(1, '中部')"
+                  >
+                    中部
+                  </li>
+                  <li
+                    class="dropdown-item py-2 text-center rounded-3"
+                    @click="selectArea(2, '南部')"
+                  >
+                    南部
+                  </li>
+                  <li
+                    class="dropdown-item py-2 text-center rounded-3"
+                    @click="selectArea(3, '東部')"
+                  >
+                    東部
+                  </li>
+                  <li
+                    class="dropdown-item py-2 text-center rounded-3"
+                    @click="selectArea(4, '離島')"
+                  >
+                    離島
+                  </li>
+                </ul>
+                <!-- 搜尋關鍵字 -->
+                <input
+                  type="text"
+                  class="
+                    form-control form-control
+                    border-0
+                    position-relative
+                    ps-3
+                    bg-transparent
+                  "
+                  aria-label="Text input with dropdown button"
+                  placeholder="請輸入關鍵字搜尋（書籍名稱、活動名稱等）"
+                  v-model="seachParams.query"
+                />
+              </div>
             </div>
           </div>
+          <div class="col-2 d-flex justify-content-end">
+            <button
+              type="submit"
+              class="
+                btn btn-secondary
+                rounded-pill
+                text-white
+                w-100
+                d-flex
+                justify-content-center
+                align-items-center
+              "
+            >
+              <span class="material-icons me-2">search</span>
+              立即搜尋
+            </button>
+          </div>
         </div>
-        <div class="col-md-2">
-          <button
-            class="
-              btn
-              bg-secondary
-              fs-6
-              py-13
-              rounded-pill
-              text-white
-              w-100
-              h-100
-              d-flex
-              justify-content-center
-              align-items-center
-            "
-            type="button"
-          >
-            <span class="material-icons me-3">search</span>
-            搜尋
-          </button>
-        </div>
-      </div>
+      </form>
       <!-- 即將截止 -->
       <div class="mb-5">
         <!-- 標題 -->
@@ -161,69 +217,88 @@
         <!-- 卡片區塊 -->
         <ul class="row row-cols-1 row-cols-md-3 g-4 list-unstyled">
           <li class="col" v-for="item in newWorkshopComingData" :key="item.Id">
-            <div class="card h-100 rounded-4">
-              <img
-                :src="item.imgUrl"
-                class="card-img-top card-img rounded-top-4"
-                :alt="item.Image"
-              />
-              <div class="card-img-overlay d-flex justify-content-end">
-                <span class="material-icons text-white fs-1"
+            <div class="position-relative">
+              <!-- 卡片圖片與內容 -->
+              <div class="card h-100 rounded-4">
+                <router-link :to="`/activity-content/${item.Id}`">
+                  <img
+                    :src="item.imgUrl"
+                    class="card-img-top card-img rounded-top-4"
+                    :alt="item.Image"
+                  />
+                </router-link>
+                <div class="card-body position-relative p-4">
+                  <h5 class="card-title mb-2 p-0 fs-4">
+                    <router-link
+                      :to="`/activity-content/${item.Id}`"
+                      class="stretched-link text-secondary"
+                    >
+                      {{ item.Name }}
+                    </router-link>
+                  </h5>
+                  <div class="d-flex align-items-center mb-2">
+                    <div class="d-flex align-items-center">
+                      <span class="material-icons text-primary me-1"
+                        >star_rate</span
+                      >
+                      <span class="material-icons text-primary me-1"
+                        >star_rate</span
+                      >
+                      <span class="material-icons text-primary me-1"
+                        >star_rate</span
+                      >
+                      <span class="material-icons text-primary me-1"
+                        >star_rate</span
+                      >
+                      <span class="material-icons text-primary">star_rate</span>
+                    </div>
+                    <p class="text-gray m-0 ps-2">
+                      {{ item.EvaluateStars }}/5 ({{
+                        item.OpinionNumber
+                      }}則評論)
+                    </p>
+                  </div>
+                  <p class="text-secondary mb-4">
+                    <span class="pe-13">{{ item.transStartDate }}</span
+                    >｜<span class="px-13"
+                      >{{ item.transStartTime }} - {{ item.transEndTime }}</span
+                    >｜<span class="ps-13">{{ item.OrganizerName }}</span>
+                  </p>
+                  <div
+                    class="
+                      card-footer
+                      border-0
+                      bg-transparent
+                      p-0
+                      d-flex
+                      justify-content-between
+                      align-items-end
+                    "
+                  >
+                    <p class="text-secondary fs-8 m-0">
+                      {{ item.ApplicantNumber }}人參加 ｜
+                      {{ item.CollectNumber }}人收藏
+                    </p>
+                    <p class="text-secondary fs-4 m-0">NT$ {{ item.Price }}</p>
+                  </div>
+                </div>
+              </div>
+              <!-- 收藏按鈕 position ， 不受 stretched-link 效果影響 -->
+              <div class="position-absolute top-0 end-0 mt-3 me-3">
+                <span
+                  class="material-icons text-white fs-1"
+                  type="button"
+                  :class="{ 'd-none': isCollect }"
+                  @click="collectActivity('hadCollected')"
                   >bookmark_border</span
                 >
-              </div>
-              <div class="card-body p-4">
-                <h5 class="card-title mb-2 p-0 fs-4">
-                  <router-link
-                    :to="`/activity-content/${item.Id}`"
-                    class="stretched-link text-secondary"
-                  >
-                    {{ item.Name }}
-                  </router-link>
-                </h5>
-                <div class="d-flex align-items-center mb-2">
-                  <div class="d-flex align-items-center">
-                    <span class="material-icons text-primary me-1"
-                      >star_rate</span
-                    >
-                    <span class="material-icons text-primary me-1"
-                      >star_rate</span
-                    >
-                    <span class="material-icons text-primary me-1"
-                      >star_rate</span
-                    >
-                    <span class="material-icons text-primary me-1"
-                      >star_rate</span
-                    >
-                    <span class="material-icons text-primary">star_rate</span>
-                  </div>
-                  <p class="text-gray m-0 ps-2">
-                    {{ item.EvaluateStars }}/5 ({{ item.OpinionNumber }}則評論)
-                  </p>
-                </div>
-                <p class="text-secondary mb-4">
-                  <span class="pe-13">{{ item.transStartDate }}</span
-                  >｜<span class="px-13"
-                    >{{ item.transStartTime }} - {{ item.transEndTime }}</span
-                  >｜<span class="ps-13">{{ item.OrganizerName }}</span>
-                </p>
-                <div
-                  class="
-                    card-footer
-                    border-0
-                    bg-transparent
-                    p-0
-                    d-flex
-                    justify-content-between
-                    align-items-end
-                  "
+                <span
+                  class="material-icons text-white fs-1"
+                  type="button"
+                  :class="{ 'd-none': !isCollect }"
+                  @click="collectActivity('notCollected')"
+                  >bookmark</span
                 >
-                  <p class="text-secondary fs-8 m-0">
-                    {{ item.ApplicantNumber }}人參加 ｜
-                    {{ item.CollectNumber }}人收藏
-                  </p>
-                  <p class="text-secondary fs-4 m-0">NT$ {{ item.Price }}</p>
-                </div>
               </div>
             </div>
           </li>
@@ -244,69 +319,88 @@
         <!-- 卡片區塊 -->
         <ul class="row row-cols-1 row-cols-md-3 g-4 list-unstyled">
           <li class="col" v-for="item in newWorkshopHotData" :key="item.Id">
-            <div class="card h-100 rounded-4">
-              <img
-                :src="item.imgUrl"
-                class="card-img-top card-img rounded-top-4"
-                :alt="item.Image"
-              />
-              <div class="card-img-overlay d-flex justify-content-end">
-                <span class="material-icons text-white fs-1"
+            <div class="position-relative">
+              <!-- 卡片圖片與內容 -->
+              <div class="card h-100 rounded-4">
+                <router-link :to="`/activity-content/${item.Id}`">
+                  <img
+                    :src="item.imgUrl"
+                    class="card-img-top card-img rounded-top-4"
+                    :alt="item.Image"
+                  />
+                </router-link>
+                <div class="card-body position-relative p-4">
+                  <h5 class="card-title mb-2 p-0 fs-4">
+                    <router-link
+                      :to="`/activity-content/${item.Id}`"
+                      class="stretched-link text-secondary"
+                    >
+                      {{ item.Name }}
+                    </router-link>
+                  </h5>
+                  <div class="d-flex align-items-center mb-2">
+                    <div class="d-flex align-items-center">
+                      <span class="material-icons text-primary me-1"
+                        >star_rate</span
+                      >
+                      <span class="material-icons text-primary me-1"
+                        >star_rate</span
+                      >
+                      <span class="material-icons text-primary me-1"
+                        >star_rate</span
+                      >
+                      <span class="material-icons text-primary me-1"
+                        >star_rate</span
+                      >
+                      <span class="material-icons text-primary">star_rate</span>
+                    </div>
+                    <p class="text-gray m-0 ps-2">
+                      {{ item.EvaluateStars }}/5 ({{
+                        item.OpinionNumber
+                      }}則評論)
+                    </p>
+                  </div>
+                  <p class="text-secondary mb-4">
+                    <span class="pe-13">{{ item.transStartDate }}</span
+                    >｜<span class="px-13"
+                      >{{ item.transStartTime }} - {{ item.transEndTime }}</span
+                    >｜<span class="ps-13">{{ item.OrganizerName }}</span>
+                  </p>
+                  <div
+                    class="
+                      card-footer
+                      border-0
+                      bg-transparent
+                      p-0
+                      d-flex
+                      justify-content-between
+                      align-items-end
+                    "
+                  >
+                    <p class="text-secondary fs-8 m-0">
+                      {{ item.ApplicantNumber }}人參加 ｜
+                      {{ item.CollectNumber }}人收藏
+                    </p>
+                    <p class="text-secondary fs-4 m-0">NT$ {{ item.Price }}</p>
+                  </div>
+                </div>
+              </div>
+              <!-- 收藏按鈕 position ， 不受 stretched-link 效果影響 -->
+              <div class="position-absolute top-0 end-0 mt-3 me-3">
+                <span
+                  class="material-icons text-white fs-1"
+                  type="button"
+                  :class="{ 'd-none': isCollect }"
+                  @click="collectActivity('hadCollected')"
                   >bookmark_border</span
                 >
-              </div>
-              <div class="card-body p-4">
-                <h5 class="card-title mb-2 p-0 fs-4">
-                  <router-link
-                    :to="`/activity-content/${item.Id}`"
-                    class="stretched-link text-secondary"
-                  >
-                    {{ item.Name }}
-                  </router-link>
-                </h5>
-                <div class="d-flex align-items-center mb-2">
-                  <div class="d-flex align-items-center">
-                    <span class="material-icons text-primary me-1"
-                      >star_rate</span
-                    >
-                    <span class="material-icons text-primary me-1"
-                      >star_rate</span
-                    >
-                    <span class="material-icons text-primary me-1"
-                      >star_rate</span
-                    >
-                    <span class="material-icons text-primary me-1"
-                      >star_rate</span
-                    >
-                    <span class="material-icons text-primary">star_rate</span>
-                  </div>
-                  <p class="text-gray m-0 ps-2">
-                    {{ item.EvaluateStars }}/5 ({{ item.OpinionNumber }}則評論)
-                  </p>
-                </div>
-                <p class="text-secondary mb-4">
-                  <span class="pe-13">{{ item.transStartDate }}</span
-                  >｜<span class="px-13"
-                    >{{ item.transStartTime }} - {{ item.transEndTime }}</span
-                  >｜<span class="ps-13">{{ item.OrganizerName }}</span>
-                </p>
-                <div
-                  class="
-                    card-footer
-                    border-0
-                    bg-transparent
-                    p-0
-                    d-flex
-                    justify-content-between
-                    align-items-end
-                  "
+                <span
+                  class="material-icons text-white fs-1"
+                  type="button"
+                  :class="{ 'd-none': !isCollect }"
+                  @click="collectActivity('notCollected')"
+                  >bookmark</span
                 >
-                  <p class="text-secondary fs-8 m-0">
-                    {{ item.ApplicantNumber }}人參加 ｜
-                    {{ item.CollectNumber }}人收藏
-                  </p>
-                  <p class="text-secondary fs-4 m-0">NT$ {{ item.Price }}</p>
-                </div>
               </div>
             </div>
           </li>
@@ -327,69 +421,88 @@
         <!-- 卡片區塊 -->
         <ul class="row row-cols-1 row-cols-md-3 g-4 list-unstyled">
           <li class="col" v-for="item in newWorkshopNewData" :key="item.Id">
-            <div class="card h-100 rounded-4">
-              <img
-                :src="item.imgUrl"
-                class="card-img-top card-img rounded-top-4"
-                :alt="item.Image"
-              />
-              <div class="card-img-overlay d-flex justify-content-end">
-                <span class="material-icons text-white fs-1"
+            <div class="position-relative">
+              <!-- 卡片圖片與內容 -->
+              <div class="card h-100 rounded-4">
+                <router-link :to="`/activity-content/${item.Id}`">
+                  <img
+                    :src="item.imgUrl"
+                    class="card-img-top card-img rounded-top-4"
+                    :alt="item.Image"
+                  />
+                </router-link>
+                <div class="card-body position-relative p-4">
+                  <h5 class="card-title mb-2 p-0 fs-4">
+                    <router-link
+                      :to="`/activity-content/${item.Id}`"
+                      class="stretched-link text-secondary"
+                    >
+                      {{ item.Name }}
+                    </router-link>
+                  </h5>
+                  <div class="d-flex align-items-center mb-2">
+                    <div class="d-flex align-items-center">
+                      <span class="material-icons text-primary me-1"
+                        >star_rate</span
+                      >
+                      <span class="material-icons text-primary me-1"
+                        >star_rate</span
+                      >
+                      <span class="material-icons text-primary me-1"
+                        >star_rate</span
+                      >
+                      <span class="material-icons text-primary me-1"
+                        >star_rate</span
+                      >
+                      <span class="material-icons text-primary">star_rate</span>
+                    </div>
+                    <p class="text-gray m-0 ps-2">
+                      {{ item.EvaluateStars }}/5 ({{
+                        item.OpinionNumber
+                      }}則評論)
+                    </p>
+                  </div>
+                  <p class="text-secondary mb-4">
+                    <span class="pe-13">{{ item.transStartDate }}</span
+                    >｜<span class="px-13"
+                      >{{ item.transStartTime }} - {{ item.transEndTime }}</span
+                    >｜<span class="ps-13">{{ item.OrganizerName }}</span>
+                  </p>
+                  <div
+                    class="
+                      card-footer
+                      border-0
+                      bg-transparent
+                      p-0
+                      d-flex
+                      justify-content-between
+                      align-items-end
+                    "
+                  >
+                    <p class="text-secondary fs-8 m-0">
+                      {{ item.ApplicantNumber }}人參加 ｜
+                      {{ item.CollectNumber }}人收藏
+                    </p>
+                    <p class="text-secondary fs-4 m-0">NT$ {{ item.Price }}</p>
+                  </div>
+                </div>
+              </div>
+              <!-- 收藏按鈕 position ， 不受 stretched-link 效果影響 -->
+              <div class="position-absolute top-0 end-0 mt-3 me-3">
+                <span
+                  class="material-icons text-white fs-1"
+                  type="button"
+                  :class="{ 'd-none': isCollect }"
+                  @click="collectActivity('hadCollected')"
                   >bookmark_border</span
                 >
-              </div>
-              <div class="card-body p-4">
-                <h5 class="card-title mb-2 p-0 fs-4">
-                  <router-link
-                    :to="`/activity-content/${item.Id}`"
-                    class="stretched-link text-secondary"
-                  >
-                    {{ item.Name }}
-                  </router-link>
-                </h5>
-                <div class="d-flex align-items-center mb-2">
-                  <div class="d-flex align-items-center">
-                    <span class="material-icons text-primary me-1"
-                      >star_rate</span
-                    >
-                    <span class="material-icons text-primary me-1"
-                      >star_rate</span
-                    >
-                    <span class="material-icons text-primary me-1"
-                      >star_rate</span
-                    >
-                    <span class="material-icons text-primary me-1"
-                      >star_rate</span
-                    >
-                    <span class="material-icons text-primary">star_rate</span>
-                  </div>
-                  <p class="text-gray m-0 ps-2">
-                    {{ item.EvaluateStars }}/5 ({{ item.OpinionNumber }}則評論)
-                  </p>
-                </div>
-                <p class="text-secondary mb-4">
-                  <span class="pe-13">{{ item.transStartDate }}</span
-                  >｜<span class="px-13"
-                    >{{ item.transStartTime }} - {{ item.transEndTime }}</span
-                  >｜<span class="ps-13">{{ item.OrganizerName }}</span>
-                </p>
-                <div
-                  class="
-                    card-footer
-                    border-0
-                    bg-transparent
-                    p-0
-                    d-flex
-                    justify-content-between
-                    align-items-end
-                  "
+                <span
+                  class="material-icons text-white fs-1"
+                  type="button"
+                  :class="{ 'd-none': !isCollect }"
+                  @click="collectActivity('notCollected')"
+                  >bookmark</span
                 >
-                  <p class="text-secondary fs-8 m-0">
-                    {{ item.ApplicantNumber }}人參加 ｜
-                    {{ item.CollectNumber }}人收藏
-                  </p>
-                  <p class="text-secondary fs-4 m-0">NT$ {{ item.Price }}</p>
-                </div>
               </div>
             </div>
           </li>
@@ -414,7 +527,20 @@ export default {
     return {
       newWorkshopComingData: [],
       newWorkshopHotData: [],
-      newWorkshopNewData: []
+      newWorkshopNewData: [],
+      seachParams: {
+        split: 9,
+        page: 1,
+        // 活動工作坊
+        type: 3,
+        // 類別：根據 select 選擇不同而有對應的索引值
+        classify: -1,
+        area: -1,
+        sorting: 0,
+        query: ''
+      },
+      classifyText: '類別',
+      areaText: '地區'
     }
   },
   created () {
@@ -473,6 +599,34 @@ export default {
     })
   },
   methods: {
+    // 搜尋方法
+    searchNow () {
+      console.log('活動工作坊換搜尋頁！')
+      const split = this.seachParams.split
+      const page = this.seachParams.page
+      const type = this.seachParams.type
+      const classify = this.seachParams.classify
+      const area = this.seachParams.area
+      const sorting = this.seachParams.sorting
+      const query = encodeURI(this.seachParams.query)
+      console.log(query)
+      this.$router.push(
+        `/activities/search/${split}/${page}/${type}/${classify}/${area}/${sorting}/${query}`
+      )
+    },
+    // 選擇分類類別
+    selectClassify (classifyNum, Text) {
+      console.log(classifyNum)
+      this.seachParams.classify = classifyNum
+      this.classifyText = Text
+      console.log(this.seachParams.classify, this.classifyText)
+    },
+    // 選擇地區分類
+    selectArea (areaNum, Text) {
+      this.seachParams.area = areaNum
+      this.areaText = Text
+      console.log(this.seachParams.area, this.areaText)
+    },
     splitDate (date) {
       const Time = new Date(date)
       Time.getFullYear()

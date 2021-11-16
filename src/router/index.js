@@ -61,6 +61,7 @@ const routes = [
       }
     ]
   },
+  // 三個主題活動頁
   {
     path: '/activity',
     name: 'Activity',
@@ -87,6 +88,37 @@ const routes = [
         path: 'workshop',
         name: 'Workshop',
         component: () => import('../views/Activity/WorkShop.vue')
+      }
+    ]
+  },
+  // 搜尋、官方推薦頁面
+  {
+    path: '/activities',
+    name: 'Layout',
+    component: () => import('../views/Layout.vue'),
+    children: [
+      {
+        // 從搜尋框點擊到的頁面
+        path: 'search/:split/:page/:type/:classify/:area/:sorting/:query',
+        name: 'SearchActivity',
+        component: () => import('../views/Activity/SearchActivity.vue'),
+        props: (route) => {
+          console.log(route)
+          return {
+            Split: route.params.split,
+            Page: route.params.page,
+            Type: route.params.type,
+            Classify: route.params.classify,
+            Area: route.params.classify,
+            Sorting: route.params.sorting,
+            Query: route.params.query
+          }
+        }
+      },
+      {
+        path: 'more/recommend/variety/type',
+        name: 'ActivityRecommend',
+        component: () => import('../views/Activity/MoreRecommend.vue')
       }
     ]
   },
@@ -134,16 +166,6 @@ const routes = [
     // which is lazy-loaded when the route is visited.
     component: () =>
       import(/* webpackChunkName: "about" */ '../views/About.vue')
-  },
-  {
-    path: '/layout',
-    name: 'Layout',
-    component: () => import('../views/Layout.vue')
-  },
-  {
-    path: '/searchActivity',
-    name: 'SearchActivity',
-    component: () => import('../views/Activity/SearchActivity.vue')
   }
 ]
 
