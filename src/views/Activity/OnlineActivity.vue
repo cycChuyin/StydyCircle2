@@ -143,14 +143,13 @@
           <h6 class="display-6 text-secondary fw-bold">
             即將截止報名的線上讀書會
           </h6>
-          <a
-            href="#"
+          <router-link
             class="text-secondary fs-4 d-flex align-items-center"
-            @click="changeSorting(0)"
+            to="/activities/more/recommend/0/0/9/1"
           >
             <span class="material-icons me-2">east</span>
             More
-          </a>
+          </router-link>
         </div>
         <!-- 卡片區塊 -->
         <ul class="row row-cols-1 row-cols-md-3 g-4 list-unstyled">
@@ -249,10 +248,13 @@
           <h6 class="display-6 text-secondary fw-bold">
             最多人報名的線上讀書會
           </h6>
-          <a href="#" class="text-secondary fs-4 d-flex align-items-center">
+          <router-link
+            class="text-secondary fs-4 d-flex align-items-center"
+            to="/activities/more/recommend/1/0/9/1"
+          >
             <span class="material-icons me-2">east</span>
             More
-          </a>
+          </router-link>
         </div>
         <!-- 卡片區塊 -->
         <ul class="row row-cols-1 row-cols-md-3 g-4 list-unstyled">
@@ -351,10 +353,13 @@
           <h6 class="display-6 text-secondary fw-bold">
             本週新推出的線上讀書會
           </h6>
-          <a href="#" class="text-secondary fs-4 d-flex align-items-center">
+          <router-link
+            class="text-secondary fs-4 d-flex align-items-center"
+            to="/activities/more/recommend/3/0/9/1"
+          >
             <span class="material-icons me-2">east</span>
             More
-          </a>
+          </router-link>
         </div>
         <!-- 卡片區塊 -->
         <ul class="row row-cols-1 row-cols-md-3 g-4 list-unstyled">
@@ -448,12 +453,13 @@
       </div>
 
       <div class="d-flex justify-content-center">
-        <button
+        <router-link
           type="button"
           class="btn btn-secondary rounded-pill mt-5 mb-10 text-white"
+          to="/activities/search/9/1/-1/-1/-1/0/%E3%80%8A"
         >
           查看所有結果
-        </button>
+        </router-link>
       </div>
     </div>
   </div>

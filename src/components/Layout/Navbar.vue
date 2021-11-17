@@ -49,11 +49,15 @@
           <!-- 右側 -->
           <ul class="navbar-nav mb-2 mb-lg-0 align-items-center">
             <li class="nav-item">
-              <a class="nav-link text-secondary" href="#">
+              <router-link
+                type="button"
+                class="nav-link text-secondary"
+                to="/activities/search/9/1/-1/-1/-1/0/%E3%80%8A"
+              >
                 <span class="material-icons d-flex align-items-center">
                   search
                 </span>
-              </a>
+              </router-link>
             </li>
             <!-- login -->
             <li class="nav-item" :class="{ 'd-none': isLogin }">

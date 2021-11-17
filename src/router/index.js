@@ -95,6 +95,7 @@ const routes = [
   {
     path: '/activities',
     name: 'Layout',
+    redirect: 'search/:split/:page/:type/:classify/:area/:sorting/:query',
     component: () => import('../views/Layout.vue'),
     children: [
       {
@@ -116,9 +117,18 @@ const routes = [
         }
       },
       {
-        path: 'more/recommend/variety/type',
+        path: 'more/recommend/:variety/:type/:split/:page',
         name: 'ActivityRecommend',
-        component: () => import('../views/Activity/MoreRecommend.vue')
+        component: () => import('../views/Activity/MoreRecommend.vue'),
+        props: (route) => {
+          console.log(route)
+          return {
+            Variety: route.params.variety,
+            Type: route.params.type,
+            Split: route.params.split,
+            Page: route.params.page
+          }
+        }
       }
     ]
   },

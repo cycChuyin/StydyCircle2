@@ -275,7 +275,7 @@
     </div>
     <!-- 卡片區塊 -->
     <ul class="row row-cols-1 row-cols-md-3 g-4 list-unstyled">
-      <li class="col" v-for="item in newUserSearchData" :key="item.Id">
+      <li class="col" v-for="item in newSearchData" :key="item.Id">
         <div class="position-relative">
           <!-- 卡片圖片與內容 -->
           <div class="card h-100 rounded-4">
@@ -423,7 +423,7 @@ export default {
   props: ['Split', 'Page', 'Type', 'Classify', 'Area', 'Sorting', 'Query'],
   data () {
     return {
-      newUserSearchData: [],
+      newSearchData: [],
       seachParams: {
         split: 9,
         page: 1,
@@ -472,6 +472,12 @@ export default {
       // 將 sorting 監聽為路由存的參數，這樣在 watch 監聽到變動時，路由才有效改變
       const sorting = this.$route.params.sorting
       const query = encodeURI(this.seachParams.query)
+
+      // 應該先從路由守衛判斷的，這裡先暫時用參數判斷
+      // if (this.$route.params.query === '%E3%80%8A') {
+      //   this.seachParams.query = ''
+      // }
+
       // 先用 1-8 確認是否有沒有登入
       this.$apiHelper.get('api/users/profile-data').then((res) => {
         // 存 Token
@@ -494,10 +500,10 @@ export default {
                 const token = res.data.JwtToken
                 localStorage.setItem('JwtToken', token)
                 console.log('3-1 的搜尋 ', res.data.Data)
-                // oriUserSearchData 取得 api 裡的 Activity 陣列資料
-                const oriUserSearchData = res.data.Data.Activity
+                // oriSearchData 取得 api 裡的 Activity 陣列資料
+                const oriSearchData = res.data.Data.Activity
                 // 跑迴圈將日期拆分
-                oriUserSearchData.forEach((item) => {
+                oriSearchData.forEach((item) => {
                   // 呼叫轉換日期方法
                   this.transDate(item)
 
@@ -505,9 +511,9 @@ export default {
                   const imgUrl = `${process.env.VUE_APP_CARDIMG}/${item.Image}?2021`
                   item.imgUrl = imgUrl
                 })
-                // 將整理好的 oriUserSearchData 賦予給本元件的 data
-                this.newUserSearchData = oriUserSearchData
-                console.log(this.newUserSearchData)
+                // 將整理好的 oriSearchData 賦予給本元件的 data
+                this.newSearchData = oriSearchData
+                console.log(this.newSearchData)
               }
             })
         } else {
@@ -521,6 +527,20 @@ export default {
             .then((res) => {
               if (res.data.Status) {
                 console.log('1-7 的搜尋 ', res.data)
+                // oriSearchData 取得 api 裡的 Activity 陣列資料
+                const oriSearchData = res.data.Data.Activity
+                // 跑迴圈將日期拆分
+                oriSearchData.forEach((item) => {
+                  // 呼叫轉換日期方法
+                  this.transDate(item)
+
+                  // 2. 加上圖片路徑
+                  const imgUrl = `${process.env.VUE_APP_CARDIMG}/${item.Image}?2021`
+                  item.imgUrl = imgUrl
+                })
+                // 將整理好的 oriSearchData 賦予給本元件的 data
+                this.newSearchData = oriSearchData
+                console.log(this.newSearchData)
               }
             })
         }
