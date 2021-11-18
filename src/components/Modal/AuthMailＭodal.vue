@@ -69,6 +69,7 @@ export default {
   },
   mounted () {
     this.modal = new Modal(this.$refs.modal)
+    // this.$refs.modal.show()
   }
 }
 </script>

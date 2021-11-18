@@ -5,7 +5,7 @@
   <div class="container">
     <div class="row justify-content-center">
       <div class="col-md-10 pt-10 pb-5">
-        <h6 class="display-6 text-center text-secondary mb-6">
+        <h6 class="display-6 text-center text-secondary mb-6 fw-bold">
           想要找伙伴一起讀書嗎？
         </h6>
         <div class="row row-cols-md-2">
@@ -205,7 +205,7 @@
     <div class="container">
       <div class="row justify-content-center py-10">
         <div class="col-md-10">
-          <h6 class="display-6 fw-bold text-secondary text-center mb-5">
+          <h6 class="display-6 text-center text-secondary mb-6 fw-bold">
             如何使用作伙來讀冊？
           </h6>
           <div class="text-secondary mb-7">

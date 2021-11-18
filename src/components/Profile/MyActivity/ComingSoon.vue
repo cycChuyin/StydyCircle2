@@ -134,7 +134,7 @@
                         ms-3
                       "
                       type="button"
-                      @click="deletedRegister(item.ActivityId)"
+                      @click="openCancleRegisterModal(item)"
                     >
                       取消報名
                     </button>
@@ -160,22 +160,28 @@
       </template>
     </ul>
   </div>
-  <!-- <opinion-modal ref="opinionModal"></opinion-modal> -->
+  <cancle-register-modal
+    ref="cancleRegister"
+    :comming="giveEmitActivityInfo"
+    @deleted-register="deletedRegister"
+  ></cancle-register-modal>
 </template>
 
 <script>
-// import opinionModal from '../../Modal/OpinionModal.vue'
+import CancleRegisterModal from '../../Modal/CancleRegisterModal.vue'
+
 export default {
   props: ['UserId'],
   data () {
     return {
       newCommingData: [],
-      routeUserId: ''
+      routeUserId: '',
+      giveEmitActivityInfo: {}
     }
   },
-  // components: {
-  //   opinionModal
-  // },
+  components: {
+    CancleRegisterModal
+  },
   watch: {
     '$route.params.UserId': 'changePath'
   },
@@ -184,7 +190,6 @@ export default {
   },
   methods: {
     // 剛渲染時得取資料
-
     getCommingData () {
       console.log(this.$route)
       // const getUserId = localStorage.getItem('UserId')
@@ -219,8 +224,17 @@ export default {
       // 呼叫取得資料的方法
       this.getCommingData()
     },
+    // 取消報名呼叫 Modal
+    openCancleRegisterModal (ActivityInfo) {
+      // 將父層建立的物件賦予要傳給子元件的活動資料，透過 props 給子元件
+      // 有無直接傳陣列，然後在子元件直接挑選某個物件的方式？
+      this.giveEmitActivityInfo = ActivityInfo
+      console.log(this.$refs.cancleRegister)
+      this.$refs.cancleRegister.showModal()
+    },
     // 取消報名
     deletedRegister (ActivityId) {
+      // console.log(ActivityId)
       const deleteActivity = {}
       deleteActivity.ActivityId = ActivityId
       // 7-12 取消報名功能 (JWT)
@@ -232,6 +246,8 @@ export default {
             const token = res.data.JwtToken
             localStorage.setItem('JwtToken', token)
             console.log(res.data.Message)
+            this.$refs.cancleRegister.hideModal()
+            this.getCommingData()
           }
         })
     },
