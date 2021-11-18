@@ -87,7 +87,7 @@
                 fs-7
               "
               type="button"
-              @click="openModal"
+              @click="opeOpinionnModal(item)"
             >
               <span class="material-icons me-2 fs-7">rate_review</span>
               我要評價
@@ -97,51 +97,71 @@
       </li>
     </ul>
   </div>
-  <!-- <opinion-modal ref="opinionModal"></opinion-modal> -->
+  <opinion-modal
+    ref="opinionModal"
+    :parentOpinionInfo="giveEmitActivityInfo"
+    @send-opinion="getEmitOpinion"
+  ></opinion-modal>
 </template>
 
 <script>
-// import opinionModal from '../../Modal/OpinionModal.vue'
+import opinionModal from '../../Modal/OpinionModal.vue'
 export default {
   data () {
     return {
-      opinionObj: {
+      // 填寫評價需要的物件格式
+      opinionTemplate: {
         ActivityId: 18,
         Star: 5,
         Opinion: '蒸蚌!抄蚌的!'
       },
+      // 給子元件的資料
+      giveEmitActivityInfo: {},
+      // 個人檔案取得未評價的活動資料
       getUnOpionData: [],
-      routeUserId: '',
-      modal: {}
+      routeUserId: ''
     }
   },
-  // components: {
-  //   opinionModal
-  // },
+  components: {
+    opinionModal
+  },
   created () {
-    this.routeUserId = this.$route.params.UserId
-    console.log(this.routeUserId)
-    // 7-8 尚未評價活動資料+分頁
-    this.$apiHelper
-      .get(`api/users/activity/attend/opinions/${this.routeUserId}/9/1`)
-      .then((res) => {
-        console.log(res.data)
-        if (res.data.Status === true) {
-          const oriUnOpionData = res.data.Data.MyActivity
-          console.log(oriUnOpionData)
-          oriUnOpionData.forEach((item) => {
-            // 拆解日期
-            this.transDate(item)
-            // 2. 加上圖片路徑
-            const imgUrl = `${process.env.VUE_APP_CARDIMG}/${item.Image}?2021`
-            item.imgUrl = imgUrl
-          })
-          this.getUnOpionData = oriUnOpionData
-          console.log(this.getUnOpionData)
-        }
-      })
+    this.getOpinionData()
   },
   methods: {
+    // 從 API 取得資料
+    getOpinionData () {
+      this.routeUserId = this.$route.params.UserId
+      console.log(this.routeUserId)
+      // 7-8 尚未評價活動資料+分頁
+      this.$apiHelper
+        .get(`api/users/activity/attend/opinions/${this.routeUserId}/9/1`)
+        .then((res) => {
+          console.log(res.data)
+          if (res.data.Status === true) {
+            const oriUnOpionData = res.data.Data.MyActivity
+            console.log(oriUnOpionData)
+            oriUnOpionData.forEach((item) => {
+              // 1. 拆解日期
+              this.transDate(item)
+              // 2. 加上圖片路徑
+              const imgUrl = `${process.env.VUE_APP_CARDIMG}/${item.Image}?2021`
+              item.imgUrl = imgUrl
+              // 3.改變星期格式
+              this.transDay(item)
+            })
+            // 尚未評價的活動資料
+            this.getUnOpionData = oriUnOpionData
+            console.log(this.getUnOpionData)
+          }
+        })
+    },
+    // 子元件呼叫的方法
+    getEmitOpinion () {
+      this.getOpinionData()
+      console.log('成功評價，重新取得評價資料')
+    },
+
     // // 填寫活動評價
     // sendOpinion () {
     //   console.log('我要準備送出評價了')
@@ -151,7 +171,7 @@ export default {
     //   console.log(Token)
     //   if (Token) {
     //     this.$apiHelper
-    //       .post('api/users/activity/attend/opinion', this.opinionObj)
+    //       .post('api/users/activity/attend/opinion', this.opinionTemplate)
     //       .then((res) => {
     //         if (res.data.Status) {
     //           const getJwtToken = res.data.JwtToken
@@ -163,12 +183,26 @@ export default {
     //       })
     //   }
     // },
-    // 打開 modal
-    openModal () {
-      console.log('打開 modal', this.$refs)
-      // const opinionModal = this.$refs.opinionModal
-      // opinionModal.showModal()
+
+    // 打開 modal，並給予活動資料讓子元件可以渲染在畫面上
+    opeOpinionnModal (ActivityInfo) {
+      this.giveEmitActivityInfo = ActivityInfo
+      console.log('打開 modal', this.$refs.opinionModal)
+      this.$refs.opinionModal.showModal()
     },
+
+    // 轉換成星期格式
+    transDay (item) {
+      const dayList = ['日', '一', '二', '三', '四', '五', '六']
+      const oriDay = item.ActivityStartDate
+      const newday = new Date(oriDay).getDay() // or "new Date().getDay()";
+
+      const transDay = dayList[newday]
+      item.transDay = transDay
+      return item
+    },
+
+    // 時間拆分
     splitDate (date) {
       const Time = new Date(date)
       Time.getFullYear()
