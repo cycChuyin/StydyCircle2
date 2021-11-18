@@ -50,6 +50,7 @@ export default {
       }
     }
   },
+
   created () {
     // 取得 mailGuid 邏輯
     // 先取得網址字串
