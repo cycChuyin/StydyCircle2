@@ -233,6 +233,10 @@
         </div>
       </div>
     </form>
+    <!-- 標題區塊 -->
+    <h6 class="display-6 text-dark fw-bold mb-5">
+      {{ virietyTitleText }}{{ ActivityTypeText }}
+    </h6>
     <!-- 卡片區塊 -->
     <ul class="row row-cols-1 row-cols-md-3 g-4 list-unstyled">
       <li class="col" v-for="item in newRecommendedData" :key="item.Id">
@@ -306,12 +310,14 @@
               class="material-icons text-white fs-1"
               type="button"
               :class="{ 'd-none': item.UserCollected }"
+              @click="changeCollect(item.Id)"
               >bookmark_border</span
             >
             <span
               class="material-icons text-white fs-1"
               type="button"
               :class="{ 'd-none': !item.UserCollected }"
+              @click="changeCollect(item.Id)"
               >bookmark</span
             >
           </div>
@@ -398,7 +404,9 @@ export default {
       },
       typeText: '主題類別',
       classifyText: '類別',
-      areaText: '地區'
+      areaText: '地區',
+      virietyTitleText: '',
+      ActivityTypeText: ''
     }
   },
   created () {
@@ -422,17 +430,28 @@ export default {
       const split = this.getMoreReommendParams.split
       const page = this.getMoreReommendParams.page
 
+      if (type === '0') {
+        this.ActivityTypeText = '線上讀書會'
+      } else if (type === '1') {
+        this.ActivityTypeText = '實體讀書會'
+      } else if (type === '2') {
+        this.ActivityTypeText = '活動工作坊'
+      }
+
       // 先用 1-8 確認是否有沒有登入
       this.$apiHelper.get('api/users/profile-data').then((res) => {
-        // 存 Token
-        const token = res.data.JwtToken
-        localStorage.setItem('JwtToken', token)
         // 判斷有無登入來決定接4-1~4-3 or 4-4~4-6
         if (res.data.Status) {
           console.log('登入')
+          // 存 Token
+          const token = res.data.JwtToken
+          localStorage.setItem('JwtToken', token)
           // 如果有登入
           // 判斷 4-4~4-6 即將截止 / 最多人報名 / 新推出 (JWT)
           if (getVariety === '0') {
+            // title 給類別
+            this.virietyTitleText = '即將截止報名的'
+
             // 如果是即將截止的話，接 4-4 即將截止報名資料 (JWT)）
             this.$apiHelper
               .get(`api/users/activity/final/type/${type}/${split}/${page}`)
@@ -444,6 +463,7 @@ export default {
                   localStorage.setItem('JwtToken', token)
                   // oriSearchData 取得 api 裡的 Activity 陣列資料
                   const oriRecommendedData = res.data.Data.Activity
+
                   // 跑迴圈將日期拆分
                   oriRecommendedData.forEach((item) => {
                     // 呼叫轉換日期方法
@@ -459,7 +479,10 @@ export default {
                 }
               })
           } else if (getVariety === '1') {
-            // 如果是即將截止的話，接 4-5 最多人報名 (JWT)）
+            // title 給類別
+            this.virietyTitleText = '最多人報名的'
+
+            // 如果是最多人報名的話，接 4-5 最多人報名 (JWT)）
             this.$apiHelper
               .get(`api/users/activity/hot/type/${type}/${split}/${page}`)
               .then((res) => {
@@ -485,7 +508,10 @@ export default {
                 }
               })
           } else if (getVariety === '2') {
-            // 如果是即將截止的話，接 4-6 新推出資料 (JWT)）
+            // title 給類別
+            this.virietyTitleText = '本週新推出的'
+
+            // 如果是新推出資料的話，接 4-6 新推出資料 (JWT)）
             this.$apiHelper
               .get(`api/users/activity/new/type/${type}/${split}/${page}`)
               .then((res) => {
@@ -588,6 +614,39 @@ export default {
           }
         }
       })
+      // // title 的類別
+      // this.ActivityTypeText = this.newRecommendedData[0].ActivityType
+    },
+
+    // 改變收藏、取消收藏功能
+    changeCollect (ActivityId) {
+      console.log('3-2 收藏/取消收藏活動 (JWT)')
+      console.log(ActivityId)
+      // 3-2 收藏/取消收藏活動 (JWT)
+      // 先把 body 要的資料準備好
+      const sentActivityId = {}
+      sentActivityId.ActivityId = ActivityId
+      console.log(sentActivityId)
+
+      // 3-2 收藏/取消收藏活動 (JWT)
+      this.$apiHelper
+        .put('api/users/activity/collect', sentActivityId)
+        .then((res) => {
+          if (res.data.Status) {
+            console.log('3-2 收藏/取消收藏活動 (JWT)')
+            // 先存 token
+            const token = res.data.JwtToken
+            localStorage.setItem('JwtToken', token)
+
+            // 收藏、取消收藏 - 改變 icon
+            // 將陣列跑迴圈，如果有對應的資料（Id），就切換狀態
+            this.newRecommendedData.forEach((item) => {
+              if (item.Id === ActivityId) {
+                item.UserCollected = !item.UserCollected
+              }
+            })
+          }
+        })
     },
 
     // 選擇主題類別

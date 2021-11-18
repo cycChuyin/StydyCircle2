@@ -1,4 +1,8 @@
 <template>
+  <!-- 線上讀書會 -->
+  <div class="container">
+    <h6 class="display-6 text-dark fw-bold mb-32">線上讀書會</h6>
+  </div>
   <div
     id="onlineActivity"
     class="carousel carousel-dark slide pb-5"
@@ -37,34 +41,60 @@
               v-for="item in newOnlineActivity.slice(0, 3)"
               :key="item.Id"
             >
-              <div class="card h-100 rounded-4">
-                <img
-                  :src="item.imgUrl"
-                  class="
-                    card-img-top card-img
-                    rounded rounded-top-4 rounded-bottom-0
-                  "
-                  :alt="item.Image"
-                />
-                <div class="p-40">
-                  <h5 class="card-title p-0 mb-3">
-                    <router-link
-                      :to="`/activity-content/${item.Id}`"
-                      class="stretched-link text-dark"
-                    >
-                      {{ item.Name }}
-                    </router-link>
-                  </h5>
-                  <p class="text-dark mb-2">
-                    活動日期｜{{ item.transStartDate }}
-                  </p>
-                  <p class="text-dark mb-2">
-                    活動時間｜{{ item.transStartTime }} ～
-                    {{ item.transEndTime }}
-                  </p>
-                  <p class="text-dark mb-0">
-                    活動講者｜{{ item.OrganizerName }}
-                  </p>
+              <!-- 給標籤 position 用的 -->
+              <div class="position-relative">
+                <!-- 卡片圖片與內容 -->
+                <div class="card h-100 rounded-4">
+                  <router-link :to="`/activity-content/${item.Id}`">
+                    <img
+                      :src="item.imgUrl"
+                      class="
+                        card-img-top card-img
+                        rounded rounded-top-4 rounded-bottom-0
+                      "
+                      :alt="item.Image"
+                    />
+                  </router-link>
+                  <div class="card-body position-relative p-40">
+                    <h5 class="card-title p-0 mb-3">
+                      <router-link
+                        :to="`/activity-content/${item.Id}`"
+                        class="stretched-link text-dark"
+                      >
+                        {{ item.Name }}
+                      </router-link>
+                    </h5>
+                    <p class="text-dark mb-2">
+                      活動日期｜{{ item.transStartDate }}
+                    </p>
+                    <p class="text-dark mb-2">
+                      活動時間｜{{ item.transStartTime }} ～
+                      {{ item.transEndTime }}
+                    </p>
+                    <p class="text-dark mb-0">
+                      活動講者｜{{ item.OrganizerName }}
+                    </p>
+                  </div>
+                </div>
+                <!-- 收藏按鈕 position ， 不受 stretched-link 效果影響 -->
+
+                <div class="position-absolute top-0 end-0 mt-3 me-3">
+                  <!-- 未收藏 -->
+                  <span
+                    class="material-icons text-white fs-1"
+                    type="button"
+                    :class="{ 'd-none': item.UserCollected }"
+                    @click="changeCollect(item.Id, 'newOnlineActivity')"
+                    >bookmark_border</span
+                  >
+                  <!-- 已收藏 -->
+                  <span
+                    class="material-icons text-white fs-1"
+                    type="button"
+                    :class="{ 'd-none': !item.UserCollected }"
+                    @click="changeCollect(item.Id, 'newOnlineActivity')"
+                    >bookmark</span
+                  >
                 </div>
               </div>
             </li>
@@ -77,34 +107,59 @@
               v-for="item in newOnlineActivity.slice(3, 6)"
               :key="item.Id"
             >
-              <div class="card h-100 rounded-4">
-                <img
-                  :src="item.imgUrl"
-                  class="
-                    card-img-top card-img
-                    rounded rounded-top-4 rounded-bottom-0
-                  "
-                  :alt="item.Image"
-                />
-                <div class="p-40">
-                  <h5 class="card-title p-0 mb-3">
-                    <router-link
-                      :to="`/activity-content/${item.Id}`"
-                      class="stretched-link text-dark"
-                    >
-                      {{ item.Name }}
-                    </router-link>
-                  </h5>
-                  <p class="text-dark mb-2">
-                    活動日期｜{{ item.transStartDate }}
-                  </p>
-                  <p class="text-dark mb-2">
-                    活動時間｜{{ item.transStartTime }} ～
-                    {{ item.transEndTime }}
-                  </p>
-                  <p class="text-dark mb-0">
-                    活動講者｜{{ item.OrganizerName }}
-                  </p>
+              <!-- 給標籤 position 用的 -->
+              <div class="position-relative">
+                <!-- 卡片圖片與內容 -->
+                <div class="card h-100 rounded-4">
+                  <router-link :to="`/activity-content/${item.Id}`">
+                    <img
+                      :src="item.imgUrl"
+                      class="
+                        card-img-top card-img
+                        rounded rounded-top-4 rounded-bottom-0
+                      "
+                      :alt="item.Image"
+                    />
+                  </router-link>
+                  <div class="card-body position-relative p-40">
+                    <h5 class="card-title p-0 mb-3">
+                      <router-link
+                        :to="`/activity-content/${item.Id}`"
+                        class="stretched-link text-dark"
+                      >
+                        {{ item.Name }}
+                      </router-link>
+                    </h5>
+                    <p class="text-dark mb-2">
+                      活動日期｜{{ item.transStartDate }}
+                    </p>
+                    <p class="text-dark mb-2">
+                      活動時間｜{{ item.transStartTime }} ～
+                      {{ item.transEndTime }}
+                    </p>
+                    <p class="text-dark mb-0">
+                      活動講者｜{{ item.OrganizerName }}
+                    </p>
+                  </div>
+                </div>
+                <!-- 收藏按鈕 position ， 不受 stretched-link 效果影響 -->
+                <div class="position-absolute top-0 end-0 mt-3 me-3">
+                  <!-- 未收藏 -->
+                  <span
+                    class="material-icons text-white fs-1"
+                    type="button"
+                    :class="{ 'd-none': item.UserCollected }"
+                    @click="changeCollect(item.Id, 'newOnlineActivity')"
+                    >bookmark_border</span
+                  >
+                  <!-- 已收藏 -->
+                  <span
+                    class="material-icons text-white fs-1"
+                    type="button"
+                    :class="{ 'd-none': !item.UserCollected }"
+                    @click="changeCollect(item.Id, 'newOnlineActivity')"
+                    >bookmark</span
+                  >
                 </div>
               </div>
             </li>
@@ -117,34 +172,59 @@
               v-for="item in newOnlineActivity.slice(6, 9)"
               :key="item.Id"
             >
-              <div class="card h-100 rounded-4">
-                <img
-                  :src="item.imgUrl"
-                  class="
-                    card-img-top card-img
-                    rounded rounded-top-4 rounded-bottom-0
-                  "
-                  :alt="item.Image"
-                />
-                <div class="p-40">
-                  <h5 class="card-title p-0 mb-3">
-                    <router-link
-                      :to="`/activity-content/${item.Id}`"
-                      class="stretched-link text-dark"
-                    >
-                      {{ item.Name }}
-                    </router-link>
-                  </h5>
-                  <p class="text-dark mb-2">
-                    活動日期｜{{ item.transStartDate }}
-                  </p>
-                  <p class="text-dark mb-2">
-                    活動時間｜{{ item.transStartTime }} ～
-                    {{ item.transEndTime }}
-                  </p>
-                  <p class="text-dark mb-0">
-                    活動講者｜{{ item.OrganizerName }}
-                  </p>
+              <!-- 給標籤 position 用的 -->
+              <div class="position-relative">
+                <!-- 卡片圖片與內容 -->
+                <div class="card h-100 rounded-4">
+                  <router-link :to="`/activity-content/${item.Id}`">
+                    <img
+                      :src="item.imgUrl"
+                      class="
+                        card-img-top card-img
+                        rounded rounded-top-4 rounded-bottom-0
+                      "
+                      :alt="item.Image"
+                    />
+                  </router-link>
+                  <div class="card-body position-relative p-40">
+                    <h5 class="card-title p-0 mb-3">
+                      <router-link
+                        :to="`/activity-content/${item.Id}`"
+                        class="stretched-link text-dark"
+                      >
+                        {{ item.Name }}
+                      </router-link>
+                    </h5>
+                    <p class="text-dark mb-2">
+                      活動日期｜{{ item.transStartDate }}
+                    </p>
+                    <p class="text-dark mb-2">
+                      活動時間｜{{ item.transStartTime }} ～
+                      {{ item.transEndTime }}
+                    </p>
+                    <p class="text-dark mb-0">
+                      活動講者｜{{ item.OrganizerName }}
+                    </p>
+                  </div>
+                </div>
+                <!-- 收藏按鈕 position ， 不受 stretched-link 效果影響 -->
+                <div class="position-absolute top-0 end-0 mt-3 me-3">
+                  <!-- 未收藏 -->
+                  <span
+                    class="material-icons text-white fs-1"
+                    type="button"
+                    :class="{ 'd-none': item.UserCollected }"
+                    @click="changeCollect(item.Id, 'newOnlineActivity')"
+                    >bookmark_border</span
+                  >
+                  <!-- 已收藏 -->
+                  <span
+                    class="material-icons text-white fs-1"
+                    type="button"
+                    :class="{ 'd-none': !item.UserCollected }"
+                    @click="changeCollect(item.Id, 'newOnlineActivity')"
+                    >bookmark</span
+                  >
                 </div>
               </div>
             </li>
@@ -170,6 +250,10 @@
       <span class="carousel-control-next-icon" aria-hidden="true"></span>
       <span class="visually-hidden">Next</span>
     </button>
+  </div>
+  <!-- 實體讀書會 -->
+  <div class="container">
+    <h6 class="display-6 text-dark fw-bold mb-32">實體讀書會</h6>
   </div>
   <div
     id="entityActivity"
@@ -209,34 +293,59 @@
               v-for="item in newEntityActivity.slice(0, 3)"
               :key="item.Id"
             >
-              <div class="card h-100 rounded-4">
-                <img
-                  :src="item.imgUrl"
-                  class="
-                    card-img-top card-img
-                    rounded rounded-top-4 rounded-bottom-0
-                  "
-                  :alt="item.Image"
-                />
-                <div class="p-40">
-                  <h5 class="card-title p-0 mb-3">
-                    <router-link
-                      :to="`/activity-content/${item.Id}`"
-                      class="stretched-link text-dark"
-                    >
-                      {{ item.Name }}
-                    </router-link>
-                  </h5>
-                  <p class="text-dark mb-2">
-                    活動日期｜{{ item.transStartDate }}
-                  </p>
-                  <p class="text-dark mb-2">
-                    活動時間｜{{ item.transStartTime }} ～
-                    {{ item.transEndTime }}
-                  </p>
-                  <p class="text-dark mb-0">
-                    活動講者｜{{ item.OrganizerName }}
-                  </p>
+              <!-- 給標籤 position 用的 -->
+              <div class="position-relative">
+                <!-- 卡片圖片與內容 -->
+                <div class="card h-100 rounded-4">
+                  <router-link :to="`/activity-content/${item.Id}`">
+                    <img
+                      :src="item.imgUrl"
+                      class="
+                        card-img-top card-img
+                        rounded rounded-top-4 rounded-bottom-0
+                      "
+                      :alt="item.Image"
+                    />
+                  </router-link>
+                  <div class="card-body position-relative p-40">
+                    <h5 class="card-title p-0 mb-3">
+                      <router-link
+                        :to="`/activity-content/${item.Id}`"
+                        class="stretched-link text-dark"
+                      >
+                        {{ item.Name }}
+                      </router-link>
+                    </h5>
+                    <p class="text-dark mb-2">
+                      活動日期｜{{ item.transStartDate }}
+                    </p>
+                    <p class="text-dark mb-2">
+                      活動時間｜{{ item.transStartTime }} ～
+                      {{ item.transEndTime }}
+                    </p>
+                    <p class="text-dark mb-0">
+                      活動講者｜{{ item.OrganizerName }}
+                    </p>
+                  </div>
+                </div>
+                <!-- 收藏按鈕 position ， 不受 stretched-link 效果影響 -->
+                <div class="position-absolute top-0 end-0 mt-3 me-3">
+                  <!-- 未收藏 -->
+                  <span
+                    class="material-icons text-white fs-1"
+                    type="button"
+                    :class="{ 'd-none': item.UserCollected }"
+                    @click="changeCollect(item.Id, 'newEntityActivity')"
+                    >bookmark_border</span
+                  >
+                  <!-- 已收藏 -->
+                  <span
+                    class="material-icons text-white fs-1"
+                    type="button"
+                    :class="{ 'd-none': !item.UserCollected }"
+                    @click="changeCollect(item.Id, 'newEntityActivity')"
+                    >bookmark</span
+                  >
                 </div>
               </div>
             </li>
@@ -249,34 +358,59 @@
               v-for="item in newEntityActivity.slice(3, 6)"
               :key="item.Id"
             >
-              <div class="card h-100 rounded-4">
-                <img
-                  :src="item.imgUrl"
-                  class="
-                    card-img-top card-img
-                    rounded rounded-top-4 rounded-bottom-0
-                  "
-                  :alt="item.Image"
-                />
-                <div class="p-40">
-                  <h5 class="card-title p-0 mb-3">
-                    <router-link
-                      :to="`/activity-content/${item.Id}`"
-                      class="stretched-link text-dark"
-                    >
-                      {{ item.Name }}
-                    </router-link>
-                  </h5>
-                  <p class="text-dark mb-2">
-                    活動日期｜{{ item.transStartDate }}
-                  </p>
-                  <p class="text-dark mb-2">
-                    活動時間｜{{ item.transStartTime }} ～
-                    {{ item.transEndTime }}
-                  </p>
-                  <p class="text-dark mb-0">
-                    活動講者｜{{ item.OrganizerName }}
-                  </p>
+              <!-- 給標籤 position 用的 -->
+              <div class="position-relative">
+                <!-- 卡片圖片與內容 -->
+                <div class="card h-100 rounded-4">
+                  <router-link :to="`/activity-content/${item.Id}`">
+                    <img
+                      :src="item.imgUrl"
+                      class="
+                        card-img-top card-img
+                        rounded rounded-top-4 rounded-bottom-0
+                      "
+                      :alt="item.Image"
+                    />
+                  </router-link>
+                  <div class="card-body position-relative p-40">
+                    <h5 class="card-title p-0 mb-3">
+                      <router-link
+                        :to="`/activity-content/${item.Id}`"
+                        class="stretched-link text-dark"
+                      >
+                        {{ item.Name }}
+                      </router-link>
+                    </h5>
+                    <p class="text-dark mb-2">
+                      活動日期｜{{ item.transStartDate }}
+                    </p>
+                    <p class="text-dark mb-2">
+                      活動時間｜{{ item.transStartTime }} ～
+                      {{ item.transEndTime }}
+                    </p>
+                    <p class="text-dark mb-0">
+                      活動講者｜{{ item.OrganizerName }}
+                    </p>
+                  </div>
+                </div>
+                <!-- 收藏按鈕 position ， 不受 stretched-link 效果影響 -->
+                <div class="position-absolute top-0 end-0 mt-3 me-3">
+                  <!-- 未收藏 -->
+                  <span
+                    class="material-icons text-white fs-1"
+                    type="button"
+                    :class="{ 'd-none': item.UserCollected }"
+                    @click="changeCollect(item.Id, 'newEntityActivity')"
+                    >bookmark_border</span
+                  >
+                  <!-- 已收藏 -->
+                  <span
+                    class="material-icons text-white fs-1"
+                    type="button"
+                    :class="{ 'd-none': !item.UserCollected }"
+                    @click="changeCollect(item.Id, 'newEntityActivity')"
+                    >bookmark</span
+                  >
                 </div>
               </div>
             </li>
@@ -289,34 +423,57 @@
               v-for="item in newEntityActivity.slice(6, 9)"
               :key="item.Id"
             >
-              <div class="card h-100 rounded-4">
-                <img
-                  :src="item.imgUrl"
-                  class="
-                    card-img-top card-img
-                    rounded rounded-top-4 rounded-bottom-0
-                  "
-                  :alt="item.Image"
-                />
-                <div class="p-40">
-                  <h5 class="card-title p-0 mb-3">
-                    <router-link
-                      :to="`/activity-content/${item.Id}`"
-                      class="stretched-link text-dark"
-                    >
-                      {{ item.Name }}
-                    </router-link>
-                  </h5>
-                  <p class="text-dark mb-2">
-                    活動日期｜{{ item.transStartDate }}
-                  </p>
-                  <p class="text-dark mb-2">
-                    活動時間｜{{ item.transStartTime }} ～
-                    {{ item.transEndTime }}
-                  </p>
-                  <p class="text-dark mb-0">
-                    活動講者｜{{ item.OrganizerName }}
-                  </p>
+              <!-- 給標籤 position 用的 -->
+              <div class="position-relative">
+                <!-- 卡片圖片與內容 -->
+                <div class="card h-100 rounded-4">
+                  <img
+                    :src="item.imgUrl"
+                    class="
+                      card-img-top card-img
+                      rounded rounded-top-4 rounded-bottom-0
+                    "
+                    :alt="item.Image"
+                  />
+                  <div class="card-body position-relative p-40">
+                    <h5 class="card-title p-0 mb-3">
+                      <router-link
+                        :to="`/activity-content/${item.Id}`"
+                        class="stretched-link text-dark"
+                      >
+                        {{ item.Name }}
+                      </router-link>
+                    </h5>
+                    <p class="text-dark mb-2">
+                      活動日期｜{{ item.transStartDate }}
+                    </p>
+                    <p class="text-dark mb-2">
+                      活動時間｜{{ item.transStartTime }} ～
+                      {{ item.transEndTime }}
+                    </p>
+                    <p class="text-dark mb-0">
+                      活動講者｜{{ item.OrganizerName }}
+                    </p>
+                  </div>
+                </div>
+                <!-- 收藏按鈕 position ， 不受 stretched-link 效果影響 -->
+                <div class="position-absolute top-0 end-0 mt-3 me-3">
+                  <!-- 未收藏 -->
+                  <span
+                    class="material-icons text-white fs-1"
+                    type="button"
+                    :class="{ 'd-none': item.UserCollected }"
+                    @click="changeCollect(item.Id, 'newEntityActivity')"
+                    >bookmark_border</span
+                  >
+                  <!-- 已收藏 -->
+                  <span
+                    class="material-icons text-white fs-1"
+                    type="button"
+                    :class="{ 'd-none': !item.UserCollected }"
+                    @click="changeCollect(item.Id, 'newEntityActivity')"
+                    >bookmark</span
+                  >
                 </div>
               </div>
             </li>
@@ -342,6 +499,10 @@
       <span class="carousel-control-next-icon" aria-hidden="true"></span>
       <span class="visually-hidden">Next</span>
     </button>
+  </div>
+  <!-- 活動工作坊 -->
+  <div class="container">
+    <h6 class="display-6 text-dark fw-bold mb-32">活動工作坊</h6>
   </div>
   <div
     id="workShop"
@@ -381,34 +542,57 @@
               v-for="item in newWorkShop.slice(0, 3)"
               :key="item.Id"
             >
-              <div class="card h-100 rounded-4">
-                <img
-                  :src="item.imgUrl"
-                  class="
-                    card-img-top card-img
-                    rounded rounded-top-4 rounded-bottom-0
-                  "
-                  :alt="item.Image"
-                />
-                <div class="p-40">
-                  <h5 class="card-title p-0 mb-3">
-                    <router-link
-                      :to="`/activity-content/${item.Id}`"
-                      class="stretched-link text-dark"
-                    >
-                      {{ item.Name }}
-                    </router-link>
-                  </h5>
-                  <p class="text-dark mb-2">
-                    活動日期｜{{ item.transStartDate }}
-                  </p>
-                  <p class="text-dark mb-2">
-                    活動時間｜{{ item.transStartTime }} ～
-                    {{ item.transEndTime }}
-                  </p>
-                  <p class="text-dark mb-0">
-                    活動講者｜{{ item.OrganizerName }}
-                  </p>
+              <!-- 給標籤 position 用的 -->
+              <div class="position-relative">
+                <!-- 卡片圖片與內容 -->
+                <div class="card h-100 rounded-4">
+                  <img
+                    :src="item.imgUrl"
+                    class="
+                      card-img-top card-img
+                      rounded rounded-top-4 rounded-bottom-0
+                    "
+                    :alt="item.Image"
+                  />
+                  <div class="card-body position-relative p-40">
+                    <h5 class="card-title p-0 mb-3">
+                      <router-link
+                        :to="`/activity-content/${item.Id}`"
+                        class="stretched-link text-dark"
+                      >
+                        {{ item.Name }}
+                      </router-link>
+                    </h5>
+                    <p class="text-dark mb-2">
+                      活動日期｜{{ item.transStartDate }}
+                    </p>
+                    <p class="text-dark mb-2">
+                      活動時間｜{{ item.transStartTime }} ～
+                      {{ item.transEndTime }}
+                    </p>
+                    <p class="text-dark mb-0">
+                      活動講者｜{{ item.OrganizerName }}
+                    </p>
+                  </div>
+                </div>
+                <!-- 收藏按鈕 position ， 不受 stretched-link 效果影響 -->
+                <div class="position-absolute top-0 end-0 mt-3 me-3">
+                  <!-- 未收藏 -->
+                  <span
+                    class="material-icons text-white fs-1"
+                    type="button"
+                    :class="{ 'd-none': item.UserCollected }"
+                    @click="changeCollect(item.Id, 'newWorkShop')"
+                    >bookmark_border</span
+                  >
+                  <!-- 已收藏 -->
+                  <span
+                    class="material-icons text-white fs-1"
+                    type="button"
+                    :class="{ 'd-none': !item.UserCollected }"
+                    @click="changeCollect(item.Id, 'newWorkShop')"
+                    >bookmark</span
+                  >
                 </div>
               </div>
             </li>
@@ -421,34 +605,57 @@
               v-for="item in newWorkShop.slice(3, 6)"
               :key="item.Id"
             >
-              <div class="card h-100 rounded-4">
-                <img
-                  :src="item.imgUrl"
-                  class="
-                    card-img-top card-img
-                    rounded rounded-top-4 rounded-bottom-0
-                  "
-                  :alt="item.Image"
-                />
-                <div class="p-40">
-                  <h5 class="card-title p-0 mb-3">
-                    <router-link
-                      :to="`/activity-content/${item.Id}`"
-                      class="stretched-link text-dark"
-                    >
-                      {{ item.Name }}
-                    </router-link>
-                  </h5>
-                  <p class="text-dark mb-2">
-                    活動日期｜{{ item.transStartDate }}
-                  </p>
-                  <p class="text-dark mb-2">
-                    活動時間｜{{ item.transStartTime }} ～
-                    {{ item.transEndTime }}
-                  </p>
-                  <p class="text-dark mb-0">
-                    活動講者｜{{ item.OrganizerName }}
-                  </p>
+              <!-- 給標籤 position 用的 -->
+              <div class="position-relative">
+                <!-- 卡片圖片與內容 -->
+                <div class="card h-100 rounded-4">
+                  <img
+                    :src="item.imgUrl"
+                    class="
+                      card-img-top card-img
+                      rounded rounded-top-4 rounded-bottom-0
+                    "
+                    :alt="item.Image"
+                  />
+                  <div class="card-body position-relative p-40">
+                    <h5 class="card-title p-0 mb-3">
+                      <router-link
+                        :to="`/activity-content/${item.Id}`"
+                        class="stretched-link text-dark"
+                      >
+                        {{ item.Name }}
+                      </router-link>
+                    </h5>
+                    <p class="text-dark mb-2">
+                      活動日期｜{{ item.transStartDate }}
+                    </p>
+                    <p class="text-dark mb-2">
+                      活動時間｜{{ item.transStartTime }} ～
+                      {{ item.transEndTime }}
+                    </p>
+                    <p class="text-dark mb-0">
+                      活動講者｜{{ item.OrganizerName }}
+                    </p>
+                  </div>
+                </div>
+                <!-- 收藏按鈕 position ， 不受 stretched-link 效果影響 -->
+                <div class="position-absolute top-0 end-0 mt-3 me-3">
+                  <!-- 未收藏 -->
+                  <span
+                    class="material-icons text-white fs-1"
+                    type="button"
+                    :class="{ 'd-none': item.UserCollected }"
+                    @click="changeCollect(item.Id, 'newWorkShop')"
+                    >bookmark_border</span
+                  >
+                  <!-- 已收藏 -->
+                  <span
+                    class="material-icons text-white fs-1"
+                    type="button"
+                    :class="{ 'd-none': !item.UserCollected }"
+                    @click="changeCollect(item.Id, 'newWorkShop')"
+                    >bookmark</span
+                  >
                 </div>
               </div>
             </li>
@@ -461,34 +668,57 @@
               v-for="item in newWorkShop.slice(6, 9)"
               :key="item.Id"
             >
-              <div class="card h-100 rounded-4">
-                <img
-                  :src="item.imgUrl"
-                  class="
-                    card-img-top card-img
-                    rounded rounded-top-4 rounded-bottom-0
-                  "
-                  :alt="item.Image"
-                />
-                <div class="p-40">
-                  <h5 class="card-title p-0 mb-3">
-                    <router-link
-                      :to="`/activity-content/${item.Id}`"
-                      class="stretched-link text-dark"
-                    >
-                      {{ item.Name }}
-                    </router-link>
-                  </h5>
-                  <p class="text-dark mb-2">
-                    活動日期｜{{ item.transStartDate }}
-                  </p>
-                  <p class="text-dark mb-2">
-                    活動時間｜{{ item.transStartTime }} ～
-                    {{ item.transEndTime }}
-                  </p>
-                  <p class="text-dark mb-0">
-                    活動講者｜{{ item.OrganizerName }}
-                  </p>
+              <!-- 給標籤 position 用的 -->
+              <div class="position-relative">
+                <!-- 卡片圖片與內容 -->
+                <div class="card h-100 rounded-4">
+                  <img
+                    :src="item.imgUrl"
+                    class="
+                      card-img-top card-img
+                      rounded rounded-top-4 rounded-bottom-0
+                    "
+                    :alt="item.Image"
+                  />
+                  <div class="card-body position-relative p-40">
+                    <h5 class="card-title p-0 mb-3">
+                      <router-link
+                        :to="`/activity-content/${item.Id}`"
+                        class="stretched-link text-dark"
+                      >
+                        {{ item.Name }}
+                      </router-link>
+                    </h5>
+                    <p class="text-dark mb-2">
+                      活動日期｜{{ item.transStartDate }}
+                    </p>
+                    <p class="text-dark mb-2">
+                      活動時間｜{{ item.transStartTime }} ～
+                      {{ item.transEndTime }}
+                    </p>
+                    <p class="text-dark mb-0">
+                      活動講者｜{{ item.OrganizerName }}
+                    </p>
+                  </div>
+                </div>
+                <!-- 收藏按鈕 position ， 不受 stretched-link 效果影響 -->
+                <div class="position-absolute top-0 end-0 mt-3 me-3">
+                  <!-- 未收藏 -->
+                  <span
+                    class="material-icons text-white fs-1"
+                    type="button"
+                    :class="{ 'd-none': item.UserCollected }"
+                    @click="changeCollect(item.Id, 'newWorkShop')"
+                    >bookmark_border</span
+                  >
+                  <!-- 已收藏 -->
+                  <span
+                    class="material-icons text-white fs-1"
+                    type="button"
+                    :class="{ 'd-none': !item.UserCollected }"
+                    @click="changeCollect(item.Id, 'newWorkShop')"
+                    >bookmark</span
+                  >
                 </div>
               </div>
             </li>
@@ -529,54 +759,226 @@ export default {
   },
   methods: {
     getOnlineNew () {
-      // GET請求
-      this.$apiHelper.get('api/activities/new9/type/0').then((res) => {
+      // 先用 1-8 確認是否有沒有登入
+      this.$apiHelper.get('api/users/profile-data').then((res) => {
+        // 判斷有無登入來決定接哪隻搜尋的 api
         if (res.data.Status) {
-          const activityData = res.data.Data
-          // console.log(activityData)
-          activityData.forEach((item) => {
-            this.transDate(item)
+          // 如果有登入
+          console.log('登入')
 
-            // 2. 加上圖片路徑
-            const imgUrl = `${process.env.VUE_APP_CARDIMG}/${item.Image}?2021`
-            item.imgUrl = imgUrl
+          // 存 Token
+          const token = res.data.JwtToken
+          localStorage.setItem('JwtToken', token)
+          // 1-10 線上讀書會滾動區資料 (JWT)
+          this.$apiHelper
+            .get('api/users/activities/new9/type/0')
+            .then((res) => {
+              if (res.data.Status) {
+                // 存 Token
+                const token = res.data.JwtToken
+                localStorage.setItem('JwtToken', token)
+                // 取得活動資料
+                const activityData = res.data.Data
+                // console.log(activityData)
+                activityData.forEach((item) => {
+                  this.transDate(item)
+
+                  // 2. 加上圖片路徑
+                  const imgUrl = `${process.env.VUE_APP_CARDIMG}/${item.Image}?2021`
+                  item.imgUrl = imgUrl
+                })
+                this.newOnlineActivity = activityData
+                console.log(
+                  '1-10 線上讀書會滾動區資料 (JWT)',
+                  this.newOnlineActivity
+                )
+              }
+            })
+        } else {
+          // 沒有登入
+          // 1-2 線上讀書會滾動區資料
+          this.$apiHelper.get('api/activities/new9/type/0').then((res) => {
+            if (res.data.Status) {
+              const activityData = res.data.Data
+              // console.log(activityData)
+              activityData.forEach((item) => {
+                this.transDate(item)
+
+                // 2. 加上圖片路徑
+                const imgUrl = `${process.env.VUE_APP_CARDIMG}/${item.Image}?2021`
+                item.imgUrl = imgUrl
+              })
+              this.newOnlineActivity = activityData
+              console.log('1-2 線上讀書會滾動區資料', this.newOnlineActivity)
+            }
           })
-          this.newOnlineActivity = activityData
-          // console.log(this.newOnlineActivity)
         }
       })
     },
     getEntityNew () {
-      // GET請求
-      this.$apiHelper.get('api/activities/new9/type/1').then((res) => {
+      // 先用 1-8 確認是否有沒有登入
+      this.$apiHelper.get('api/users/profile-data').then((res) => {
+        // 判斷有無登入來決定接哪隻搜尋的 api
         if (res.data.Status) {
-          const activityData = res.data.Data
-          activityData.forEach((item) => {
-            this.transDate(item)
+          // 如果有登入
 
-            // 2. 加上圖片路徑
-            const imgUrl = `${process.env.VUE_APP_CARDIMG}/${item.Image}?2021`
-            item.imgUrl = imgUrl
+          // 存 Token
+          const token = res.data.JwtToken
+          localStorage.setItem('JwtToken', token)
+          // 1-11 實體讀書會滾動區資料 (JWT)
+          this.$apiHelper
+            .get('api/users/activities/new9/type/1')
+            .then((res) => {
+              if (res.data.Status) {
+                // 存 Token
+                const token = res.data.JwtToken
+                localStorage.setItem('JwtToken', token)
+                // 取得活動資料
+                const activityData = res.data.Data
+                activityData.forEach((item) => {
+                  this.transDate(item)
+
+                  // 2. 加上圖片路徑
+                  const imgUrl = `${process.env.VUE_APP_CARDIMG}/${item.Image}?2021`
+                  item.imgUrl = imgUrl
+                })
+                this.newEntityActivity = activityData
+                console.log(
+                  '1-11 實體讀書會滾動區資料 (JWT)',
+                  this.newEntityActivity
+                )
+              }
+            })
+        } else {
+          // 沒有登入
+          // 1-3 實體讀書會滾動區資料
+          this.$apiHelper.get('api/activities/new9/type/1').then((res) => {
+            if (res.data.Status) {
+              console.log('1-3 實體讀書會滾動區資料')
+              const activityData = res.data.Data
+              activityData.forEach((item) => {
+                this.transDate(item)
+
+                // 2. 加上圖片路徑
+                const imgUrl = `${process.env.VUE_APP_CARDIMG}/${item.Image}?2021`
+                item.imgUrl = imgUrl
+              })
+              this.newEntityActivity = activityData
+              console.log('1-3 實體讀書會滾動區資料', this.newEntityActivity)
+            }
           })
-          this.newEntityActivity = activityData
         }
       })
     },
     getWorkShopNew () {
-      // GET請求
-      this.$apiHelper.get('api/activities/new9/type/2').then((res) => {
+      // 先用 1-8 確認是否有沒有登入
+      this.$apiHelper.get('api/users/profile-data').then((res) => {
+        // 判斷有無登入來決定接哪隻搜尋的 api
         if (res.data.Status) {
-          const activityData = res.data.Data
-          activityData.forEach((item) => {
-            this.transDate(item)
-            // 2. 加上圖片路徑
-            const imgUrl = `${process.env.VUE_APP_CARDIMG}/${item.Image}?2021`
-            item.imgUrl = imgUrl
+          // 如果有登入
+          // 存 Token
+          const token = res.data.JwtToken
+          localStorage.setItem('JwtToken', token)
+          // 1-12 活動工作坊滾動區資料 (JWT)
+          this.$apiHelper
+            .get('api/users/activities/new9/type/2')
+            .then((res) => {
+              if (res.data.Status) {
+                // 存 Token
+                const token = res.data.JwtToken
+                localStorage.setItem('JwtToken', token)
+                // 取得活動資料
+                const activityData = res.data.Data
+                activityData.forEach((item) => {
+                  // 轉換成星期格式
+                  this.transDay(item)
+                  // 轉換日期格式
+                  this.transDate(item)
+                  // 2. 加上圖片路徑
+                  const imgUrl = `${process.env.VUE_APP_CARDIMG}/${item.Image}?2021`
+                  item.imgUrl = imgUrl
+                })
+                this.newWorkShop = activityData
+                console.log('1-12 活動工作坊滾動區資料 (JWT)', this.newWorkShop)
+              }
+            })
+        } else {
+          // 沒有登入
+          console.log('沒有登入')
+          // 1-4 活動工作坊滾動區資料
+          this.$apiHelper.get('api/activities/new9/type/2').then((res) => {
+            if (res.data.Status) {
+              const activityData = res.data.Data
+              activityData.forEach((item) => {
+                // 轉換成星期格式
+                this.transDay(item)
+                // 轉換日期格式
+                this.transDate(item)
+                // 2. 加上圖片路徑
+                const imgUrl = `${process.env.VUE_APP_CARDIMG}/${item.Image}?2021`
+                item.imgUrl = imgUrl
+              })
+              this.newWorkShop = activityData
+              console.log('1-4 活動工作坊滾動區資料', this.newWorkShop)
+            }
           })
-          this.newWorkShop = activityData
         }
       })
     },
+    // 改變收藏、取消收藏功能
+    changeCollect (ActivityId, type) {
+      console.log('3-2 收藏/取消收藏活動 (JWT)', ActivityId)
+      // 3-2 收藏/取消收藏活動 (JWT)
+      // 先把 body 要的資料準備好
+      const sentActivityId = {}
+      sentActivityId.ActivityId = ActivityId
+      console.log(sentActivityId)
+
+      // 判斷是哪個 Data 要判別 Id
+      let data = []
+      // 判斷是哪一個類別的陣列要跑迴圈
+      if (type === 'newOnlineActivity') {
+        data = this.newOnlineActivity
+      } else if (type === 'newEntityActivity') {
+        data = this.newEntityActivity
+      } else if (type === 'newWorkShop') {
+        data = this.newWorkShop
+      }
+      console.log(data)
+      // 3-2 收藏/取消收藏活動 (JWT)
+      this.$apiHelper
+        .put('api/users/activity/collect', sentActivityId)
+        .then((res) => {
+          if (res.data.Status) {
+            console.log('3-2 收藏/取消收藏活動 (JWT)')
+            // 先存 token
+            const token = res.data.JwtToken
+            localStorage.setItem('JwtToken', token)
+            // 收藏、取消收藏 - 改變 icon
+            // 將陣列跑迴圈，如果有對應的資料（Id），就切換狀態
+            data.forEach((item) => {
+              if (item.Id === ActivityId) {
+                item.UserCollected = !item.UserCollected
+              }
+            })
+          } else {
+            // 如果沒有登入的話，請他先登入
+            // 但這部分還沒做登入後如何直接回來活動詳情頁面
+            this.$router.push('/login')
+          }
+        })
+    },
+    // 轉換成星期格式
+    transDay (item) {
+      const dayList = ['日', '一', '二', '三', '四', '五', '六']
+      const oriDay = item.ActivityStartDate
+      const newday = new Date(oriDay).getDay() // or "new Date().getDay()";
+
+      const transDay = dayList[newday]
+      item.transDay = transDay
+      return item
+    },
+    // 轉換日期格式
     splitDate (date) {
       const Time = new Date(date)
       Time.getFullYear()

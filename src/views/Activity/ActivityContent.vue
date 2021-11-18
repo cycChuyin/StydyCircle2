@@ -17,8 +17,9 @@
             {{ getActivityInfo.Summary }}
           </p>
           <p class="fs-6 text-light contentTextShadow">
-            {{ getActivityInfo.transStartDate }} Thu.
-            {{ getActivityInfo.transStartTime }} -
+            {{ getActivityInfo.transStartDate }} （{{
+              getActivityInfo.transDay
+            }}） {{ getActivityInfo.transStartTime }} -
             {{ getActivityInfo.transEndTime }}
           </p>
         </div>
@@ -34,6 +35,7 @@
         {{ getActivityInfo.ActivityType }} - 活動詳情
       </h2>
       <div class="d-flex">
+        <!-- 未收藏時的按鈕狀態 -->
         <button
           type="button"
           class="
@@ -45,8 +47,27 @@
             align-items-center
             me-3
           "
+          :class="{ 'd-none': isCollected }"
+          @click="changeCollect(getActivityInfo.Id)"
         >
           <span class="material-icons me-2">bookmark_border</span>收藏活動
+        </button>
+        <!-- 已收藏時的按鈕狀態 -->
+        <button
+          type="button"
+          class="
+            btn btn-dark
+            nav-link
+            rounded-pill
+            text-white
+            d-flex
+            align-items-center
+            me-3
+          "
+          :class="{ 'd-none': !isCollected }"
+          @click="changeCollect(getActivityInfo.Id)"
+        >
+          <span class="material-icons me-2">bookmark</span>已收藏
         </button>
         <button
           type="button"
@@ -157,6 +178,7 @@
             人收藏
           </p>
           <div class="d-flex">
+            <!-- 未收藏時的按鈕狀態 -->
             <button
               type="button"
               class="
@@ -168,8 +190,27 @@
                 align-items-center
                 me-3
               "
+              :class="{ 'd-none': isCollected }"
+              @click="changeCollect(getActivityInfo.Id)"
             >
               <span class="material-icons me-2">bookmark_border</span>收藏活動
+            </button>
+            <!-- 已收藏時的按鈕狀態 -->
+            <button
+              type="button"
+              class="
+                btn btn-dark
+                nav-link
+                rounded-pill
+                text-white
+                d-flex
+                align-items-center
+                me-3
+              "
+              :class="{ 'd-none': !isCollected }"
+              @click="changeCollect(getActivityInfo.Id)"
+            >
+              <span class="material-icons me-2">bookmark</span>已收藏
             </button>
             <button
               type="button"
@@ -237,7 +278,9 @@
               <p class="text-secondary fw-bold fs-4">
                 {{ getActivityInfo.transStartDate }}
               </p>
-              <p class="text-secondary fw-bold fs-4">Tue.</p>
+              <p class="text-secondary fw-bold fs-4">
+                （{{ getActivityInfo.transDay }}）
+              </p>
             </div>
             <div class="d-flex justify-content-between align-items-center m-0">
               <p class="text-secondary fw-light fs-4 mb-0">
@@ -383,6 +426,7 @@
                   人收藏
                 </p>
                 <div class="d-flex">
+                  <!-- 未收藏時的按鈕狀態 -->
                   <button
                     type="button"
                     class="
@@ -394,9 +438,28 @@
                       align-items-center
                       me-3
                     "
+                    :class="{ 'd-none': isCollected }"
+                    @click="changeCollect(getActivityInfo.Id)"
                   >
                     <span class="material-icons me-2">bookmark_border</span
                     >收藏活動
+                  </button>
+                  <!-- 已收藏時的按鈕狀態 -->
+                  <button
+                    type="button"
+                    class="
+                      btn btn-dark
+                      nav-link
+                      rounded-pill
+                      text-white
+                      d-flex
+                      align-items-center
+                      me-3
+                    "
+                    :class="{ 'd-none': !isCollected }"
+                    @click="changeCollect(getActivityInfo.Id)"
+                  >
+                    <span class="material-icons me-2">bookmark</span>已收藏
                   </button>
                   <!-- 5-2 活動頁_活動詳情_尚未報名 -->
                   <button
@@ -530,7 +593,9 @@
                         視訊軟體｜{{ getActivityInfo.Software }}
                       </li>
                       <li class="text-dark">
-                        活動日期｜{{ getActivityInfo.transStartDate }} （四）
+                        活動日期｜{{ getActivityInfo.transStartDate }} （{{
+                          getActivityInfo.transDay
+                        }})
                       </li>
                       <li class="text-dark">
                         活動時間｜{{ getActivityInfo.transStartTime }} -
@@ -599,11 +664,11 @@
                                 form-control-darkGray
                                 rounded-pill
                                 position-relative
-                                disabled
                                 ps-3
                               "
                               id="email"
                               placeholder="chansiuming@email.com"
+                              disabled
                               v-model="getUsersAttendData.Account"
                             />
                           </div>
@@ -623,7 +688,7 @@
                   text-center text-secondary
                 "
               >
-                總計 NT$ 100
+                總計 NT$ {{ getActivityInfo.Price }}
               </p>
               <!-- 注意事項 -->
               <p class="text-secondary mb-3">活動資訊</p>
@@ -741,7 +806,8 @@ export default {
       unRegister: true,
       // 藍新金流回傳的東西
       getPaymentData: {},
-      isSuccessPay: true
+      isSuccessPay: true,
+      isCollected: false
     }
   },
   created () {
@@ -756,6 +822,8 @@ export default {
         const oriActivityInfo = res.data.Data.ActivityData
         const activityImgUrl = `${process.env.VUE_APP_ACTIVITYIMG}/${res.data.Data.ActivityData.Image}?2021`
         this.transDate(oriActivityInfo)
+        // 轉換成星期格式
+        this.transDay(oriActivityInfo)
         this.getActivityInfo = oriActivityInfo
         this.getActivityInfo.Image = activityImgUrl
         console.log(this.getActivityInfo)
@@ -784,6 +852,9 @@ export default {
         oriOpinionData.forEach((item) => {
           const userUrl = `${process.env.VUE_APP_USERIMG}/${item.Image}?2021`
           item.userImgUrl = userUrl
+          // 轉換成星期格式
+          this.transDay(item)
+          // 轉換成日期格式
           this.transDate(item)
         })
         this.getOpinionData = oriOpinionData
@@ -815,6 +886,29 @@ export default {
           }
         })
     }
+
+    // 5-5 確認是否已收藏活動 (JWT)
+    if (!Token || Token === 'undefined') {
+      console.log('沒有登入喔！')
+      this.isCollected = false
+    } else if (Token) {
+      this.$apiHelper
+        .get(`api/users/activity/collect/status/${Id}`)
+        .then((res) => {
+          const status = res.data.Status
+          if (status === true) {
+            console.log('有登入而且有收藏了！')
+            // 存取 token
+            localStorage.setItem('JwtToken', res.data.JwtToken)
+            this.isCollected = true
+          } else {
+            console.log('尚未收藏')
+            localStorage.setItem('JwtToken', res.data.JwtToken)
+            this.isCollected = false
+          }
+        })
+    }
+
     // 6-1 報名活動 - 個資帶入
     this.$apiHelper.post('api/users/attend-data', Token).then((res) => {
       console.log(res)
@@ -827,6 +921,46 @@ export default {
     })
   },
   methods: {
+    // 改變收藏、取消收藏功能
+    changeCollect (ActivityId) {
+      console.log('3-2 收藏/取消收藏活動 (JWT)')
+      console.log(ActivityId)
+      // 3-2 收藏/取消收藏活動 (JWT)
+      // 先把 body 要的資料準備好
+      const sentActivityId = {}
+      sentActivityId.ActivityId = ActivityId
+      console.log(sentActivityId)
+
+      // 3-2 收藏/取消收藏活動 (JWT)
+      this.$apiHelper
+        .put('api/users/activity/collect', sentActivityId)
+        .then((res) => {
+          if (res.data.Status) {
+            console.log('3-2 收藏/取消收藏活動 (JWT)')
+            // 先存 token
+            const token = res.data.JwtToken
+            localStorage.setItem('JwtToken', token)
+
+            // 收藏、取消收藏 - 改變 icon
+            this.isCollected = !this.isCollected
+          } else {
+            // 如果沒有登入的話，請他先登入
+            // 但這部分還沒做登入後如何直接回來活動詳情頁面
+            this.$router.push('/login')
+          }
+        })
+    },
+    // 轉換成星期格式
+    transDay (item) {
+      const dayList = ['日', '一', '二', '三', '四', '五', '六']
+      const oriDay = item.ActivityStartDate
+      const newday = new Date(oriDay).getDay() // or "new Date().getDay()";
+
+      const transDay = dayList[newday]
+      item.transDay = transDay
+      return item
+    },
+    // 拆分日期
     transDate (item) {
       // 1. 針對日期格式進行轉換
       // 取得開始、結束日期
@@ -874,6 +1008,7 @@ export default {
         UserAccount: this.getUsersAttendData.Account
       }
       console.log(this.giveUserInfo)
+      console.log(typeof this.getActivityInfo.Price)
       // 如果是免費的話，直接送 6-2
       if (this.getActivityInfo.Price === 0) {
         // 6-2 報名活動 - 免費＋發信
@@ -886,6 +1021,7 @@ export default {
               const getJwtToken = res.data.JwtToken
               localStorage.setItem('JwtToken', getJwtToken)
               this.$router.push('/register-success')
+              console.log(res.data)
             }
           })
       } else if (this.getActivityInfo.Price > 0) {

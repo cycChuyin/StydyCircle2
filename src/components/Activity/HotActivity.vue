@@ -67,7 +67,11 @@
                 {{ newOnlineObj.Name }}
               </h3>
               <p class="mb-0">
-                ｜日期：<span>{{ newOnlineObj.transStartDate }}（日）</span>
+                ｜日期：<span
+                  >{{ newOnlineObj.transStartDate }}（{{
+                    newOnlineObj.transDay
+                  }}）</span
+                >
                 ｜時間：<span
                   >{{ newOnlineObj.transStartTime }} -
                   {{ newOnlineObj.transEndTime }}</span
@@ -97,7 +101,11 @@
                 {{ newEntityObj.Name }}
               </h3>
               <p class="mb-0">
-                ｜日期：<span>{{ newEntityObj.transStartDate }}（日）</span>
+                ｜日期：<span
+                  >{{ newEntityObj.transStartDate }}（{{
+                    newEntityObj.transDay
+                  }}）</span
+                >
                 ｜時間：<span
                   >{{ newEntityObj.transStartTime }} -
                   {{ newEntityObj.transEndTime }}</span
@@ -127,12 +135,16 @@
                 {{ newWorkShop.Name }}
               </h3>
               <p class="mb-0">
-                ｜日期：<span>{{ newWorkShop.transStartDate }}（日）</span>
+                ｜日期：<span
+                  >{{ newWorkShop.transStartDate }}（{{
+                    newWorkShop.transDay
+                  }}）</span
+                >
                 ｜時間：<span
                   >{{ newWorkShop.transStartTime }} -
                   {{ newWorkShop.transEndTime }}</span
                 >
-                ｜人數：<span>{{ newWorkShop.LimitNumber }} 人以內</span>Î
+                ｜人數：<span>{{ newWorkShop.LimitNumber }} 人以內</span>
               </p>
               <p class="py-3">
                 {{ newWorkShop.Summary }}
@@ -177,7 +189,8 @@ export default {
           item.Image = imgUrl
           // 轉換時間格式
           this.transDate(item)
-          this.transDate(item)
+          // 轉換成星期格式
+          this.transDay(item)
         })
         this.newOnlineObj = JSON.parse(JSON.stringify(oriHotActivityData[0]))
         this.newEntityObj = JSON.parse(JSON.stringify(oriHotActivityData[1]))
@@ -187,6 +200,17 @@ export default {
         // console.log(this.newHotActivityData)
       })
     },
+    // 轉換成星期格式
+    transDay (item) {
+      const dayList = ['日', '一', '二', '三', '四', '五', '六']
+      const oriDay = item.ActivityStartDate
+      const newday = new Date(oriDay).getDay() // or "new Date().getDay()";
+
+      const transDay = dayList[newday]
+      item.transDay = transDay
+      return item
+    },
+    // 拆分日期
     splitDate (date) {
       const Time = new Date(date)
       Time.getFullYear()

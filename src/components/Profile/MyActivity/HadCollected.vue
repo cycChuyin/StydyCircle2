@@ -93,6 +93,8 @@ export default {
           const oriHadCollectedData = res.data.Data.MyActivity
           console.log(oriHadCollectedData)
           oriHadCollectedData.forEach((item) => {
+            // 轉換成星期格式
+            this.transDay(item)
             // 拆解日期
             this.transDate(item)
             // 2. 加上圖片路徑
@@ -105,6 +107,16 @@ export default {
       })
   },
   methods: {
+    // 轉換成星期格式
+    transDay (item) {
+      const dayList = ['日', '一', '二', '三', '四', '五', '六']
+      const oriDay = item.ActivityStartDate
+      const newday = new Date(oriDay).getDay() // or "new Date().getDay()";
+
+      const transDay = dayList[newday]
+      item.transDay = transDay
+      return item
+    },
     splitDate (date) {
       const Time = new Date(date)
       Time.getFullYear()

@@ -18,6 +18,7 @@
                   :src="item.imgUrl"
                   :alt="item.Image"
                   class="card-img-top rounded-7 rounded-end-0"
+                  style="height: 100%"
                 />
               </div>
               <div class="col-md-8">
@@ -25,7 +26,13 @@
                   <h5 class="card-title fw-light fs-4 mb-2">
                     {{ item.Name }} - {{ item.OrganizerName }}
                   </h5>
-                  <p class="card-text mb-2">2021/12/23（四）15:00 - 18:00</p>
+                  <p class="card-text mb-2">
+                    {{ item.transStartDate }}（{{ item.transDay }}）{{
+                      item.transStartTime
+                    }}
+                    -
+                    {{ item.transEndTime }}
+                  </p>
                   <p class="card-text mb-3">
                     {{ item.Summary }}
                   </p>
@@ -69,7 +76,7 @@
                     進行方式｜{{ item.ActivityType }} - {{ item.Software }}
                   </p>
                   <p class="fw-light text-secondary mb-3">
-                    活動日期｜{{ item.transStartDate }} （四）
+                    活動日期｜{{ item.transStartDate }} （{{ item.transDay }}）
                   </p>
                   <p class="fw-light text-secondary mb-3">
                     活動時間｜{{ item.transStartTime }} -
@@ -177,7 +184,7 @@ export default {
   },
   methods: {
     // 剛渲染時得取資料
-    // 當路由變化時，更新資料
+
     getCommingData () {
       console.log(this.$route)
       // const getUserId = localStorage.getItem('UserId')
@@ -192,6 +199,8 @@ export default {
 
             oriCommingData.forEach((item) => {
               this.transDate(item)
+              // 轉換成星期格式
+              this.transDay(item)
               // 2. 加上圖片路徑
               const imgUrl = `${process.env.VUE_APP_CARDIMG}/${item.Image}?2021`
               item.imgUrl = imgUrl
@@ -203,6 +212,14 @@ export default {
           }
         })
     },
+    // 當路由變化時，更新資料(watch 監聽)
+    changePath () {
+      console.log(this.$route)
+      this.routeUserId = this.$route.params.UserId
+      // 呼叫取得資料的方法
+      this.getCommingData()
+    },
+    // 取消報名
     deletedRegister (ActivityId) {
       const deleteActivity = {}
       deleteActivity.ActivityId = ActivityId
@@ -219,12 +236,22 @@ export default {
         })
     },
     changeTopImg (id) {
-      this.getCommingData.forEach((item) => {
+      this.newCommingData.forEach((item) => {
         if (item.ActivityId === id) {
           console.log(item.ActivityId, id)
           return (item.isCollapse = !item.isCollapse)
         }
       })
+    },
+    // 轉換成星期格式
+    transDay (item) {
+      const dayList = ['日', '一', '二', '三', '四', '五', '六']
+      const oriDay = item.ActivityStartDate
+      const newday = new Date(oriDay).getDay() // or "new Date().getDay()";
+
+      const transDay = dayList[newday]
+      item.transDay = transDay
+      return item
     },
     splitDate (date) {
       const Time = new Date(date)
@@ -257,10 +284,6 @@ export default {
       item.transEndTime = transEndDateObj.splitFinalTime
       // 回傳每筆資料
       return item
-    },
-    openModal () {
-      console.log('打開 modal', this.$refs.opinionModal)
-      this.$refs.opinionModal.showModal()
     }
   }
 }

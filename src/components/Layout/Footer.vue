@@ -2,7 +2,7 @@
   <div class="border border-dark">
     <div class="container">
       <img
-        src="@/assets/photo/logo.png"
+        src="@/assets/photo/thak-tsheh.png?20211118"
         class="mt-5"
         style="width: 239px; height: auto"
       />

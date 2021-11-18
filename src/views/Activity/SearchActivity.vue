@@ -44,13 +44,19 @@
                 </li>
                 <li
                   class="dropdown-item py-2 text-center rounded-3"
-                  @click="selectType(-1, '線上讀書會')"
+                  @click="selectType(0, '線上讀書會')"
                 >
                   線上讀書會
                 </li>
                 <li
                   class="dropdown-item py-2 text-center rounded-3"
-                  @click="selectType(-1, '活動工作坊')"
+                  @click="selectType(1, '實體讀書會')"
+                >
+                  實體讀書會
+                </li>
+                <li
+                  class="dropdown-item py-2 text-center rounded-3"
+                  @click="selectType(2, '活動工作坊')"
                 >
                   活動工作坊
                 </li>
@@ -346,12 +352,14 @@
               class="material-icons text-white fs-1"
               type="button"
               :class="{ 'd-none': item.UserCollected }"
+              @click="changeCollect(item.Id)"
               >bookmark_border</span
             >
             <span
               class="material-icons text-white fs-1"
               type="button"
               :class="{ 'd-none': !item.UserCollected }"
+              @click="changeCollect(item.Id)"
               >bookmark</span
             >
           </div>
@@ -480,12 +488,14 @@ export default {
 
       // 先用 1-8 確認是否有沒有登入
       this.$apiHelper.get('api/users/profile-data').then((res) => {
-        // 存 Token
-        const token = res.data.JwtToken
-        localStorage.setItem('JwtToken', token)
         // 判斷有無登入來決定接哪隻搜尋的 api
         if (res.data.Status) {
           console.log('登入')
+
+          // 存 Token
+          const token = res.data.JwtToken
+          localStorage.setItem('JwtToken', token)
+
           // 如果有登入
           // 3-1 已登入分類搜尋+排序+分頁功能 (JWT)
           // api/users/activity/search/:split/:page/:type/:classify/:area/:sorting/:query
@@ -514,6 +524,7 @@ export default {
                 // 將整理好的 oriSearchData 賦予給本元件的 data
                 this.newSearchData = oriSearchData
                 console.log(this.newSearchData)
+                // this.checkCollect(this.newSearchData)
               }
             })
         } else {
@@ -546,6 +557,34 @@ export default {
         }
       })
     },
+    // checkCollect (item) {
+    //   console.log('我有被呼叫喔！')
+    //   console.log(item)
+    //   // 直接使用陣列下去看有無收藏
+    //   // 有登入會判斷有無追蹤，沒登入一律是未收藏
+    //   // 使用 5-5 判斷使用者有無收藏活動
+
+    //   // 因為 this.newSearchData 是陣列，用迴圈跑
+    //   item.forEach((item) => {
+    //     // 宣告傳進來的資料庫的活動 Id
+    //     const ActivityId = item.Id
+    //     console.log(ActivityId)
+    //     // 5-5 確認是否已收藏活動 (JWT)
+    //     this.$apiHelper
+    //       .get(`api/users/activity/collect/status/${ActivityId}`)
+    //       .then((res) => {
+    //         if (res.data.Status) {
+    //           // 如果有收藏，則給 true
+    //           // 新增 isCollected 屬性
+    //           item.isCollected = true
+    //         } else {
+    //           item.isCollected = false
+    //         }
+    //       })
+    //   })
+    //   console.log(item)
+    //   return item
+    // },
     // 選擇「排序」
     selectSorting (sortingNum, Text) {
       this.sortingText = Text
@@ -558,6 +597,36 @@ export default {
         this.sortingText
       )
     },
+    // 改變收藏、取消收藏功能
+    changeCollect (ActivityId) {
+      console.log(ActivityId)
+      // 3-2 收藏/取消收藏活動 (JWT)
+      // 先把 body 要的資料準備好
+      const sentActivityId = {}
+      sentActivityId.ActivityId = ActivityId
+      console.log(sentActivityId)
+
+      // 3-2 收藏/取消收藏活動 (JWT)
+      this.$apiHelper
+        .put('api/users/activity/collect', sentActivityId)
+        .then((res) => {
+          if (res.data.Status) {
+            console.log('3-2 收藏/取消收藏活動 (JWT)')
+            // 先存 token
+            const token = res.data.JwtToken
+            localStorage.setItem('JwtToken', token)
+
+            // 收藏、取消收藏 - 改變 icon
+            // 將陣列跑迴圈，如果有對應的資料（Id），就切換狀態
+            this.newSearchData.forEach((item) => {
+              if (item.Id === ActivityId) {
+                item.UserCollected = !item.UserCollected
+              }
+            })
+          }
+        })
+    },
+
     // 選擇主題類別
     selectType (typeNum, Text) {
       console.log(typeNum)

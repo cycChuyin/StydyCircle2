@@ -169,9 +169,6 @@ export default {
       this.isEntity = false
       this.isWorkShop = true
     }
-  },
-  mounted () {
-    console.log(this.refs)
   }
 }
 </script>

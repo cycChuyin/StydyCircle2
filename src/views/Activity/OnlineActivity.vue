@@ -225,15 +225,15 @@
                 <span
                   class="material-icons text-white fs-1"
                   type="button"
-                  :class="{ 'd-none': isCollect }"
-                  @click="collectActivity('hadCollected')"
+                  :class="{ 'd-none': item.UserCollected }"
+                  @click="changeCollect(item.Id, 'newOnlineComingData')"
                   >bookmark_border</span
                 >
                 <span
                   class="material-icons text-white fs-1"
                   type="button"
-                  :class="{ 'd-none': !isCollect }"
-                  @click="collectActivity('notCollected')"
+                  :class="{ 'd-none': !item.UserCollected }"
+                  @click="changeCollect(item.Id, 'newOnlineComingData')"
                   >bookmark</span
                 >
               </div>
@@ -330,15 +330,15 @@
                 <span
                   class="material-icons text-white fs-1"
                   type="button"
-                  :class="{ 'd-none': isCollect }"
-                  @click="collectActivity('hadCollected')"
+                  :class="{ 'd-none': item.UserCollected }"
+                  @click="changeCollect(item.Id, 'newOnlineHotData')"
                   >bookmark_border</span
                 >
                 <span
                   class="material-icons text-white fs-1"
                   type="button"
-                  :class="{ 'd-none': !isCollect }"
-                  @click="collectActivity('notCollected')"
+                  :class="{ 'd-none': !item.UserCollected }"
+                  @click="changeCollect(item.Id, 'newOnlineHotData')"
                   >bookmark</span
                 >
               </div>
@@ -435,15 +435,15 @@
                 <span
                   class="material-icons text-white fs-1"
                   type="button"
-                  :class="{ 'd-none': isCollect }"
-                  @click="collectActivity('hadCollected')"
+                  :class="{ 'd-none': item.UserCollected }"
+                  @click="changeCollect(item.Id, 'newOnlineNewData')"
                   >bookmark_border</span
                 >
                 <span
                   class="material-icons text-white fs-1"
                   type="button"
-                  :class="{ 'd-none': !isCollect }"
-                  @click="collectActivity('notCollected')"
+                  :class="{ 'd-none': !item.UserCollected }"
+                  @click="changeCollect(item.Id, 'newOnlineNewData')"
                   >bookmark</span
                 >
               </div>
@@ -489,60 +489,208 @@ export default {
     }
   },
   created () {
-    // 4-1 即將截止（線上讀書會）
-    this.$apiHelper.get('api/activity/final/type/0/3/1').then((res) => {
-      if (res.data.Status) {
-        console.log(res.data)
-        const oriOnlineComingData = res.data.Data.Activity
-        console.log(oriOnlineComingData)
-        oriOnlineComingData.forEach((item) => {
-          this.transDate(item)
-
-          // 2. 加上圖片路徑
-          const imgUrl = `${process.env.VUE_APP_CARDIMG}/${item.Image}?2021`
-          item.imgUrl = imgUrl
-        })
-        this.newOnlineComingData = oriOnlineComingData
-        console.log(this.newOnlineComingData)
-      }
-    })
-
-    // 4-2 最多人報名（線上讀書會）
-    this.$apiHelper.get('api/activity/hot/type/0/3/1').then((res) => {
-      if (res.data.Status) {
-        // console.log(res.data)
-        const oriOnlineHotData = res.data.Data.Activity
-        // console.log(oriOnlineHotData)
-        oriOnlineHotData.forEach((item) => {
-          this.transDate(item)
-
-          // 2. 加上圖片路徑
-          const imgUrl = `${process.env.VUE_APP_CARDIMG}/${item.Image}?2021`
-          item.imgUrl = imgUrl
-        })
-        this.newOnlineHotData = oriOnlineHotData
-        // console.log(this.newOnlineHotData)
-      }
-    })
-
-    // 4-3 新推出資料（線上讀書會）
-    this.$apiHelper.get('api/activity/new/type/0/3/1').then((res) => {
-      if (res.data.Status) {
-        // console.log(res.data)
-        const oriOnlineNewData = res.data.Data.Activity
-        // console.log(oriOnlineNewData)
-        oriOnlineNewData.forEach((item) => {
-          this.transDate(item)
-
-          // 2. 加上圖片路徑
-          const imgUrl = `${process.env.VUE_APP_CARDIMG}/${item.Image}?2021`
-          item.imgUrl = imgUrl
-        })
-        this.newOnlineNewData = oriOnlineNewData
-      }
-    })
+    this.getOnlineStudyCircleData()
   },
   methods: {
+    // 取得線上讀書會資料
+    // 大方向：先確認有無登入，再來決定要接哪一隻 API
+    getOnlineStudyCircleData () {
+      // 先用 1-8 確認是否有沒有登入
+      this.$apiHelper.get('api/users/profile-data').then((res) => {
+        // 存 Token
+        const token = res.data.JwtToken
+        localStorage.setItem('JwtToken', token)
+        // 判斷有無登入來決定接哪隻搜尋的 api
+        if (res.data.Status) {
+          // 如果有登入
+          console.log('登入')
+
+          // 4-4 即將截止報名資料 (JWT)
+          this.$apiHelper
+            .get('api/users/activity/final/type/0/3/1')
+            .then((res) => {
+              if (res.data.Status) {
+                // 有 JWT 的先存取 Token
+                const token = res.data.JwtToken
+                localStorage.setItem('JwtToken', token)
+
+                console.log(res.data)
+                // oriOnlineComingData 取得 api 先給的資料
+                const oriOnlineComingData = res.data.Data.Activity
+                console.log(oriOnlineComingData)
+                oriOnlineComingData.forEach((item) => {
+                  // 1. 轉換日期格式
+                  this.transDate(item)
+
+                  // 2. 加上圖片路徑，並在資料上新建屬性
+                  const imgUrl = `${process.env.VUE_APP_CARDIMG}/${item.Image}?2021`
+                  item.imgUrl = imgUrl
+                })
+                // 將本地的 newOnlineComingData 賦予 oriOnlineComingData 的資料
+                this.newOnlineComingData = oriOnlineComingData
+                console.log(this.newOnlineComingData)
+              }
+            })
+
+          // 4-5 最多人報名資料 (JWT)
+          this.$apiHelper
+            .get('api/users/activity/hot/type/0/3/1')
+            .then((res) => {
+              if (res.data.Status) {
+                // 有 JWT 的先存取 Token
+                const token = res.data.JwtToken
+                localStorage.setItem('JwtToken', token)
+
+                // console.log(res.data)
+                // oriOnlineHotData 取得 api 先給的資料
+                const oriOnlineHotData = res.data.Data.Activity
+                // console.log(oriOnlineHotData)
+                oriOnlineHotData.forEach((item) => {
+                  // 1. 轉換日期格式
+                  this.transDate(item)
+
+                  // 2. 加上圖片路徑
+                  const imgUrl = `${process.env.VUE_APP_CARDIMG}/${item.Image}?2021`
+                  item.imgUrl = imgUrl
+                })
+                // 將本地的 newOnlineHotData 賦予 oriOnlineHotData 的資料
+                this.newOnlineHotData = oriOnlineHotData
+                console.log(this.newOnlineHotData)
+              }
+            })
+
+          // 4-6 新推出資料 (JWT)
+          this.$apiHelper
+            .get('api/users/activity/new/type/0/3/1')
+            .then((res) => {
+              if (res.data.Status) {
+                // 有 JWT 的先存取 Token
+                const token = res.data.JwtToken
+                localStorage.setItem('JwtToken', token)
+
+                // console.log(res.data)
+                // oriOnlineNewData 取得 api 先給的資料
+                const oriOnlineNewData = res.data.Data.Activity
+                // console.log(oriOnlineNewData)
+                oriOnlineNewData.forEach((item) => {
+                  // 1. 轉換日期格式
+                  this.transDate(item)
+
+                  // 2. 加上圖片路徑
+                  const imgUrl = `${process.env.VUE_APP_CARDIMG}/${item.Image}?2021`
+                  item.imgUrl = imgUrl
+                })
+                // 將本地的 newOnlineNewData 賦予 oriOnlineNewData 的資料
+                this.newOnlineNewData = oriOnlineNewData
+                console.log(this.newOnlineNewData)
+              }
+            })
+        } else {
+          // 沒有登入
+          console.log('沒有登入')
+
+          // 4-1 即將截止（線上讀書會）
+          this.$apiHelper.get('api/activity/final/type/0/3/1').then((res) => {
+            if (res.data.Status) {
+              console.log(res.data)
+              const oriOnlineComingData = res.data.Data.Activity
+              console.log(oriOnlineComingData)
+              oriOnlineComingData.forEach((item) => {
+                // 1. 轉換日期格式
+                this.transDate(item)
+
+                // 2. 加上圖片路徑
+                const imgUrl = `${process.env.VUE_APP_CARDIMG}/${item.Image}?2021`
+                item.imgUrl = imgUrl
+              })
+              this.newOnlineComingData = oriOnlineComingData
+              console.log(this.newOnlineComingData)
+            }
+          })
+
+          // 4-2 最多人報名（線上讀書會）
+          this.$apiHelper.get('api/activity/hot/type/0/3/1').then((res) => {
+            if (res.data.Status) {
+              // console.log(res.data)
+              const oriOnlineHotData = res.data.Data.Activity
+              // console.log(oriOnlineHotData)
+              oriOnlineHotData.forEach((item) => {
+                this.transDate(item)
+
+                // 2. 加上圖片路徑
+                const imgUrl = `${process.env.VUE_APP_CARDIMG}/${item.Image}?2021`
+                item.imgUrl = imgUrl
+              })
+              this.newOnlineHotData = oriOnlineHotData
+              // console.log(this.newOnlineHotData)
+            }
+          })
+
+          // 4-3 新推出資料（線上讀書會）
+          this.$apiHelper.get('api/activity/new/type/0/3/1').then((res) => {
+            if (res.data.Status) {
+              // console.log(res.data)
+              const oriOnlineNewData = res.data.Data.Activity
+              // console.log(oriOnlineNewData)
+              oriOnlineNewData.forEach((item) => {
+                this.transDate(item)
+
+                // 2. 加上圖片路徑
+                const imgUrl = `${process.env.VUE_APP_CARDIMG}/${item.Image}?2021`
+                item.imgUrl = imgUrl
+              })
+              this.newOnlineNewData = oriOnlineNewData
+            }
+          })
+        }
+      })
+    },
+
+    // 改變收藏、取消收藏功能
+    changeCollect (ActivityId, variety) {
+      console.log('3-2 收藏/取消收藏活動 (JWT)')
+      console.log(ActivityId)
+      // 3-2 收藏/取消收藏活動 (JWT)
+      // 先把 body 要的資料準備好
+      const sentActivityId = {}
+      sentActivityId.ActivityId = ActivityId
+      console.log(sentActivityId)
+
+      let data = []
+      // 判斷是哪一個類別的陣列要跑迴圈
+      if (variety === 'newOnlineComingData') {
+        data = this.newOnlineComingData
+      } else if (variety === 'newOnlineHotData') {
+        data = this.newOnlineHotData
+      } else if (variety === 'newOnlineNewData') {
+        data = this.newOnlineNewData
+      }
+
+      // 3-2 收藏/取消收藏活動 (JWT)
+      this.$apiHelper
+        .put('api/users/activity/collect', sentActivityId)
+        .then((res) => {
+          if (res.data.Status) {
+            console.log('3-2 收藏/取消收藏活動 (JWT)')
+            // 先存 token
+            const token = res.data.JwtToken
+            localStorage.setItem('JwtToken', token)
+
+            // 收藏、取消收藏 - 改變 icon
+            // 將陣列跑迴圈，如果有對應的資料（Id），就切換狀態
+            data.forEach((item) => {
+              if (item.Id === ActivityId) {
+                item.UserCollected = !item.UserCollected
+              }
+            })
+          } else {
+            // 如果沒有登入的話，請他先登入
+            // 但這部分還沒做登入後如何直接回來活動詳情頁面
+            this.$router.push('/login')
+          }
+        })
+    },
+
     // 搜尋方法
     searchNow () {
       console.log('線上活動換搜尋頁！')
@@ -565,6 +713,7 @@ export default {
       this.classifyText = Text
       console.log(this.seachParams.classify, this.classifyText)
     },
+    // 時間拆分
     splitDate (date) {
       const Time = new Date(date)
       Time.getFullYear()

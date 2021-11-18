@@ -176,7 +176,7 @@
     </nav>
     <router-link to="/study-circle">
       <img
-        src="@/assets/photo/logo.png"
+        src="@/assets/photo/thak-tsheh.png?20211118"
         class="position-absolute top-50 start-50 translate-middle"
         style="width: 239px; height: auto"
       />
