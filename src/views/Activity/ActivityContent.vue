@@ -25,6 +25,221 @@
         </div>
       </div>
     </div>
+    <!-- 畫布 - offcanvas -->
+    <div
+      class="offcanvas offcanvas-end py-4"
+      tabindex="-1"
+      id="offcanvasRight"
+      aria-labelledby="offcanvasRightLabel"
+      data-bs-scroll="true"
+      ref="offcanvas"
+    >
+      <div class="offcanvas-header border-bottom border-secondary px-5">
+        <h6 id="offcanvasRightLabel" class="text-secondary fs-2 fw-bold">報名資訊</h6>
+        <button
+          type="button"
+          class="btn-close text-reset"
+          @click="hideOffcanvas"
+          aria-label="Close"
+        ></button>
+      </div>
+      <div class="offcanvas-body px-5">
+        <form @click.prevent="sendApply">
+          <div class="py-5">
+            <div class="row">
+              <div class="col-6">
+                <p class="text-secondary">活動資訊</p>
+                <ul class="list-unstyled">
+                  <li class="text-dark mb-2">
+                    活動名稱｜{{ getActivityInfo.Name }}
+                  </li>
+                  <li class="text-dark mb-2">
+                    活動類型｜{{ getActivityInfo.ActivityType }}
+                  </li>
+                  <li class="text-dark mb-2">
+                    視訊軟體｜{{ getActivityInfo.Software }}
+                  </li>
+                  <li class="text-dark mb-2">
+                    活動日期｜{{ getActivityInfo.transStartDate }} （{{
+                      getActivityInfo.transDay
+                    }})
+                  </li>
+                  <li class="text-dark mb-2">
+                    活動時間｜{{ getActivityInfo.transStartTime }} -
+                    {{ getActivityInfo.transEndTime }}
+                  </li>
+                  <li class="text-dark mb-2">
+                    活動費用｜${{ getActivityInfo.Price }}
+                  </li>
+                </ul>
+              </div>
+              <div class="col-6 border-start border-secondary">
+                <div
+                  class="
+                    d-flex
+                    flex-column
+                    justify-content-center
+                    align-items-center
+                  "
+                >
+                  <ul class="list-unstyled">
+                    <li>
+                      <p class="text-secondary text-start">參加人資訊</p>
+                    </li>
+                    <li class="text-dark mb-3">
+                      <label for="name" class="form-label">姓名</label>
+                      <div class="input-group">
+                        <input
+                          type="text"
+                          class="
+                            form-control-darkGray
+                            rounded-pill
+                            position-relative
+                            ps-3
+                          "
+                          id="name"
+                          placeholder="陳小明"
+                          v-model="getUsersAttendData.Name"
+                        />
+                      </div>
+                    </li>
+                    <li class="text-dark mb-3">
+                      <label for="cellphone" class="form-label">電話號碼</label>
+                      <div class="input-group">
+                        <input
+                          type="text"
+                          class="
+                            form-control-darkGray
+                            rounded-pill
+                            position-relative
+                            ps-3
+                          "
+                          id="cellphone"
+                          placeholder="0912-345-678"
+                          v-model="getUsersAttendData.MobilePhone"
+                        />
+                      </div>
+                    </li>
+                    <li class="text-dark disabled">
+                      <label for="email" class="form-label">電子信箱</label>
+                      <div class="input-group">
+                        <input
+                          type="email"
+                          class="
+                            form-control-darkGray
+                            rounded-pill
+                            position-relative
+                            ps-3
+                          "
+                          id="email"
+                          placeholder="chansiuming@email.com"
+                          disabled
+                          v-model="getUsersAttendData.Account"
+                        />
+                      </div>
+                    </li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </div>
+          <p
+            class="
+              border border-secondary
+              mb-32
+              w-100
+              py-2
+              text-center text-secondary
+            "
+          >
+            <span class="me-2">總計</span> NT$ {{ getActivityInfo.Price }}
+          </p>
+          <!-- 注意事項 -->
+          <p class="text-secondary mb-3">注意事項</p>
+          <p class="text-dark mb-3">
+            煩請在活動開始前先自行下載及註冊
+            Zoom，以免影響活動進行。為了維持活動之品質，倘若遲到 30
+            分鐘即代表放棄活動資格，敬請大家互相配合！
+          </p>
+          <p class="text-secondary mb-3">取消規則</p>
+          <p class="text-dark">
+            若於報名 7 日內取消報名，將可取回活動費用總額之 50%。若在報名完成之
+            7
+            日後取消報名，恕無法退還所有報名費用。煩請各位參加者事先預留活動之時間，希望大家可以好好享受活動的樂趣。
+          </p>
+          <!-- 按鈕 -->
+          <div class="d-flex">
+            <button
+              type="button"
+              class="btn btn-outline-secondary rounded-pill w-100 py-13 fs-4"
+              @click="hideOffcanvas"
+            >
+              取消
+            </button>
+            <button
+              type="submit"
+              class="btn btn-dark rounded-pill w-100 py-13 fs-4"
+              :class="{ 'd-none': !isSuccessPay }"
+            >
+              確認報名
+            </button>
+          </div>
+        </form>
+        <!-- 藍新金流區塊 -->
+        <form
+          name="Newebpay"
+          method="post"
+          action="https://ccore.newebpay.com/MPG/mpg_gateway"
+        >
+          <!-- 設定 hidden 可以隱藏不用給使用者看的資訊 -->
+          <!-- 藍新金流商店代號 -->
+          <input
+            type="hidden"
+            id="MerchantID"
+            name="MerchantID"
+            :value="getPaymentData.MerchantID"
+          />
+          <!-- 交易資料透過 Key 及 IV 進行 AES 加密 -->
+          <input
+            type="hidden"
+            id="TradeInfo"
+            name="TradeInfo"
+            :value="getPaymentData.TradeInfo"
+          />
+          <!-- 經過上述 AES 加密過的字串，透過商店 Key 及 IV 進行 SHA256 加密 -->
+          <input
+            type="hidden"
+            id="TradeSha"
+            name="TradeSha"
+            :value="getPaymentData.TradeSha"
+          />
+          <!-- 串接程式版本 -->
+          <input
+            type="hidden"
+            id="Version"
+            name="Version"
+            :value="getPaymentData.Version"
+          />
+
+          <!-- 按鈕 -->
+          <div class="d-flex" :class="{ 'd-none': isSuccessPay }">
+            <button
+              type="button"
+              class="btn btn-outline-secondary rounded-pill w-100"
+              @click="hideOffcanvas"
+            >
+              取消
+            </button>
+            <!-- 直接執行送出 -->
+            <input
+              type="submit"
+              value="確認付款"
+              class="btn btn-dark rounded-pill w-100"
+            />
+          </div>
+        </form>
+      </div>
+    </div>
   </div>
   <!-- main  -->
   <div class="bg-white pt-5">
@@ -79,7 +294,7 @@
             d-flex
             align-items-center
           "
-          data-bs-toggle="offcanvas"
+          @click="joinRightNow"
           data-bs-target="#offcanvasRight"
           aria-controls="offcanvasRight"
           :class="{ 'd-none': hadRegister }"
@@ -222,7 +437,7 @@
                 d-flex
                 align-items-center
               "
-              data-bs-toggle="offcanvas"
+              @click="joinRightNow"
               data-bs-target="#offcanvasRight"
               aria-controls="offcanvasRight"
               :class="{ 'd-none': hadRegister }"
@@ -472,7 +687,7 @@
                       d-flex
                       align-items-center
                     "
-                    data-bs-toggle="offcanvas"
+                    @click="joinRightNow"
                     data-bs-target="#offcanvasRight"
                     aria-controls="offcanvasRight"
                     :class="{ 'd-none': hadRegister }"
@@ -502,7 +717,7 @@
             </div>
           </div>
           <!-- pagination -->
-          <div
+          <!-- <div
             class="
               d-flex
               justify-content-center
@@ -557,224 +772,7 @@
                 </ul>
               </div>
             </nav>
-          </div>
-        </div>
-
-        <!-- 畫布 - offcanvas -->
-        <div
-          class="offcanvas offcanvas-end px-5 py-8"
-          tabindex="-1"
-          id="offcanvasRight"
-          aria-labelledby="offcanvasRightLabel"
-        >
-          <div class="offcanvas-header border-bottom border-secondary px-0">
-            <h5 id="offcanvasRightLabel" class="text-secondary">報名資訊</h5>
-            <button
-              type="button"
-              class="btn-close text-reset"
-              data-bs-dismiss="offcanvas"
-              aria-label="Close"
-            ></button>
-          </div>
-          <div class="offcanvas-body p-0">
-            <form>
-              <div class="py-5">
-                <div class="row">
-                  <div class="col-6">
-                    <p class="text-secondary">活動資訊</p>
-                    <ul class="list-unstyled">
-                      <li class="text-dark">
-                        活動名稱｜{{ getActivityInfo.Name }}
-                      </li>
-                      <li class="text-dark">
-                        活動方式｜{{ getActivityInfo.ActivityType }}
-                      </li>
-                      <li class="text-dark">
-                        視訊軟體｜{{ getActivityInfo.Software }}
-                      </li>
-                      <li class="text-dark">
-                        活動日期｜{{ getActivityInfo.transStartDate }} （{{
-                          getActivityInfo.transDay
-                        }})
-                      </li>
-                      <li class="text-dark">
-                        活動時間｜{{ getActivityInfo.transStartTime }} -
-                        {{ getActivityInfo.transEndTime }}
-                      </li>
-                      <li class="text-dark">
-                        活動費用｜${{ getActivityInfo.Price }}
-                      </li>
-                    </ul>
-                  </div>
-                  <div class="col-6 border-start border-secondary">
-                    <div
-                      class="
-                        d-flex
-                        flex-column
-                        justify-content-center
-                        align-items-center
-                      "
-                    >
-                      <ul class="list-unstyled">
-                        <li>
-                          <p class="text-secondary text-start">參加人資訊</p>
-                        </li>
-                        <li class="text-dark mb-3">
-                          <label for="name" class="form-label">姓名</label>
-                          <div class="input-group">
-                            <input
-                              type="text"
-                              class="
-                                form-control-darkGray
-                                rounded-pill
-                                position-relative
-                                ps-3
-                              "
-                              id="name"
-                              placeholder="陳小明"
-                              v-model="getUsersAttendData.Name"
-                            />
-                          </div>
-                        </li>
-                        <li class="text-dark mb-3">
-                          <label for="cellphone" class="form-label"
-                            >電話號碼</label
-                          >
-                          <div class="input-group">
-                            <input
-                              type="text"
-                              class="
-                                form-control-darkGray
-                                rounded-pill
-                                position-relative
-                                ps-3
-                              "
-                              id="cellphone"
-                              placeholder="0912-345-678"
-                              v-model="getUsersAttendData.MobilePhone"
-                            />
-                          </div>
-                        </li>
-                        <li class="text-dark disabled">
-                          <label for="email" class="form-label">電子信箱</label>
-                          <div class="input-group">
-                            <input
-                              type="email"
-                              class="
-                                form-control-darkGray
-                                rounded-pill
-                                position-relative
-                                ps-3
-                              "
-                              id="email"
-                              placeholder="chansiuming@email.com"
-                              disabled
-                              v-model="getUsersAttendData.Account"
-                            />
-                          </div>
-                        </li>
-                      </ul>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <p
-                class="
-                  border border-secondary
-                  rounded-pill
-                  mb-32
-                  w-100
-                  py-2
-                  text-center text-secondary
-                "
-              >
-                總計 NT$ {{ getActivityInfo.Price }}
-              </p>
-              <!-- 注意事項 -->
-              <p class="text-secondary mb-3">活動資訊</p>
-              <p class="text-dark mb-3">
-                麻煩在活動開始前先自行下載及註冊
-                Zoom，以免影響活動進行。為了維持活動之品質，倘若遲到 30
-                分鐘即代表放棄活動資格，敬請大家互相配合！
-              </p>
-              <p class="text-secondary mb-3">取消規則</p>
-              <p class="text-dark">
-                活動開始的前 10 日如需取消報名，需酌收票價 10%
-                手續費。若在活動開始的 10
-                日內取消報名，恕無法退還所有報名費用。煩請各位參加者事先預留活動之時間，希望大家可以好好享受活動的樂趣。
-              </p>
-              <!-- 按鈕 -->
-              <div class="d-flex">
-                <button
-                  type="button"
-                  class="btn btn-outline-secondary rounded-pill w-100"
-                >
-                  取消
-                </button>
-                <button
-                  type="submit"
-                  class="btn btn-dark rounded-pill w-100"
-                  @click="sendApply"
-                >
-                  確認報名
-                </button>
-              </div>
-            </form>
-            <!-- 藍新金流區塊 -->
-            <form
-              name="Newebpay"
-              method="post"
-              action="https://ccore.newebpay.com/MPG/mpg_gateway"
-            >
-              <!-- 設定 hidden 可以隱藏不用給使用者看的資訊 -->
-              <!-- 藍新金流商店代號 -->
-              <input
-                type="hidden"
-                id="MerchantID"
-                name="MerchantID"
-                :value="getPaymentData.MerchantID"
-              />
-              <!-- 交易資料透過 Key 及 IV 進行 AES 加密 -->
-              <input
-                type="hidden"
-                id="TradeInfo"
-                name="TradeInfo"
-                :value="getPaymentData.TradeInfo"
-              />
-              <!-- 經過上述 AES 加密過的字串，透過商店 Key 及 IV 進行 SHA256 加密 -->
-              <input
-                type="hidden"
-                id="TradeSha"
-                name="TradeSha"
-                :value="getPaymentData.TradeSha"
-              />
-              <!-- 串接程式版本 -->
-              <input
-                type="hidden"
-                id="Version"
-                name="Version"
-                :value="getPaymentData.Version"
-              />
-
-              <!-- 按鈕 -->
-              <div class="d-flex" :class="{ 'd-none': isSuccessPay }">
-                <button
-                  type="button"
-                  class="btn btn-outline-secondary rounded-pill w-100"
-                  data-bs-dismiss="offcanvas"
-                >
-                  取消
-                </button>
-                <!-- 直接執行送出 -->
-                <input
-                  type="submit"
-                  value="確認付款"
-                  class="btn btn-dark rounded-pill w-100"
-                  data-bs-dismiss="offcanvas"
-                />
-              </div>
-            </form>
-          </div>
+          </div> -->
         </div>
       </div>
     </div>
@@ -782,13 +780,17 @@
 </template>
 
 <script>
+import Offcanvas from 'bootstrap/js/dist/offcanvas'
+
 export default {
   props: ['Id'],
   data () {
     return {
+      offcanvas: {},
       getActivityInfo: {},
       getOrganizerInfo: {},
       getUsersAttendData: {},
+      // 報名 API 需要的資料
       giveUserInfo: {
         ActivityId: '',
         ActivityPrice: '',
@@ -798,6 +800,7 @@ export default {
         UserAccount: ''
       },
       getOpinionData: [],
+      // 新增瀏覽次數
       putViews: {
         ActivityId: ''
       },
@@ -812,115 +815,162 @@ export default {
   },
   created () {
     console.log(this.$route.params)
-    const Id = this.Id
-    this.putViews.ActivityId = Id
-    // 5-1 活動+舉辦者資料
-    this.$apiHelper.get(`api/activity/id/${Id}`).then((res) => {
-      if (res.data.Status) {
-        // console.log(res.data)
-        // 活動
-        const oriActivityInfo = res.data.Data.ActivityData
-        const activityImgUrl = `${process.env.VUE_APP_ACTIVITYIMG}/${res.data.Data.ActivityData.Image}?2021`
-        this.transDate(oriActivityInfo)
-        // 轉換成星期格式
-        this.transDay(oriActivityInfo)
-        this.getActivityInfo = oriActivityInfo
-        this.getActivityInfo.Image = activityImgUrl
-        console.log(this.getActivityInfo)
-        // 講者
-        const userImgUrl = `${process.env.VUE_APP_USERIMG}/${res.data.Data.OrganizerData.Image}?2021`
-        const oriOrganizerInfo = res.data.Data.OrganizerData
-        this.getOrganizerInfo = oriOrganizerInfo
-        console.log(this.getOrganizerInfo)
-        this.getOrganizerInfo.Image = userImgUrl
-      }
-    })
+
+    // 5-1 取得活動+舉辦者資料
+    this.getActivityOrganizerInfo()
     // 5-2增加活動瀏覽次數
-    this.$apiHelper
-      .put('api/organizer/activity/views', this.putViews)
-      .then((res) => {
-        if (res.data.Status) {
-          console.log(res.data.Message)
-        }
-      })
-
+    this.addViewsNum()
     // 5-3 活動評價資料 + 分頁
-    this.$apiHelper.get(`api/activity/opinion/${Id}`).then((res) => {
-      if (res.data.Status) {
-        // console.log(res.data.Data)
-        const oriOpinionData = res.data.Data.Opinion
-        oriOpinionData.forEach((item) => {
-          const userUrl = `${process.env.VUE_APP_USERIMG}/${item.Image}?2021`
-          item.userImgUrl = userUrl
-          // 轉換成星期格式
-          this.transDay(item)
-          // 轉換成日期格式
-          this.transDate(item)
-        })
-        this.getOpinionData = oriOpinionData
-        console.log(this.getOpinionData)
-      }
-    })
-
-    const Token = localStorage.getItem('JwtToken')
+    this.getActivityOpinionInfo()
     // 5-4 確認是否已報名過活動 (JWT)
-    if (!Token || Token === 'undefined') {
-      console.log('沒有登入喔！')
-      this.hadRegister = false
-      this.unRegister = true
-    } else if (Token) {
-      this.$apiHelper
-        .get(`api/users/activity/attend/status/${Id}`)
-        .then((res) => {
-          const status = res.data.Status
-          if (status === true) {
-            console.log('有登入而且有報名了！')
-            localStorage.setItem('JwtToken', res.data.JwtToken)
-            this.hadRegister = true
-            this.unRegister = false
-          } else {
-            console.log('尚未報名唷！')
-            localStorage.setItem('JwtToken', res.data.JwtToken)
-            this.hadRegister = false
-            this.unRegister = true
-          }
-        })
-    }
-
+    this.checkAttendStatus()
     // 5-5 確認是否已收藏活動 (JWT)
-    if (!Token || Token === 'undefined') {
-      console.log('沒有登入喔！')
-      this.isCollected = false
-    } else if (Token) {
-      this.$apiHelper
-        .get(`api/users/activity/collect/status/${Id}`)
-        .then((res) => {
-          const status = res.data.Status
-          if (status === true) {
-            console.log('有登入而且有收藏了！')
-            // 存取 token
-            localStorage.setItem('JwtToken', res.data.JwtToken)
-            this.isCollected = true
-          } else {
-            console.log('尚未收藏')
-            localStorage.setItem('JwtToken', res.data.JwtToken)
-            this.isCollected = false
-          }
-        })
-    }
-
+    this.checkCollectStatus()
     // 6-1 報名活動 - 個資帶入
-    this.$apiHelper.post('api/users/attend-data', Token).then((res) => {
-      console.log(res)
-      if (res.data.Status) {
-        const getJwtToken = res.data.JwtToken
-        localStorage.setItem('JwtToken', getJwtToken)
-        this.getUsersAttendData = res.data.Data
-        console.log(this.getUsersAttendData)
-      }
-    })
+    this.getUsersAttendInfo()
+    // 報名流程時需要送的資料
+    this.getGiveUserInfo()
   },
   methods: {
+    // 5-1 取得活動+舉辦者資料
+    getActivityOrganizerInfo () {
+      const Id = this.Id
+
+      // 5-1 活動+舉辦者資料
+      this.$apiHelper.get(`api/activity/id/${Id}`).then((res) => {
+        if (res.data.Status) {
+          // console.log(res.data)
+          // 活動
+          const oriActivityInfo = res.data.Data.ActivityData
+          const activityImgUrl = `${process.env.VUE_APP_ACTIVITYIMG}/${res.data.Data.ActivityData.Image}?2021`
+          this.transDate(oriActivityInfo)
+          // 轉換成星期格式
+          this.transDay(oriActivityInfo)
+          this.getActivityInfo = oriActivityInfo
+          this.getActivityInfo.Image = activityImgUrl
+          console.log(this.getActivityInfo)
+          // 講者
+          const userImgUrl = `${process.env.VUE_APP_USERIMG}/${res.data.Data.OrganizerData.Image}?2021`
+          const oriOrganizerInfo = res.data.Data.OrganizerData
+          this.getOrganizerInfo = oriOrganizerInfo
+          console.log(this.getOrganizerInfo)
+          this.getOrganizerInfo.Image = userImgUrl
+        }
+      })
+    },
+
+    // 5-2 增加活動瀏覽次數
+    addViewsNum () {
+      // 送出活動 Id
+      this.putViews.ActivityId = this.Id
+
+      // 5-2增加活動瀏覽次數
+      this.$apiHelper
+        .put('api/organizer/activity/views', this.putViews)
+        .then((res) => {
+          if (res.data.Status) {
+            console.log(res.data.Message)
+          }
+        })
+    },
+
+    // 5-3 取得活動評價資料 + 分頁
+    getActivityOpinionInfo () {
+      const Id = this.Id
+
+      // 5-3 活動評價資料 + 分頁
+      this.$apiHelper.get(`api/activity/opinion/${Id}`).then((res) => {
+        if (res.data.Status) {
+          // console.log(res.data.Data)
+          const oriOpinionData = res.data.Data.Opinion
+          oriOpinionData.forEach((item) => {
+            const userUrl = `${process.env.VUE_APP_USERIMG}/${item.Image}?2021`
+            item.userImgUrl = userUrl
+            // 轉換成星期格式
+            this.transDay(item)
+            // 轉換成日期格式
+            this.transDate(item)
+          })
+          this.getOpinionData = oriOpinionData
+          console.log(this.getOpinionData)
+        }
+      })
+    },
+
+    // 5-4 進入活動詳情頁面之前，先判斷是否有沒有報名過活動
+    checkAttendStatus () {
+      const Id = this.Id
+      // 先從 localStorage 取得 Token 做判斷有無登入
+      const Token = localStorage.getItem('JwtToken')
+
+      if (!Token || Token === 'undefined') {
+        console.log('沒有登入喔！')
+        this.hadRegister = false
+        this.unRegister = true
+      } else if (Token) {
+        // 5-4 確認是否已報名過活動 (JWT)
+        this.$apiHelper
+          .get(`api/users/activity/attend/status/${Id}`)
+          .then((res) => {
+            const status = res.data.Status
+            if (status === true) {
+              console.log('有登入而且有報名了！')
+              localStorage.setItem('JwtToken', res.data.JwtToken)
+              this.hadRegister = true
+              this.unRegister = false
+            } else {
+              console.log('尚未報名唷！')
+              localStorage.setItem('JwtToken', res.data.JwtToken)
+              this.hadRegister = false
+              this.unRegister = true
+            }
+          })
+      }
+    },
+
+    // 5-5 進入活動詳情頁面之前，先判斷確認是否已收藏活動 (JWT)
+    checkCollectStatus () {
+      const Id = this.Id
+      // 先從 localStorage 取得 Token 做判斷有無登入
+      const Token = localStorage.getItem('JwtToken')
+      // 5-5 確認是否已收藏活動 (JWT)
+      if (!Token || Token === 'undefined') {
+        console.log('沒有登入喔！')
+        this.isCollected = false
+      } else if (Token) {
+        this.$apiHelper
+          .get(`api/users/activity/collect/status/${Id}`)
+          .then((res) => {
+            const status = res.data.Status
+            if (status === true) {
+              console.log('有登入而且有收藏了！')
+              // 存取 token
+              localStorage.setItem('JwtToken', res.data.JwtToken)
+              this.isCollected = true
+            } else {
+              console.log('尚未收藏')
+              localStorage.setItem('JwtToken', res.data.JwtToken)
+              this.isCollected = false
+            }
+          })
+      }
+    },
+
+    // 6-1 報名活動的時候，需要將個資代入進去填寫報名的資料
+    getUsersAttendInfo () {
+      // 6-1 報名活動 - 個資帶入
+      // * 如取得無姓名跟電話需提醒填入 *
+      this.$apiHelper.post('api/users/attend-data').then((res) => {
+        console.log(res)
+        if (res.data.Status) {
+          const getJwtToken = res.data.JwtToken
+          localStorage.setItem('JwtToken', getJwtToken)
+          this.getUsersAttendData = res.data.Data
+          console.log(this.getUsersAttendData)
+        }
+      })
+    },
+
     // 改變收藏、取消收藏功能
     changeCollect (ActivityId) {
       console.log('3-2 收藏/取消收藏活動 (JWT)')
@@ -982,6 +1032,7 @@ export default {
       // 回傳每筆資料
       return item
     },
+    // 轉換日期格式
     splitDate (date) {
       const Time = new Date(date)
       Time.getFullYear()
@@ -997,7 +1048,30 @@ export default {
       }`
       return { splitFinalDate, splitFinalTime }
     },
-    sendApply () {
+
+    // 【 立即參加 】如果使用者沒登入，需先請使用者登入（轉至登入頁）
+    joinRightNow () {
+      // 判斷有無登入
+      // 先用 1-8 確認是否有沒有登入
+      this.$apiHelper.get('api/users/profile-data').then((res) => {
+        if (res.data.Status) {
+          // 如果有登入
+          console.log('1-8,登入')
+          // 打開 Offcanvas
+          this.showOffcanvas()
+          // 存 Token
+          const token = res.data.JwtToken
+          localStorage.setItem('JwtToken', token)
+        } else {
+          // 沒有登入
+          console.log('1-8,沒有登入，請先登入')
+          // 跳轉到登入頁面
+          this.$router.push('/login')
+        }
+      })
+    },
+    // 報名流程時需要送的資料
+    getGiveUserInfo () {
       // 先取得 api 要送的資料
       this.giveUserInfo = {
         ActivityId: this.getActivityInfo.Id,
@@ -1007,8 +1081,18 @@ export default {
         UserMobilePhone: this.getUsersAttendData.MobilePhone,
         UserAccount: this.getUsersAttendData.Account
       }
-      console.log(this.giveUserInfo)
-      console.log(typeof this.getActivityInfo.Price)
+      // console.log(this.giveUserInfo)
+    },
+
+    // 報名活動 -【 確認報名 】
+    sendApply () {
+      console.log(this.getActivityInfo.Price)
+      this.getGiveUserInfo()
+      // 前往報名成功頁面時，路由參數給活動 ID
+      const ActivityId = this.giveUserInfo.ActivityId
+      // console.log(this.giveUserInfo)
+
+      // 報名活動流程邏輯
       // 如果是免費的話，直接送 6-2
       if (this.getActivityInfo.Price === 0) {
         // 6-2 報名活動 - 免費＋發信
@@ -1018,9 +1102,13 @@ export default {
           .then((res) => {
             console.log(res)
             if (res.data.Status) {
+              // 存取 Token
               const getJwtToken = res.data.JwtToken
               localStorage.setItem('JwtToken', getJwtToken)
-              this.$router.push('/register-success')
+              // 關閉 Offcanvas
+              this.hideOffcanvas()
+              // 轉換到成功頁面
+              this.$router.push(`/register-success/${ActivityId}`)
               console.log(res.data)
             }
           })
@@ -1034,13 +1122,25 @@ export default {
             if (res.data.Status) {
               const getJwtToken = res.data.JwtToken
               localStorage.setItem('JwtToken', getJwtToken)
-              // this.$router.push('/register-success')
               this.getPaymentData = res.data.PaymentData
               this.isSuccessPay = false
             }
           })
       }
+    },
+
+    // 打開畫布
+    showOffcanvas () {
+      this.offcanvas.show()
+    },
+
+    // 關閉畫布
+    hideOffcanvas () {
+      this.offcanvas.hide()
     }
+  },
+  mounted () {
+    this.offcanvas = new Offcanvas(this.$refs.offcanvas)
   }
 }
 </script>

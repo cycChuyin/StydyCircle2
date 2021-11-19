@@ -25,7 +25,7 @@
                   >location_on</span
                 >
                 <p class="fs-4 text-secondary m-0 fw-light">
-                  《新手貓奴必看》線上讀書會
+                  {{ activityData.Name }}{{ activityData.ActivityType }}
                 </p>
               </div>
               <div class="d-flex justify-content-center mt-md-0 mt-3">
@@ -63,7 +63,10 @@
                   >event_note</span
                 >
                 <p class="fs-4 text-secondary m-0 fw-light">
-                  2021 / 12 / 23（四）15:00 - 18:00
+                  {{ activityData.transStartDate }}（{{
+                    activityData.transDay
+                  }}）{{ activityData.transStartTime }} -
+                  {{ activityData.transEndTime }}
                 </p>
               </div>
               <div class="d-flex justify-content-center mt-md-0 mt-3">
@@ -155,7 +158,8 @@
               <div class="col-9">
                 <div class="row">
                   <div class="col-sm-6">
-                    <button
+                    <router-link
+                      :to="`/profile/my-activity/${this.UserId}`"
                       type="button"
                       class="
                         btn btn-outline-secondary
@@ -172,7 +176,7 @@
                         >search</span
                       >
                       查看票券
-                    </button>
+                    </router-link>
                   </div>
                   <div class="col-sm-6">
                     <router-link
@@ -205,3 +209,98 @@
     </div>
   </div>
 </template>
+
+<script>
+export default {
+  props: ['ActivityId'],
+  data () {
+    return {
+      activityData: {},
+      UserId: ''
+    }
+  },
+  created () {
+    console.log(this.ActivityId)
+    this.getActivityData()
+    this.getUserId()
+  },
+  methods: {
+    // 進來到成功報名頁面後，取得活動資料，渲染在畫面資訊
+    getActivityData () {
+      // 宣告 ActivityId 等於路由上傳進來的 id
+      const ActivityId = this.ActivityId
+      // 取得活動資料
+      // 5-1 活動+舉辦者資料
+      this.$apiHelper.get(`api/activity/id/${ActivityId}`).then((res) => {
+        console.log(res)
+        if (res.data.Status) {
+          // 取得 api 給的活動資料
+          const getActivityData = res.data.Data.ActivityData
+          // 轉換成星期格式
+          this.transDay(getActivityData)
+          // 轉換成日期格式
+          this.transDate(getActivityData)
+          // 將整理好的 getActivityData 傳到本地的 data
+          this.activityData = getActivityData
+
+          console.log('報名成功頁面', this.activityData)
+        }
+      })
+    },
+    // 取得登入者的 ID ，可以連結到個人檔案查看票券
+    getUserId () {
+      const localUserId = localStorage.getItem('UserId')
+      this.UserId = localUserId
+    },
+
+    // 轉換成星期格式
+    transDay (item) {
+      const dayList = ['日', '一', '二', '三', '四', '五', '六']
+      const oriDay = item.ActivityStartDate
+      const newday = new Date(oriDay).getDay() // or "new Date().getDay()";
+
+      const transDay = dayList[newday]
+      item.transDay = transDay
+      return item
+    },
+    // 拆分日期
+    transDate (item) {
+      // 1. 針對日期格式進行轉換
+      // 取得開始、結束日期
+      const startDate = item.ActivityStartDate
+      const endDate = item.ActivityEndDate
+      const creatDate = item.CreatDate
+      // 轉換日期格式,呼叫函式
+      const transStartDateObj = this.splitDate(startDate)
+      const transEndDateObj = this.splitDate(endDate)
+      const transCreatDateObj = this.splitDate(creatDate)
+      // transDate:{splitFinalDate: '2021.12.12', splitFinalTime: '16:00'}
+      // 將拆解好的時間加入陣列
+      item.transStartDate = transStartDateObj.splitFinalDate
+      item.transStartTime = transStartDateObj.splitFinalTime
+      item.transEndDate = transEndDateObj.splitFinalDate
+      item.transEndTime = transEndDateObj.splitFinalTime
+      item.transCreatDate = transCreatDateObj.splitFinalDate
+      item.transCreatTime = transCreatDateObj.splitFinalTime
+      // 回傳每筆資料
+      return item
+    },
+    // 轉換日期格式
+    splitDate (date) {
+      const Time = new Date(date)
+      Time.getFullYear()
+      Time.getMonth()
+      Time.getDate()
+      Time.getHours()
+      Time.getMinutes()
+      const splitFinalDate = `${Time.getFullYear()}.${
+        Time.getMonth() + 1
+      }.${Time.getDate()}`
+      const splitFinalTime = `${Time.getHours()}:${
+        (Time.getMinutes() < 10 ? '0' : '') + Time.getMinutes()
+      }`
+      return { splitFinalDate, splitFinalTime }
+    }
+  }
+}
+</script>

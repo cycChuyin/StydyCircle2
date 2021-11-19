@@ -55,9 +55,15 @@ const routes = [
         }
       },
       {
-        path: 'register-success',
+        path: 'register-success/:activityId',
         name: 'RegisterSuccess',
-        component: () => import('../views/Activity/RegisterSuccess.vue')
+        component: () => import('../views/Activity/RegisterSuccess.vue'),
+        props: (route) => {
+          // console.log(route)
+          return {
+            ActivityId: route.params.activityId
+          }
+        }
       }
     ]
   },
@@ -78,16 +84,25 @@ const routes = [
         path: 'online',
         name: 'Online',
         component: () => import('../views/Activity/OnlineActivity.vue')
+        // meta: {
+        //   keepAlive: true // 需要被緩存
+        // }
       },
       {
         path: 'entity',
         name: 'Entity',
         component: () => import('../views/Activity/EntityActivity.vue')
+        // meta: {
+        //   keepAlive: true // 需要被緩存
+        // }
       },
       {
         path: 'workshop',
         name: 'Workshop',
         component: () => import('../views/Activity/WorkShop.vue')
+        // meta: {
+        //   keepAlive: true // 需要被緩存
+        // }
       }
     ]
   },
@@ -181,7 +196,13 @@ const routes = [
 
 const router = createRouter({
   history: createWebHashHistory(),
-  routes
+  routes,
+  scrollBehavior (to, from, savedPosition) {
+    console.log(to, from, savedPosition)
+    return {
+      top: 0
+    }
+  }
 })
 
 export default router

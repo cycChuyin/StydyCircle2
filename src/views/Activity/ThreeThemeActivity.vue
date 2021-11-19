@@ -89,7 +89,10 @@
     </div>
   </div>
 
-  <router-view></router-view>
+  <keep-alive>
+    <router-view></router-view>
+  </keep-alive>
+
   <!-- 下方 footer -->
   <component-footer></component-footer>
 </template>

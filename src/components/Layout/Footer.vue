@@ -1,11 +1,13 @@
 <template>
   <div class="border border-dark">
     <div class="container">
-      <img
-        src="@/assets/photo/thak-tsheh.png?20211118"
-        class="mt-5"
-        style="width: 239px; height: auto"
-      />
+      <router-link to="/study-circle">
+        <img
+          src="@/assets/photo/thak-tsheh.png?20211120"
+          class="mt-5"
+          style="width: 239px; height: auto"
+        />
+      </router-link>
       <div
         class="
           row

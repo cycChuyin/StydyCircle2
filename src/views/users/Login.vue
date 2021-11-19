@@ -241,6 +241,7 @@ export default {
             localStorage.setItem('JwtToken', getJwtToken)
             // this.$router.push('/study-circle')
             location.href = '/'
+            // location.href = 'https://cycchuyin.github.io/thak-tsheh/'
           }
         })
         .catch((error) => {

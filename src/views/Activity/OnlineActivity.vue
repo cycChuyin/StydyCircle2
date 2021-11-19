@@ -497,13 +497,13 @@ export default {
     getOnlineStudyCircleData () {
       // 先用 1-8 確認是否有沒有登入
       this.$apiHelper.get('api/users/profile-data').then((res) => {
-        // 存 Token
-        const token = res.data.JwtToken
-        localStorage.setItem('JwtToken', token)
         // 判斷有無登入來決定接哪隻搜尋的 api
         if (res.data.Status) {
           // 如果有登入
           console.log('登入')
+          // 存 Token
+          const token = res.data.JwtToken
+          localStorage.setItem('JwtToken', token)
 
           // 4-4 即將截止報名資料 (JWT)
           this.$apiHelper
