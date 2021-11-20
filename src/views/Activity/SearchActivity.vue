@@ -1,5 +1,7 @@
 <template>
   <div class="container">
+    <!-- loading 元件 -->
+    <loading :active="isLoading"></loading>
     <!-- 篩選搜尋區塊 -->
     <form class="filterSearchBar py-5" @submit.prevent="reSearchNow">
       <div class="row">
@@ -209,7 +211,7 @@
                 "
                 aria-label="Text input with dropdown button"
                 placeholder="請輸入關鍵字搜尋（書籍名稱、活動名稱等）"
-                v-model="seachParams.query"
+                v-model="searchParams.query"
               />
             </div>
           </div>
@@ -235,7 +237,7 @@
     </form>
     <!-- 排序區塊 -->
     <div class="activityCardGroup d-flex justify-content-between mb-5">
-      <p class="fs-1 text-secondary">搜尋結果</p>
+      <p class="fs-1 text-secondary">{{ searchText }}</p>
       <div class="btn-group">
         <button
           class="btn bg-transparent dropdown-toggle fs-4 text-secondary"
@@ -432,7 +434,7 @@ export default {
   data () {
     return {
       newSearchData: [],
-      seachParams: {
+      searchParams: {
         split: 9,
         page: 1,
         // 所有主題
@@ -447,15 +449,17 @@ export default {
       sortingText: '排序',
       typeText: '主題類別',
       classifyText: '類別',
-      areaText: '地區'
+      areaText: '地區',
+      isLoading: false,
+      searchText: '搜尋'
     }
   },
   watch: {
     routerSorting: 'getSearchActivity'
   },
   created () {
-    this.seachParams = this.$route.params
-    this.routerSorting = this.seachParams.sorting
+    this.searchParams = this.$route.params
+    this.routerSorting = this.searchParams.sorting
     console.log(this.$route)
     console.log(
       this.Split,
@@ -470,20 +474,23 @@ export default {
   methods: {
     // 從搜尋欄框過來的，取得搜尋結果
     getSearchActivity () {
+      // 開啟讀取效果
+      this.isLoading = true
+
       console.log('搜尋頁觸發', this.$route)
       // 先將路由參數宣告變數，方便後續使用
-      const split = this.seachParams.split
-      const page = this.seachParams.page
-      const type = this.seachParams.type
-      const classify = this.seachParams.classify
-      const area = this.seachParams.area
+      const split = this.searchParams.split
+      const page = this.searchParams.page
+      const type = this.searchParams.type
+      const classify = this.searchParams.classify
+      const area = this.searchParams.area
       // 將 sorting 監聽為路由存的參數，這樣在 watch 監聽到變動時，路由才有效改變
       const sorting = this.$route.params.sorting
-      const query = encodeURI(this.seachParams.query)
+      const query = encodeURI(this.searchParams.query)
 
       // 應該先從路由守衛判斷的，這裡先暫時用參數判斷
       // if (this.$route.params.query === '%E3%80%8A') {
-      //   this.seachParams.query = ''
+      //   this.searchParams.query = ''
       // }
 
       // 先用 1-8 確認是否有沒有登入
@@ -526,6 +533,8 @@ export default {
                 console.log(this.newSearchData)
                 // this.checkCollect(this.newSearchData)
               }
+              // 關閉讀取效果
+              this.isLoading = false
             })
         } else {
           // 如果沒有登入
@@ -553,6 +562,8 @@ export default {
                 this.newSearchData = oriSearchData
                 console.log(this.newSearchData)
               }
+              // 關閉讀取效果
+              this.isLoading = false
             })
         }
       })
@@ -588,12 +599,12 @@ export default {
     // 選擇「排序」
     selectSorting (sortingNum, Text) {
       this.sortingText = Text
-      this.seachParams.sorting = sortingNum
+      this.searchParams.sorting = sortingNum
       this.routerSorting = sortingNum
       this.$route.params.sorting = sortingNum
       console.log(
         this.routerSorting,
-        this.seachParams.sorting,
+        this.searchParams.sorting,
         this.sortingText
       )
     },
@@ -630,38 +641,39 @@ export default {
     // 選擇主題類別
     selectType (typeNum, Text) {
       console.log(typeNum)
-      this.seachParams.type = typeNum
+      this.searchParams.type = typeNum
       this.typeText = Text
-      console.log(this.seachParams.type, this.typeText)
+      console.log(this.searchParams.type, this.typeText)
     },
     // 選擇分類類別
     selectClassify (classifyNum, Text) {
       console.log(classifyNum)
-      this.seachParams.classify = classifyNum
+      this.searchParams.classify = classifyNum
       this.classifyText = Text
-      console.log(this.seachParams.classify, this.classifyText)
+      console.log(this.searchParams.classify, this.classifyText)
     },
     // 選擇地區分類
     selectArea (areaNum, Text) {
-      this.seachParams.area = areaNum
+      this.searchParams.area = areaNum
       this.areaText = Text
-      console.log(this.seachParams.area, this.areaText)
+      console.log(this.searchParams.area, this.areaText)
     },
     // 在搜尋結果頁重新搜尋的方法，重新渲染資料
     reSearchNow () {
       console.log('實體活動換搜尋頁！')
-      const split = this.seachParams.split
-      const page = this.seachParams.page
-      const type = this.seachParams.split
-      const classify = this.seachParams.classify
-      const area = this.seachParams.area
-      const sorting = this.seachParams.sorting
-      const query = encodeURI(this.seachParams.query)
+      const split = this.searchParams.split
+      const page = this.searchParams.page
+      const type = this.searchParams.split
+      const classify = this.searchParams.classify
+      const area = this.searchParams.area
+      const sorting = this.searchParams.sorting
+      const query = encodeURI(this.searchParams.query)
       console.log(split, sorting, query)
       this.$router.push(
         `/activities/search/${split}/${page}/${type}/${classify}/${area}/${sorting}/${query}`
       )
       this.getSearchActivity()
+      this.searchText = '搜尋結果'
       // location.href = `activities/search/${split}/${page}/${type}/${classify}/${area}/${sorting}/${query}`
     },
     // 時間拆分

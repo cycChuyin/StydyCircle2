@@ -1,6 +1,9 @@
 <template>
+  <!-- loading 元件 -->
+  <!-- <loading :active="isLoading" :is-full-page="Fullpage"></loading>   -->
   <!-- 摺疊卡片 -->
-  <div class="px-13 py-32">
+  <!-- 如果是使用者本身 -->
+  <div class="px-13 py-32" :class="{ 'd-none': !isUserSelf }">
     <ul class="row row-cols-1 list-unstyled">
       <template v-for="(item, index) in newCommingData" :key="item.ActivityId">
         <li class="col mb-4">
@@ -160,6 +163,76 @@
       </template>
     </ul>
   </div>
+  <!-- 如果「不是」使用者本身 -->
+  <div class="container" :class="{ 'd-none': isUserSelf }">
+    <ul class="row row-cols-1 row-cols-md-3 g-4 list-unstyled py-32">
+      <li class="col" v-for="item in newCommingData" :key="item.ActivityId">
+        <div class="card h-100 rounded-4 shadow-card">
+          <div class="position-relative">
+            <img
+              :src="item.imgUrl"
+              class="card-img-top rounded-top-4"
+              :alt="item.Image"
+            />
+            <div class="card-body p-3">
+              <h5 class="card-title mb-2 p-0 fw-light fs-4">
+                <router-link
+                  :to="`/activity-content/${item.ActivityId}`"
+                  class="stretched-link text-secondary"
+                >
+                  {{ item.Name }}
+                </router-link>
+              </h5>
+              <div class="d-flex align-items-center mb-2">
+                <div class="d-flex align-items-center">
+                  <span class="material-icons text-primary me-1"
+                    >star_rate</span
+                  >
+                  <span class="material-icons text-primary me-1"
+                    >star_rate</span
+                  >
+                  <span class="material-icons text-primary me-1"
+                    >star_rate</span
+                  >
+                  <span class="material-icons text-primary me-1"
+                    >star_rate</span
+                  >
+                  <span class="material-icons text-primary">star_rate</span>
+                </div>
+                <p class="text-gray m-0 ps-2">
+                  {{ item.EvaluateStars }}/5 ({{ item.OpinionNumber }}則評論)
+                </p>
+              </div>
+              <p class="text-secondary mb-4">
+                <span>{{ item.transStartDate }}</span
+                >｜<span
+                  >{{ item.transStartTime }} - {{ item.transEndTime }}</span
+                >｜<span>{{ item.OrganizerName }}</span>
+              </p>
+              <div
+                class="
+                  card-footer
+                  border-0
+                  bg-transparent
+                  p-0
+                  d-flex
+                  justify-content-between
+                  align-items-end
+                "
+              >
+                <p class="text-secondary fs-8 m-0">
+                  {{ item.ApplicantNumber }}人參加 ｜
+                  {{ item.CollectNumber }}人收藏
+                </p>
+                <p class="text-secondary fs-4 m-0">NT$ {{ item.Price }}</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </li>
+    </ul>
+  </div>
+
   <cancle-register-modal
     ref="cancleRegister"
     :comming="giveEmitActivityInfo"
@@ -176,7 +249,8 @@ export default {
     return {
       newCommingData: [],
       routeUserId: '',
-      giveEmitActivityInfo: {}
+      giveEmitActivityInfo: {},
+      isUserSelf: false
     }
   },
   components: {
@@ -186,12 +260,35 @@ export default {
     '$route.params.UserId': 'changePath'
   },
   created () {
-    this.getCommingData()
+    this.viewSide()
   },
   methods: {
+    // 確認進來的是不是本人，來決定要呈現哪個卡片
+    viewSide () {
+      // 讀取效果開啟
+      // this.isLoading = true
+      // 先用 1-8 確認是否有沒有登入
+      this.$apiHelper.get('api/users/profile-data').then((res) => {
+        // 判斷有無登入來決定要切換哪個視角
+        if (res.data.Status) {
+          // 如果有登入
+          console.log('登入')
+
+          // 存 Token
+          const token = res.data.JwtToken
+          localStorage.setItem('JwtToken', token)
+          this.isUserSelf = true
+          this.getCommingData()
+        } else {
+          this.isUserSelf = false
+          this.getCommingData()
+        }
+      })
+    },
     // 剛渲染時得取資料
     getCommingData () {
       console.log(this.$route)
+
       // const getUserId = localStorage.getItem('UserId')
       this.routeUserId = this.$route.params.UserId
       // 7-7 即將到臨活動資料+分頁
@@ -215,6 +312,9 @@ export default {
             this.newCommingData = oriCommingData
             console.log(this.newCommingData)
           }
+
+          // 讀取效果關閉
+          // this.isLoading = false
         })
     },
     // 當路由變化時，更新資料(watch 監聽)

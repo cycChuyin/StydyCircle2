@@ -11,15 +11,19 @@
           <div class="row g-0">
             <div class="col-sm-10">
               <div class="d-flex">
-                <img
-                  :src="item.UserImgUrl"
-                  alt="memberPhoto"
-                  class="rounded-pill memberPhoto-88 me-4"
-                />
+                <router-link :to="`/profile/my-activity/${item.Id}`">
+                  <img
+                    :src="item.UserImgUrl"
+                    alt="memberPhoto"
+                    class="rounded-pill memberPhoto-88 me-4"
+                  />
+                </router-link>
                 <div class="card-body p-0">
-                  <p class="card-text text-secondary mb-2 fs-5">
-                    {{ item.Name }}{{ item.NickName }}
-                  </p>
+                  <router-link :to="`/profile/my-activity/${item.Id}`">
+                    <p class="card-text text-secondary mb-2 fs-5">
+                      {{ item.Name }}{{ item.NickName }}
+                    </p>
+                  </router-link>
                   <p class="card-text text-secondary mb-2 fw-light fs-8">
                     {{ item.FollowingNumber }} 關注中｜{{
                       item.FollowersNumber
@@ -46,9 +50,9 @@
                   px-3
                   fs-7
                 "
-                :class="{ 'd-block': item.Following }"
+                :class="{ 'd-none': !item.Following }"
               >
-                <span class="material-icons"> person </span>
+                <span class="material-icons me-2"> person </span>
                 查看檔案
               </button>
               <button
@@ -64,7 +68,7 @@
                   px-3
                   fs-7
                 "
-                :class="{ 'd-block': !item.Following || unLogin }"
+                :class="{ 'd-none': item.Following || Login }"
               >
                 <span class="material-icons me-2"> person_add </span>
                 追蹤伙伴
@@ -133,7 +137,7 @@ export default {
   data () {
     return {
       getFollowingData: [],
-      unLogin: true,
+      Login: false,
       routeUserId: ''
     }
   },
@@ -155,7 +159,7 @@ export default {
             if (res.data.Status) {
               console.log(res.data)
               // 存新的 Token
-              const getJwtToken = res.data.Data.JwtToken
+              const getJwtToken = res.data.JwtToken
               localStorage.setItem('JwtToken', getJwtToken)
               const oriFollowingData = res.data.Data.Following
               oriFollowingData.forEach((item) => {
@@ -206,7 +210,7 @@ export default {
               if (res.data.Status) {
                 console.log(res.data)
                 // 存新的 Token
-                const getJwtToken = res.data.Data.JwtToken
+                const getJwtToken = res.data.JwtToken
                 localStorage.setItem('JwtToken', getJwtToken)
                 const oriFollowingData = res.data.Data.Following
                 oriFollowingData.forEach((item) => {

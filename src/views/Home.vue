@@ -1,13 +1,5 @@
 <template>
   <component-navbar></component-navbar>
-  <!-- <router-link to="/studyCircle">StudyCircle</router-link>｜
-  <div id="nav">
-    <router-link to="/">Home</router-link> |
-    <router-link to="/about">About</router-link>|
-    <router-link to="/layout">Layout</router-link>｜
-    <router-link to="/searchActivity">searchActivity</router-link> ｜
-  </div> -->
-  <opinion-modal ref="opinionmodal"></opinion-modal>
   <router-view></router-view>
   <component-footer></component-footer>
 </template>

@@ -1,5 +1,7 @@
 <template>
   <div class="container">
+    <!-- loading 元件 -->
+    <loading :active="isLoading" :is-full-page="fullPage"></loading>
     <!-- 篩選搜尋區塊 -->
     <form class="filterSearchBar py-5" @submit.prevent="searchNow">
       <div class="row">
@@ -406,7 +408,8 @@ export default {
       classifyText: '類別',
       areaText: '地區',
       virietyTitleText: '',
-      ActivityTypeText: ''
+      ActivityTypeText: '',
+      isLoading: false
     }
   },
   created () {
@@ -420,6 +423,8 @@ export default {
     // 從活動主題頁引導過來的官方推薦
     // 取得4-1~4-3 的活動資料
     getVarietyActivityData () {
+      // 開啟讀取效果
+      this.isLoading = true
       console.log('官方活動推薦！')
       // 宣告 Variety 變數判斷是哪個排序分類的（即將截止 / 最多人報名 / 新推出）
       // 再去判斷現在該取得哪個 api
@@ -477,6 +482,8 @@ export default {
                   this.newRecommendedData = oriRecommendedData
                   console.log(this.newRecommendedData)
                 }
+                // 關閉讀取效果
+                this.isLoading = false
               })
           } else if (getVariety === '1') {
             // title 給類別
@@ -506,6 +513,8 @@ export default {
                   this.newRecommendedData = oriRecommendedData
                   console.log(this.newRecommendedData)
                 }
+                // 關閉讀取效果
+                this.isLoading = false
               })
           } else if (getVariety === '2') {
             // title 給類別
@@ -535,6 +544,8 @@ export default {
                   this.newRecommendedData = oriRecommendedData
                   console.log(this.newRecommendedData)
                 }
+                // 關閉讀取效果
+                this.isLoading = false
               })
           }
         } else {
@@ -564,6 +575,8 @@ export default {
                   this.newRecommendedData = oriRecommendedData
                   console.log(this.newRecommendedData)
                 }
+                // 關閉讀取效果
+                this.isLoading = false
               })
           } else if (getVariety === '1') {
             // 如果是即將截止的話，接 4-2 最多人報名
@@ -587,6 +600,8 @@ export default {
                   this.newRecommendedData = oriRecommendedData
                   console.log(this.newRecommendedData)
                 }
+                // 關閉讀取效果
+                this.isLoading = false
               })
           } else if (getVariety === '2') {
             // 如果是即將截止的話，接 4-3 新推出資料
@@ -610,6 +625,8 @@ export default {
                   this.newRecommendedData = oriRecommendedData
                   console.log(this.newRecommendedData)
                 }
+                // 關閉讀取效果
+                this.isLoading = false
               })
           }
         }

@@ -3,10 +3,10 @@
     <!-- 報名成功資訊區塊 -->
     <div class="container">
       <div class="row justify-content-center py-10">
-        <div class="col-xl-6 col-md-10 px-0">
-          <p class="fs-9 text-center">
-            <span class="material-icons">check_circle_outline</span>
-          </p>
+        <div class="col-xl-6 col-md-10 px-0 ">
+          <h2 class="text-center">
+            <span class="material-icons display-2 pb-4"> check_circle_outline </span>
+          </h2>
           <h2 class="text-secondary text-center mb-5">＼報名成功／</h2>
         </div>
         <div class="row justify-content-center">

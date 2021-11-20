@@ -2,6 +2,8 @@
   <!-- 內容 -->
   <div class="bg-white">
     <div class="container">
+      <!-- loading 元件 -->
+      <loading :active="isLoading" :is-full-page="fullPage"></loading>
       <!-- 篩選搜尋區塊 -->
       <form class="filterSearchBar py-5" @submit.prevent="searchNow">
         <div class="row">
@@ -195,7 +197,6 @@
                 justify-content-center
                 align-items-center
               "
-              @click="searchNow()"
             >
               <span class="material-icons me-2">search</span>
               立即搜尋
@@ -551,7 +552,10 @@ export default {
         query: ''
       },
       classifyText: '類別',
-      areaText: '地區'
+      areaText: '地區',
+      // 讀取效果
+      isLoading: false,
+      fullPage: true
     }
   },
   created () {
@@ -561,6 +565,7 @@ export default {
     // 取得實體讀書會資料
     // 大方向：先確認有無登入，再來決定要接哪一隻 API
     getEntityActivityData () {
+      this.isLoading = true
       // 先用 1-8 確認是否有沒有登入
       this.$apiHelper.get('api/users/profile-data').then((res) => {
         // 判斷有無登入來決定接哪隻搜尋的 api
@@ -597,6 +602,7 @@ export default {
                 this.newEntityComingData = oriEntityComingData
                 console.log(this.newEntityComingData)
               }
+              this.isLoading = false
             })
 
           // 4-5 最多人報名資料 (JWT)
@@ -672,6 +678,7 @@ export default {
               this.newEntityComingData = oriEntityComingData
               // console.log(this.newEntityComingData)
             }
+            this.isLoading = false
           })
 
           // 4-2 最多人報名（線上讀書會）

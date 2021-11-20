@@ -76,8 +76,8 @@
               "
             >
               <span class="material-icons me-2">place</span>
-              {{ profileObj.Area }}．{{ profileObj.City }}．{{
-                profileObj.Country
+              {{ profileObj.Country }}．{{ profileObj.City }}．{{
+                profileObj.Area
               }}
             </p>
           </div>
@@ -98,23 +98,31 @@
           </div>
           <!-- 社群軟體 -->
           <div class="py-32 border-secondary border-top">
-            <h3 class="text-secondary fs-6 mb-32">社群軟體</h3>
+            <h3 class="text-secondary fs-6 mb-4">社群軟體</h3>
             <ul class="list-unstyled d-flex justify-content-between mb-0">
-              <li>
-                <a :href="profileObj.FacebookLink"
-                  ><i class="bi bi-facebook"></i
-                ></a>
+              <li class="nav-item py-0">
+                <a
+                  class="nav-link text-secondary p-0 fs-3"
+                  :href="profileObj.FacebookLink"
+                >
+                  <i class="fab fa-facebook-square"></i>
+                </a>
               </li>
-              <li>
-                <a :href="profileObj.InstagramLink"
-                  ><i class="bi bi-instagram"></i
-                ></a>
+              <li class="nav-item py-0">
+                <a
+                  class="nav-link text-secondary p-0 fs-3"
+                  :href="profileObj.InstagramLink"
+                >
+                  <i class="fab fa-instagram"></i>
+                </a>
               </li>
-              <li>
-                <a href="#"><i class="bi bi-envelope-fill"></i></a>
-              </li>
-              <li>
-                <a href="#"><i class="bi bi-envelope-fill"></i></a>
+              <li class="nav-item py-0">
+                <a
+                  class="nav-link text-secondary p-0 fs-3"
+                  :href="profileObj.LineLink"
+                >
+                  <i class="fab fa-line"></i>
+                </a>
               </li>
             </ul>
           </div>
@@ -335,7 +343,7 @@ export default {
           } else {
             console.log(res.data.Message)
             // 如果沒有登入的話，就跳轉到登入頁請他登入
-            this.$route.push('login')
+            this.$router.push('login')
           }
           console.log(this.userAttendObj)
         })
