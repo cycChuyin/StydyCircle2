@@ -140,12 +140,16 @@
           <router-link
             :to="`/profile/my-activity/${this.routeUserId}`"
             class="mb-32 fw-bold fs-4 text-dark me-4"
+            @click="changeActive('MyActivityOverview')"
+            :class="{ 'text-searchselect': !isPage }"
             type="button"
             >我的活動</router-link
           >
           <router-link
             :to="`/profile/study-partner/${this.routeUserId}`"
             class="mb-32 fw-bold fs-4 text-dark me-4"
+            @click="changeActive('StudyPartnerOverview')"
+            :class="{ 'text-searchselect': isPage }"
             type="button"
             >讀冊夥伴</router-link
           >
@@ -171,7 +175,8 @@ export default {
       routeUserId: '',
       putFollowStaus: {
         FollowingUserId: ''
-      }
+      },
+      isPage: true
     }
   },
   components: {
@@ -182,6 +187,8 @@ export default {
     '$route.params.UserId': 'changePath'
   },
   created () {
+    this.changeLinkActive()
+
     console.log(this.$route)
     this.routeUserId = this.$route.params.UserId
     console.log(this.UserId)
@@ -239,6 +246,8 @@ export default {
   methods: {
     // 當路由變化時，更新資料
     changePath () {
+      // 我的活動、讀冊夥伴樣事業換
+      this.changeLinkActive()
       console.log(this.$route)
       this.routeUserId = this.$route.params.UserId
       // 7-1 確認是否為本人瀏覽 (JWT)
@@ -340,6 +349,27 @@ export default {
           }
           console.log(this.userAttendObj)
         })
+    },
+    // 頁面剛進來時，我的活動、讀冊夥伴 樣式切換
+    changeLinkActive () {
+      const pageName = this.$route.name
+      console.log(pageName)
+      if (pageName === 'MyActivityOverview') {
+        this.isPage = true
+        console.log('是我的活動')
+      } else if (pageName === 'StudyPartnerOverview') {
+        this.isPage = false
+        console.log('是讀冊夥伴')
+      }
+    },
+    changeActive (category) {
+      if (category === 'MyActivityOverview') {
+        this.isPage = true
+        console.log('是我的活動')
+      } else if (category === 'StudyPartnerOverview') {
+        this.isPage = false
+        console.log('是讀冊夥伴')
+      }
     }
   }
 }

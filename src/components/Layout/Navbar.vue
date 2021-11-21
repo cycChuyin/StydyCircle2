@@ -2,7 +2,7 @@
   <div class="position-relative">
     <nav
       class="navbar navbar-expand-lg py-5 bg-transparent bgNav"
-      style="height: 181px; margin-bottom: -96px;"
+      style="height: 181px; margin-bottom: -96px"
     >
       <div class="container">
         <button
@@ -55,7 +55,7 @@
               <router-link
                 type="button"
                 class="nav-link text-dark"
-                to="/activities/search/9/1/-1/-1/-1/0/%E3%80%8A"
+                :to="`/activities/search/9/1/-1/-1/-1/0/${this.allSearch}`"
               >
                 <span class="material-icons d-flex align-items-center">
                   search
@@ -182,7 +182,7 @@
       <img
         :src="`${this.envUploadLOGO}/logo_thak-tsheh.png`"
         class="position-absolute top-50 start-50 translate-middle"
-        style="height:85px;"
+        style="height: 85px"
       />
     </router-link>
   </div>
@@ -205,7 +205,8 @@ export default {
       isSighOut: true,
       UserId: '',
       // logo 的環境變數路徑
-      envUploadLOGO: ''
+      envUploadLOGO: '',
+      allSearch: 'all'
     }
   },
   created () {

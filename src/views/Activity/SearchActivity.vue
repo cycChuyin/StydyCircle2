@@ -396,6 +396,12 @@
           </div>
         </li>
       </ul>
+
+      <!-- 如果沒有資料則顯示 -->
+      <h6 class="display-6 text text-dark" :class="{ 'd-none': !isNoneData }">
+        抱歉！沒有相關活動！
+      </h6>
+
       <!-- pagination -->
       <div
         class="
@@ -480,7 +486,8 @@ export default {
       classifyText: '類別',
       areaText: '地區',
       isLoading: false,
-      searchText: '搜尋'
+      searchText: '搜尋',
+      isNoneData: false
     }
   },
   watch: {
@@ -671,6 +678,16 @@ export default {
           }
         }
       })
+      this.checkHaveData()
+    },
+    // 檢查搜尋結果有無資料
+    checkHaveData () {
+      console.log(this.newSearchData.length)
+      if (this.newSearchData.length === 0) {
+        this.isNoneData = false
+      } else {
+        this.isNoneData = true
+      }
     },
     // checkCollect (item) {
     //   console.log('我有被呼叫喔！')

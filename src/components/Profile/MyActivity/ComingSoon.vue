@@ -2,7 +2,7 @@
   <!-- loading 元件 -->
   <!-- <loading :active="isLoading" :is-full-page="Fullpage"></loading>   -->
   <!-- 摺疊卡片 -->
-  <!-- 如果是使用者本身 -->
+  <!-- 如果是使用者本身 橫行卡片-->
   <div class="px-13 py-32" :class="{ 'd-none': !isUserSelf }">
     <ul class="row row-cols-1 list-unstyled">
       <template v-for="(item, index) in newCommingData" :key="item.ActivityId">
@@ -88,9 +88,7 @@
                   <p class="fw-light text-dark mb-3">
                     活動費用｜$ {{ item.Price }}
                   </p>
-                  <p class="fw-light text-dark">
-                    活動連結｜{{ item.Link }}
-                  </p>
+                  <p class="fw-light text-dark">活動連結｜{{ item.Link }}</p>
                 </div>
                 <div class="pt-4 pb-8">
                   <p class="fw-normal text-dark mb-2">注意事項</p>
@@ -163,7 +161,7 @@
       </template>
     </ul>
   </div>
-  <!-- 如果「不是」使用者本身 -->
+  <!-- 如果「不是」使用者本身 卡片-->
   <div class="container" :class="{ 'd-none': isUserSelf }">
     <ul class="row row-cols-1 row-cols-md-3 g-4 list-unstyled py-32">
       <li class="col" v-for="item in newCommingData" :key="item.ActivityId">
@@ -175,10 +173,7 @@
               :alt="item.Image"
             />
             <div class="card-body p-3">
-              <h5
-                class="card-title mb-2 p-0"
-                style="font-size: 1.2rem"
-              >
+              <h5 class="card-title mb-2 p-0" style="font-size: 1.2rem">
                 <router-link
                   :to="`/activity-content/${item.ActivityId}`"
                   class="stretched-link text-dark"
@@ -188,18 +183,10 @@
               </h5>
               <div class="d-flex align-items-center mb-2">
                 <div class="d-flex align-items-center">
-                  <span class="material-icons text-primary"
-                    >star_rate</span
-                  >
-                  <span class="material-icons text-primary"
-                    >star_rate</span
-                  >
-                  <span class="material-icons text-primary"
-                    >star_rate</span
-                  >
-                  <span class="material-icons text-primary"
-                    >star_rate</span
-                  >
+                  <span class="material-icons text-primary">star_rate</span>
+                  <span class="material-icons text-primary">star_rate</span>
+                  <span class="material-icons text-primary">star_rate</span>
+                  <span class="material-icons text-primary">star_rate</span>
                   <span class="material-icons text-primary">star_rate</span>
                 </div>
                 <p class="text-gray m-0 ps-2">
@@ -263,30 +250,79 @@ export default {
     '$route.params.UserId': 'changePath'
   },
   created () {
+    this.routeUserId = this.$route.params.UserId
     this.viewSide()
   },
   methods: {
     // 確認進來的是不是本人，來決定要呈現哪個卡片
     viewSide () {
+      this.checkMemberWho()
       // 讀取效果開啟
       // this.isLoading = true
-      // 先用 1-8 確認是否有沒有登入
-      this.$apiHelper.get('api/users/profile-data').then((res) => {
-        // 判斷有無登入來決定要切換哪個視角
-        if (res.data.Status) {
-          // 如果有登入
-          console.log('登入')
 
-          // 存 Token
-          const token = res.data.JwtToken
-          localStorage.setItem('JwtToken', token)
-          this.isUserSelf = true
-          this.getCommingData()
-        } else {
-          this.isUserSelf = false
-          this.getCommingData()
-        }
-      })
+      // // 先用 1-8 確認是否有沒有登入
+      // this.$apiHelper.get('api/users/profile-data').then((res) => {
+      //   // 判斷有無登入來決定要切換哪個視角
+      //   if (res.data.Status) {
+      //     // 如果有登入
+      //     console.log('登入')
+
+      //     // 存 Token
+      //     const token = res.data.JwtToken
+      //     localStorage.setItem('JwtToken', token)
+      //     console.log('是本人')
+      //     this.isUserSelf = true
+      //     this.getCommingData()
+      //   } else {
+      //     console.log('不是本人')
+      //     this.isUserSelf = false
+      //     this.getCommingData()
+      //   }
+      // })
+
+      // const memberId = this.routeUserId
+      // console.log(memberId)
+
+      // // 先用 7-1 確認是否為本人
+      // this.$apiHelper
+      //   .get(`api/users/activity/attend/profile/status/${memberId}`)
+      //   .then((res) => {
+      //     if (res.data.Status) {
+      //       // 存 Token
+      //       const token = res.data.JwtToken
+      //       localStorage.setItem('JwtToken', token)
+      //       console.log('是本人')
+      //       this.isUserSelf = true
+      //       this.getCommingData()
+      //     } else {
+      //       console.log('是本人')
+      //       this.isUserSelf = false
+      //       this.getCommingData()
+      //     }
+      //   })
+    },
+    // 確認是不是自己的個人檔案頁面
+    checkMemberWho () {
+      const memberId = this.routeUserId
+      console.log(memberId)
+
+      // 先用 7-1 確認是否為本人
+      this.$apiHelper
+        .get(`api/users/activity/attend/profile/status/${memberId}`)
+        .then((res) => {
+          if (res.data.Status) {
+            // 存 Token
+            const token = res.data.JwtToken
+            localStorage.setItem('JwtToken', token)
+            console.log('是本人')
+            this.isUserSelf = true
+            this.getCommingData()
+          } else {
+            console.log('是本人')
+            this.isUserSelf = false
+            this.getCommingData()
+          }
+        })
     },
     // 剛渲染時得取資料
     getCommingData () {
@@ -325,7 +361,9 @@ export default {
       console.log(this.$route)
       this.routeUserId = this.$route.params.UserId
       // 呼叫取得資料的方法
-      this.getCommingData()
+      // 先確認是誰在取得資料
+      // this.getCommingData()
+      this.checkMemberWho()
     },
     // 取消報名呼叫 Modal
     openCancleRegisterModal (ActivityInfo) {

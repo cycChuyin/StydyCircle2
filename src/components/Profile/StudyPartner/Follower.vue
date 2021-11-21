@@ -37,7 +37,8 @@
               </div>
             </div>
             <div class="col-sm-2 d-flex align-items-center justify-content-end">
-              <button
+              <!-- 有追蹤時的按鈕狀態 -->
+              <router-link
                 type="button"
                 class="
                   btn btn-dark
@@ -50,11 +51,13 @@
                   px-3
                   fs-7
                 "
+                :to="`/profile/my-activity/${item.Id}`"
                 :class="{ 'd-none': !item.Following }"
               >
                 <span class="material-icons me-2"> person </span>
                 查看檔案
-              </button>
+              </router-link>
+              <!-- 未追蹤時的按鈕狀態 -->
               <button
                 type="button"
                 class="

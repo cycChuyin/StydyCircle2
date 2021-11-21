@@ -460,7 +460,7 @@
         <router-link
           type="button"
           class="btn btn-dark rounded-pill mt-5 mb-10 text-white"
-          to="/activities/search/9/1/-1/-1/-1/0/%E3%80%8A"
+          :to="`/activities/search/9/1/-1/-1/-1/0/${this.allSearch}`"
         >
           查看所有結果
         </router-link>
@@ -492,7 +492,8 @@ export default {
       isCollect: false,
       // 讀取效果
       isLoading: false,
-      fullPage: true
+      fullPage: true,
+      allSearch: 'all'
     }
   },
   created () {
