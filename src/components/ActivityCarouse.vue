@@ -44,7 +44,7 @@
               <!-- 給標籤 position 用的 -->
               <div class="position-relative">
                 <!-- 卡片圖片與內容 -->
-                <div class="card h-100 rounded-4">
+                <div class="card h-100 rounded-4 shadow-sm">
                   <router-link :to="`/activity-content/${item.Id}`">
                     <img
                       :src="item.imgUrl"
@@ -110,7 +110,7 @@
               <!-- 給標籤 position 用的 -->
               <div class="position-relative">
                 <!-- 卡片圖片與內容 -->
-                <div class="card h-100 rounded-4">
+                <div class="card h-100 rounded-4 shadow-sm">
                   <router-link :to="`/activity-content/${item.Id}`">
                     <img
                       :src="item.imgUrl"
@@ -175,7 +175,7 @@
               <!-- 給標籤 position 用的 -->
               <div class="position-relative">
                 <!-- 卡片圖片與內容 -->
-                <div class="card h-100 rounded-4">
+                <div class="card h-100 rounded-4 shadow-sm">
                   <router-link :to="`/activity-content/${item.Id}`">
                     <img
                       :src="item.imgUrl"
@@ -296,7 +296,7 @@
               <!-- 給標籤 position 用的 -->
               <div class="position-relative">
                 <!-- 卡片圖片與內容 -->
-                <div class="card h-100 rounded-4">
+                <div class="card h-100 rounded-4 shadow-sm">
                   <router-link :to="`/activity-content/${item.Id}`">
                     <img
                       :src="item.imgUrl"
@@ -361,7 +361,7 @@
               <!-- 給標籤 position 用的 -->
               <div class="position-relative">
                 <!-- 卡片圖片與內容 -->
-                <div class="card h-100 rounded-4">
+                <div class="card h-100 rounded-4 shadow-sm">
                   <router-link :to="`/activity-content/${item.Id}`">
                     <img
                       :src="item.imgUrl"
@@ -426,7 +426,7 @@
               <!-- 給標籤 position 用的 -->
               <div class="position-relative">
                 <!-- 卡片圖片與內容 -->
-                <div class="card h-100 rounded-4">
+                <div class="card h-100 rounded-4 shadow-sm">
                   <img
                     :src="item.imgUrl"
                     class="
@@ -545,7 +545,7 @@
               <!-- 給標籤 position 用的 -->
               <div class="position-relative">
                 <!-- 卡片圖片與內容 -->
-                <div class="card h-100 rounded-4">
+                <div class="card h-100 rounded-4 shadow-sm">
                   <img
                     :src="item.imgUrl"
                     class="
@@ -608,7 +608,7 @@
               <!-- 給標籤 position 用的 -->
               <div class="position-relative">
                 <!-- 卡片圖片與內容 -->
-                <div class="card h-100 rounded-4">
+                <div class="card h-100 rounded-4 shadow-sm">
                   <img
                     :src="item.imgUrl"
                     class="
@@ -671,7 +671,7 @@
               <!-- 給標籤 position 用的 -->
               <div class="position-relative">
                 <!-- 卡片圖片與內容 -->
-                <div class="card h-100 rounded-4">
+                <div class="card h-100 rounded-4 shadow-sm">
                   <img
                     :src="item.imgUrl"
                     class="

@@ -1,23 +1,19 @@
 <template>
   <!-- 註冊頁 -->
   <!-- banner -->
-  <div class="signUpBannerBG py-10">
+  <div class="bg-secondary py-10">
     <div class="container">
-      <h2 class="text-secondary text-center mb-5 fw-light">- 註冊 -</h2>
+      <h2 class="text-dark text-center mb-5 display-6 fw-bold">- 註冊 -</h2>
       <!-- Signup -->
       <div class="row justify-content-center">
         <div class="col-md-6">
-          <div
-            class="border border-secondary border-widths-2 rounded-6 px-6 py-7"
-          >
+          <div class="border border-dark border-widths-2 rounded-6 px-6 py-7">
             <!-- 表單內容 -->
             <form @submit.prevent="signUp">
               <!-- 驗證信箱 - 初始狀態 -->
               <div class="mb-4">
                 <div class="d-flex justify-content-between">
-                  <label
-                    for="emailAddress"
-                    class="form-label fs-4 text-secondary"
+                  <label for="emailAddress" class="form-label fs-4 text-dark"
                     >電子信箱</label
                   >
                   <!-- 驗證信箱 - 錯誤訊息 -->
@@ -36,12 +32,11 @@
                     type="email"
                     id="emailAddress"
                     class="
-                      form-control
                       border-0
                       rounded-pill
                       ps-3
                       position-relative
-                      form-control-darkGray
+                      form-control-lightYellow
                       py-13
                     "
                     placeholder="thak_tsheh@gmail.com"
@@ -56,15 +51,13 @@
 
               <!-- 密碼 -->
               <div class="mb-4">
-                <label
-                  for="signUpPassword"
-                  class="form-label fs-4 text-secondary"
+                <label for="signUpPassword" class="form-label fs-4 text-dark"
                   >密碼</label
                 >
                 <div class="input-group">
                   <input
                     type="password"
-                    class="form-control border-0 rounded-pill py-13"
+                    class="form-control-lightYellow border-0 rounded-pill py-13"
                     id="signUpPassword"
                     placeholder=""
                     v-model="user.Password"
@@ -79,14 +72,14 @@
               <div class="mb-5">
                 <label
                   for="signUpConfirmPassword"
-                  class="form-label fs-4 text-secondary"
+                  class="form-label fs-4 text-dark"
                   >確認密碼</label
                 >
                 <div class="input-group">
                   <input
                     type="password"
                     class="
-                      form-control
+                      form-control-lightYellow
                       border-0
                       rounded-pill
                       position-relative
@@ -137,7 +130,7 @@
               <!-- Button trigger modal -->
               <button
                 type="submit"
-                class="btn btn-secondary rounded-pill text-white w-100 py-13"
+                class="btn btn-dark rounded-pill text-white w-100 py-13"
               >
                 註冊
               </button>

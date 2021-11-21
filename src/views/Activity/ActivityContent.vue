@@ -1,12 +1,13 @@
 <template>
   <!-- banner -->
   <div
-    class="banner"
+    class="banner pt-10"
     :style="{ backgroundImage: 'url(' + getActivityInfo.Image + ')' }"
+    style="background-size:cover;"
   >
     <div class="container">
       <div class="row">
-        <div class="col-5 py-10">
+        <div class="col-xxl-5 col-6 py-8">
           <div class="activityBrief">
             <p class="fs-1 text-light fw-bold">
               {{ getActivityInfo.Name }}
@@ -35,10 +36,8 @@
     data-bs-scroll="true"
     ref="offcanvas"
   >
-    <div class="offcanvas-header border-bottom border-secondary px-5">
-      <h6 id="offcanvasRightLabel" class="text-secondary fs-2 fw-bold">
-        報名資訊
-      </h6>
+    <div class="offcanvas-header border-bottom border-dark px-5">
+      <h6 id="offcanvasRightLabel" class="text-dark fs-2 fw-bold">報名資訊</h6>
       <button
         type="button"
         class="btn-close text-reset"
@@ -50,11 +49,11 @@
       <!-- loading 讀取效果 -->
       <loading :active="isRegisterLoading"></loading>
 
-      <form @click.prevent="sendApply">
+      <form @submit.prevent="sendApply">
         <div class="py-5">
           <div class="row">
             <div class="col-6">
-              <p class="text-secondary">活動資訊</p>
+              <p class="text-dark">活動資訊</p>
               <ul class="list-unstyled">
                 <li class="text-dark mb-2">
                   活動名稱｜{{ getActivityInfo.Name }}
@@ -79,7 +78,7 @@
                 </li>
               </ul>
             </div>
-            <div class="col-6 border-start border-secondary">
+            <div class="col-6 border-start border-dark">
               <div
                 class="
                   d-flex
@@ -90,7 +89,7 @@
               >
                 <ul class="list-unstyled">
                   <li>
-                    <p class="text-secondary text-start">參加人資訊</p>
+                    <p class="text-dark text-start">參加人資訊</p>
                   </li>
                   <li class="text-dark mb-3">
                     <label for="name" class="form-label">姓名</label>
@@ -149,25 +148,17 @@
             </div>
           </div>
         </div>
-        <p
-          class="
-            border border-secondary
-            mb-32
-            w-100
-            py-2
-            text-center text-secondary
-          "
-        >
+        <p class="border border-dark mb-32 w-100 py-2 text-center text-dark">
           <span class="me-2">總計</span> NT$ {{ getActivityInfo.Price }}
         </p>
         <!-- 注意事項 -->
-        <p class="text-secondary mb-3">注意事項</p>
+        <p class="text-dark mb-3">注意事項</p>
         <p class="text-dark mb-3">
           煩請在活動開始前先自行下載及註冊
           Zoom，以免影響活動進行。為了維持活動之品質，倘若遲到 30
           分鐘即代表放棄活動資格，敬請大家互相配合！
         </p>
-        <p class="text-secondary mb-3">取消規則</p>
+        <p class="text-dark mb-3">取消規則</p>
         <p class="text-dark">
           若於報名 7 日內取消報名，將可取回活動費用總額之 50%。若在報名完成之 7
           日後取消報名，恕無法退還所有報名費用。煩請各位參加者事先預留活動之時間，希望大家可以好好享受活動的樂趣。
@@ -176,7 +167,7 @@
         <div class="d-flex" :class="{ 'd-none': !isSuccessPay }">
           <button
             type="button"
-            class="btn btn-outline-secondary rounded-pill w-100 py-13 fs-4"
+            class="btn btn-outline-dark rounded-pill w-100 py-13 fs-4"
             @click="hideOffcanvas"
           >
             取消
@@ -229,7 +220,7 @@
         <div class="d-flex" :class="{ 'd-none': isSuccessPay }">
           <button
             type="button"
-            class="btn btn-outline-secondary rounded-pill w-100"
+            class="btn btn-outline-dark rounded-pill w-100"
             @click="hideOffcanvas"
           >
             取消
@@ -245,13 +236,13 @@
     </div>
   </div>
   <!-- main  -->
-  <div class="bg-white pt-5">
+  <div class="bg-secondary pt-5">
     <div class="container">
       <!-- loading 元件 -->
       <loading :active="isActivityLoading" :is-full-page="fullPage"></loading>
 
       <!-- 活動詳情 - 標題區塊 -->
-      <h2 class="text-secondary fw-bold mb-4">
+      <h2 class="text-dark fw-bold mb-4">
         <!-- {{ getActivityInfo.ActivityType }} - {{ getActivityInfo.Name }} -->
         {{ getActivityInfo.ActivityType }} - 活動詳情
       </h2>
@@ -260,10 +251,8 @@
         <button
           type="button"
           class="
-            btn btn-dark
-            nav-link
+            btn btn-outline-dark
             rounded-pill
-            text-white
             d-flex
             align-items-center
             me-3
@@ -278,7 +267,6 @@
           type="button"
           class="
             btn btn-dark
-            nav-link
             rounded-pill
             text-white
             d-flex
@@ -294,10 +282,9 @@
         <button
           type="button"
           class="
-            btn btn-primary
-            nav-link
+            btn btn-dark
             rounded-pill
-            text-dark
+            text-white
             d-flex
             align-items-center
           "
@@ -308,21 +295,21 @@
         >
           <span class="material-icons me-2">arrow_forward</span>立即參加
         </button>
-        <!-- 5-2 活動頁_活動詳情_已報名 -->
+        <!-- 5-2 活動頁_活動詳情_成功報名 -->
         <button
           type="button"
           class="
-            btn btn-primary
+            btn btn-dark
             nav-link
             rounded-pill
-            text-dark
+            text-white
             d-flex
             align-items-center
             disabled
           "
           :class="{ 'd-none': unRegister }"
         >
-          <span class="material-icons me-2">check_circle_outline</span>已報名
+          <span class="material-icons me-2">check_circle_outline</span>成功報名
         </button>
         <!-- 5-3 活動頁_活動詳情_已結束 -->
         <!-- <button
@@ -340,7 +327,7 @@
         </button>
         <div class="position-relative">
           <div class="talkbubble"></div>
-          <p class="text-secondary m-0 position-absolute top-8 start-24">
+          <p class="text-dark m-0 position-absolute top-8 start-24">
             ＼ 感謝支持，活動已結束囉 /
           </p>
         </div> -->
@@ -349,19 +336,19 @@
       <div class="row py-5 justify-content-between">
         <!-- 左邊區塊 -->
         <div class="col-xl-7 col-md-12">
-          <h3 class="text-secondary fs-4">活動內容</h3>
+          <h3 class="text-dark fs-4">活動內容</h3>
           <p class="text-dark lh-base">
             {{ getActivityInfo.ContentText }}
           </p>
-          <h3 class="text-secondary mt-32 mb-3 fs-4">報名流程</h3>
+          <h3 class="text-dark mt-32 mb-3 fs-4">報名流程</h3>
           <div class="row">
             <div class="col-8">
               <div
                 class="d-flex align-items-center justify-content-between mb-2"
               >
-                <p class="text-secondary m-0 fw-light">開始</p>
-                <div class="line border border-secondary px-3"></div>
-                <p class="text-secondary m-0 fw-light">結束</p>
+                <p class="text-dark m-0 fw-light">開始</p>
+                <div class="line border border-dark px-3"></div>
+                <p class="text-dark m-0 fw-light">結束</p>
               </div>
               <div class="d-flex align-items-center justify-content-between">
                 <div class="start">
@@ -383,17 +370,17 @@
               </div>
             </div>
           </div>
-          <h3 class="text-secondary mt-32 mb-3 fs-4">主辦單位</h3>
+          <h3 class="text-dark mt-32 mb-3 fs-4">主辦單位</h3>
           <p class="text-dark mb-1">{{ getActivityInfo.OrganizerName }}</p>
           <p class="text-dark mb-1">{{ getActivityInfo.OrganizerPhone }}</p>
           <a :href="getOrganizerInfo.OrganizerMail" class="text-dark mb-1">{{
             getActivityInfo.OrganizerMail
           }}</a>
-          <h3 class="text-secondary mt-32 mb-3 fs-4">活動備註</h3>
+          <h3 class="text-dark mt-32 mb-3 fs-4">活動備註</h3>
           <p class="text-dark mb-32">
             {{ getActivityInfo.PleaseNote }}
           </p>
-          <p class="text-secondary pt-32 border-top border-secondary">
+          <p class="text-dark pt-32 border-top border-dark">
             已有 {{ getActivityInfo.ApplicantNumber }} 人參加｜{{
               getActivityInfo.CollectNumber
             }}
@@ -404,10 +391,8 @@
             <button
               type="button"
               class="
-                btn btn-dark
-                nav-link
+                btn btn-outline-dark
                 rounded-pill
-                text-white
                 d-flex
                 align-items-center
                 me-3
@@ -421,10 +406,8 @@
             <button
               type="button"
               class="
-                btn btn-dark
-                nav-link
+                btn btn-outline-dark
                 rounded-pill
-                text-white
                 d-flex
                 align-items-center
                 me-3
@@ -432,15 +415,14 @@
               :class="{ 'd-none': !isCollected }"
               @click="changeCollect(getActivityInfo.Id)"
             >
-              <span class="material-icons me-2">bookmark</span>已收藏
+              <span class="material-icons me-2 text-dark">bookmark</span>已收藏
             </button>
             <button
               type="button"
               class="
-                btn btn-primary
-                nav-link
+                btn btn-dark
+                text-white
                 rounded-pill
-                text-dark
                 d-flex
                 align-items-center
               "
@@ -451,14 +433,13 @@
             >
               <span class="material-icons me-2">arrow_forward</span>立即參加
             </button>
-            <!-- 5-2 活動頁_活動詳情_已報名 -->
+            <!-- 5-2 活動頁_活動詳情_成功報名 -->
             <button
               type="button"
               class="
-                btn btn-primary
-                nav-link
+                btn btn-dark
                 rounded-pill
-                text-dark
+                text-white
                 d-flex
                 align-items-center
                 disabled
@@ -466,7 +447,7 @@
               :class="{ 'd-none': unRegister }"
             >
               <span class="material-icons me-2">check_circle_outline</span
-              >已報名
+              >成功報名
             </button>
             <!-- 5-3 活動頁_活動詳情_已結束 -->
             <!-- <button
@@ -486,47 +467,31 @@
         </div>
         <!-- 右邊區塊 -->
         <div class="col-xl-4 col-md-12">
-          <div
-            class="
-              bg-transparent
-              border border-dark
-              p-40
-              rounded-4
-              text-secondary
-              mb-5
-            "
-          >
+          <div class="bg-searchselect p-40 rounded-4 text-dark mb-5">
             <div class="d-flex justify-content-between">
-              <p class="text-secondary fw-bold fs-4">
+              <p class="text-dark fw-bold fs-4">
                 {{ getActivityInfo.transStartDate }}
               </p>
-              <p class="text-secondary fw-bold fs-4">
-                （{{ getActivityInfo.transDay }}）
+              <p class="text-dark fw-bold fs-4">
+                星期{{ getActivityInfo.transDay }}
               </p>
             </div>
             <div class="d-flex justify-content-between align-items-center m-0">
-              <p class="text-secondary fw-light fs-4 mb-0">
+              <p class="text-dark fw-light fs-4 mb-0">
                 {{ getActivityInfo.transStartTime }}
               </p>
-              <div class="line-sm border border-secondary"></div>
-              <p class="text-secondary fw-light fs-4 mb-0">
+              <div class="line-sm border border-dark"></div>
+              <p class="text-dark fw-light fs-4 mb-0">
                 {{ getActivityInfo.transEndTime }}
               </p>
             </div>
-            <h4 class="mt-32 mb-3"></h4>
+            <h4 class="mt-32 mb-3 fw-bold fs-3">{{ getActivityInfo.Name }}</h4>
             <p class="fw-light">費用：{{ getActivityInfo.Price }} / 人</p>
             <p class="fw-light">線上：{{ getActivityInfo.Software }}</p>
             <p class="fw-light">實體：台南市幸福區快樂街 123 號 2 樓</p>
           </div>
-          <div
-            class="
-              bg-transparent
-              border border-dark
-              p-40
-              rounded-4
-              text-secondary
-            "
-          >
+
+          <div class="bg-searchselect p-40 rounded-4 text-dark">
             <div class="d-flex align-items-center mb-4">
               <router-link :to="`/profile/my-activity/${getOrganizerInfo.Id}`">
                 <img
@@ -544,7 +509,7 @@
             <p>
               {{ getOrganizerInfo.AboutMe }}
             </p>
-            <div class="d-flex border-top border-secondary pt-3">
+            <div class="d-flex border-top border-dark pt-3">
               <a :href="getOrganizerInfo.FacebookLink"
                 ><i class="fab fa-facebook-square me-4"></i
               ></a>
@@ -556,13 +521,13 @@
         </div>
       </div>
     </div>
-    <div class="bg-searchselect">
+    <div class="bg-secondary border-top border-dark py-5">
       <!-- 活動評論區塊 -->
       <div class="container">
-        <h3 class="text-secondary pt-5 mb-3">活動評價</h3>
+        <h3 class="text-dark mb-3">活動評價</h3>
         <!-- 分數、星星區塊 -->
         <div class="d-flex">
-          <h5 class="display-5 text-secondary fw-bold me-3">5.0</h5>
+          <h5 class="display-5 text-dark fw-bold me-3">5.0</h5>
           <div>
             <div class="d-flex align-items-center mb-2">
               <span class="material-icons text-primary me-1">star_rate</span>
@@ -571,7 +536,7 @@
               <span class="material-icons text-primary me-1">star_rate</span>
               <span class="material-icons text-primary">star_rate</span>
             </div>
-            <p class="fs-7 text-secondary m-0 ps-2">5/5 (25則評論)</p>
+            <p class="fs-7 text-dark m-0 ps-2">5/5 (25則評論)</p>
           </div>
         </div>
 
@@ -592,7 +557,7 @@
                       alt="memberPhoto"
                       class="rounded-pill memberPhoto-64 mb-2"
                     />
-                    <p class="text-secondary m-0 mb-1 text-center">
+                    <p class="text-dark m-0 mb-1 text-center">
                       {{ item.Name }}
                     </p>
                   </div>
@@ -600,7 +565,7 @@
                 <div class="col-md-10">
                   <div class="card-body p-0">
                     <h5 class="card-title">
-                      <p class="card-text text-secondary mb-2">
+                      <p class="card-text text-dark mb-2">
                         {{ item.transCreatDate }}
                       </p>
                       <div class="d-flex align-items-center">
@@ -621,7 +586,7 @@
                         >
                       </div>
                     </h5>
-                    <p class="card-text text-secondary lh-base">
+                    <p class="card-text text-dark lh-base">
                       {{ item.Opinion }}
                     </p>
                   </div>
@@ -632,20 +597,14 @@
           <!-- 右邊區塊-->
           <div class="col-md-4">
             <div
-              class="
-                bg-transparent
-                border border-dark
-                p-40
-                rounded-4
-                text-secondary
-              "
+              class="bg-transparent p-40 rounded-4 text-dark border border-dark"
             >
               <p class="fs-4">
                 看完評論是不是有點心動？<br />
                 先趕快收藏起來吧！
               </p>
-              <div class="border-top border-secondary pt-4">
-                <p class="text-secondary border-secondary">
+              <div class="border-top border-dark pt-4">
+                <p class="text-dark border-dark">
                   已有 {{ getActivityInfo.ApplicantNumber }} 人參加｜{{
                     getActivityInfo.CollectNumber
                   }}
@@ -656,10 +615,8 @@
                   <button
                     type="button"
                     class="
-                      btn btn-dark
-                      nav-link
+                      btn btn-outline-dark
                       rounded-pill
-                      text-white
                       d-flex
                       align-items-center
                       me-3
@@ -675,7 +632,6 @@
                     type="button"
                     class="
                       btn btn-dark
-                      nav-link
                       rounded-pill
                       text-white
                       d-flex
@@ -691,10 +647,10 @@
                   <button
                     type="button"
                     class="
-                      btn btn-primary
+                      btn btn-dark
                       nav-link
                       rounded-pill
-                      text-dark
+                      text-white
                       d-flex
                       align-items-center
                     "
@@ -706,14 +662,14 @@
                     <span class="material-icons me-2">arrow_forward</span
                     >立即參加
                   </button>
-                  <!-- 5-2 活動頁_活動詳情_已報名 -->
+                  <!-- 5-2 活動頁_活動詳情_成功報名 -->
                   <button
                     type="button"
                     class="
-                      btn btn-primary
+                      btn btn-dark
                       nav-link
                       rounded-pill
-                      text-dark
+                      text-white
                       d-flex
                       align-items-center
                       disabled
@@ -721,7 +677,7 @@
                     :class="{ 'd-none': unRegister }"
                   >
                     <span class="material-icons me-2">check_circle_outline</span
-                    >已報名
+                    >成功報名
                   </button>
                 </div>
               </div>
@@ -735,7 +691,7 @@
               fs-4
               align-items-center
               py-12
-              text-secondary
+              text-dark
             "
           >
             <nav aria-label="Page navigation example">
@@ -837,7 +793,7 @@ export default {
     this.addViewsNum()
     // 5-3 活動評價資料 + 分頁
     this.getActivityOpinionInfo()
-    // 5-4 確認是否已報名過活動 (JWT)
+    // 5-4 確認是否成功報名過活動 (JWT)
     this.checkAttendStatus()
     // 5-5 確認是否已收藏活動 (JWT)
     this.checkCollectStatus()
@@ -926,7 +882,7 @@ export default {
         this.hadRegister = false
         this.unRegister = true
       } else if (Token) {
-        // 5-4 確認是否已報名過活動 (JWT)
+        // 5-4 確認是否成功報名過活動 (JWT)
         this.$apiHelper
           .get(`api/users/activity/attend/status/${Id}`)
           .then((res) => {

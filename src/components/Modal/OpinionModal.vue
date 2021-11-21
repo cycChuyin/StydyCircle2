@@ -17,7 +17,7 @@
                 col-md-5
                 px-7
                 py-8
-                bg-secondary
+                bg-dark
                 text-white
                 d-flex
                 flex-column
@@ -26,7 +26,7 @@
               "
             >
               <div class="info">
-                <h3>
+                <h3 class="mb-5">
                   {{ emitOpinionInfo.Name }} -
                   {{ emitOpinionInfo.OrganizerName }}
                 </h3>
@@ -56,7 +56,7 @@
                     @click="hideModal"
                     :to="`/activity-content/${emitOpinionInfo.ActivityId}`"
                     type="button"
-                    class="btn btn-outline-light rounded-pill w-100"
+                    class="btn btn-outline-light rounded-pill py-13 w-100"
                   >
                     查看詳情
                   </router-link>
@@ -64,9 +64,9 @@
               </div>
             </div>
             <div class="col-md-7 ps-10 pe-7 py-8">
-              <div class="modal-header p-0 border-secondary">
+              <div class="modal-header p-0 border-dark">
                 <h5
-                  class="modal-title pb-32 text-secondary fw-bold fs-2"
+                  class="modal-title pb-32 text-dark fw-bold fs-2"
                   id="staticBackdropLabel"
                 >
                   活動評價
@@ -79,7 +79,7 @@
                 ></button>
               </div>
               <div class="modal-body pt-40 px-0">
-                <p class="text-secondary fs-4 fw-light">活動評分</p>
+                <p class="text-dark fs-4 fw-light">活動評分</p>
                 <div class="d-flex align-items-center">
                   <span class="material-icons fs-1 text-primary me-1"
                     >star_rate</span
@@ -97,7 +97,7 @@
                     >star_rate</span
                   >
                 </div>
-                <p class="text-secondary fs-4 fw-light pt-32">
+                <p class="text-dark fs-4 fw-light pt-32">
                   活動評論<span class="fw-light fs-6 ms-3 text-dark"
                     >＊字數限制在200字以內，禁止留下冒犯性評論</span
                   >
@@ -105,8 +105,8 @@
                 <textarea
                   class="
                     form-control
-                    bg-searchselect
-                    border-0
+                    bg-white
+                    border-1 border-dark
                     rounded-4
                     text-dark
                   "
@@ -123,21 +123,27 @@
                   <p class="fs-8">{{ errorText }}</p>
                 </div>
               </div>
-              <div class="modal-footer p-0 border-0">
-                <button
-                  type="button"
-                  class="btn btn-outline-secondary rounded-pill"
-                  @click="hideModal"
-                >
-                  暫不評價
-                </button>
-                <button
-                  type="button"
-                  class="btn btn-secondary text-white rounded-pill"
-                  @click="sendOpinion"
-                >
-                  送出評價
-                </button>
+              <div class="p-0 border-0">
+                <div class="row">
+                  <div class="col-6">
+                    <button
+                      type="button"
+                      class="btn btn-outline-dark rounded-pill py-13 m-0 w-100"
+                      @click="hideModal"
+                    >
+                      暫不評價
+                    </button>
+                  </div>
+                  <div class="col-6">
+                    <button
+                      type="button"
+                      class="btn btn-dark text-white rounded-pill py-13 m-0 w-100"
+                      @click="sendOpinion"
+                    >
+                      送出評價
+                    </button>
+                  </div>
+                </div>
               </div>
             </div>
           </div>

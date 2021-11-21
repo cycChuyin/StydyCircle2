@@ -1,163 +1,156 @@
 <template>
   <!-- <div>個人檔案頁的導覽頁面（全部共用元件處）</div> -->
   <component-navbar></component-navbar>
-  <div class="container">
-    <div class="row py-10">
-      <div class="col-md-3">
-        <!-- 左邊：個人資料檔案區塊 -->
-        <div class="px-40 py-5 border border-secondary rounded-6">
-          <div class="text-center">
-            <img
-              :src="profileObj.UserImgUrl"
-              alt="memberPhoto"
-              class="rounded-pill memberPhoto-120 mb-4 text-center"
-            />
-            <h2 class="text-center text-secondary mb-1 fw-bold fs-4 lh-36">
-              {{ profileObj.Name }}
-            </h2>
-            <p class="text-center text-secondary mb-3 fw-bold fs-4 lh-36">
-              {{ profileObj.NickName }}
-            </p>
-            <p class="text-secondary fw-light lh-base mb-3">
-              {{ profileObj.FollowersNumber }} 追蹤者｜{{
-                profileObj.FollowingNumber
-              }}
-              關注中
-            </p>
-            <button
-              type="button"
-              class="
-                btn btn-secondary
-                fw-light
-                rounded-pill
-                d-flex
-                align-items-center
-                text-center
-                mx-auto
-                text-white
-                fs-7
-                mb-32
-              "
-              :class="{ 'd-none': userAttendObj.Status }"
-              @click="changeFollowStatus(profileObj.Id)"
-            >
-              <span class="material-icons fs-6 me-2">done_outline</span>
-              {{ userAttendObj.Fallowed }}
-            </button>
-            <button
-              type="button"
-              class="
-                btn btn-secondary
-                fw-light
-                rounded-pill
-                d-flex
-                align-items-center
-                text-center
-                mx-auto
-                text-white
-                fs-7
-                mb-32
-              "
-              :class="{ 'd-none': !userAttendObj.Status }"
-            >
-              <span class="material-icons fs-6 me-2">edit</span>
-              編輯個人檔案
-            </button>
-          </div>
-          <!-- 地點 -->
-          <div class="address py-32 border-secondary border-top border-bottom">
+  <div class="pt-10">
+    <div class="container">
+      <div class="row py-10">
+        <div class="col-md-3">
+          <!-- 左邊：個人資料檔案區塊 -->
+          <div class="px-40 py-5 border border-dark rounded-6">
+            <div class="text-center">
+              <img
+                :src="profileObj.UserImgUrl"
+                alt="memberPhoto"
+                class="rounded-pill memberPhoto-120 mb-4 text-center"
+              />
+              <h2 class="text-center text-dark mb-1 fw-bold fs-4 lh-36">
+                {{ profileObj.Name }}
+              </h2>
+              <p class="text-center text-dark mb-3 fw-bold fs-4 lh-36">
+                {{ profileObj.NickName }}
+              </p>
+              <p class="text-dark fw-light lh-base mb-3">
+                {{ profileObj.FollowersNumber }} 追蹤者｜{{
+                  profileObj.FollowingNumber
+                }}
+                關注中
+              </p>
+              <button
+                type="button"
+                class="
+                  btn btn-dark
+                  fw-light
+                  rounded-pill
+                  d-flex
+                  align-items-center
+                  text-center
+                  mx-auto
+                  text-white
+                  fs-7
+                  mb-32
+                "
+                :class="{ 'd-none': userAttendObj.Status }"
+                @click="changeFollowStatus(profileObj.Id)"
+              >
+                <span class="material-icons fs-6 me-2">done_outline</span>
+                {{ userAttendObj.Fallowed }}
+              </button>
+              <button
+                type="button"
+                class="
+                  btn btn-dark
+                  fw-light
+                  rounded-pill
+                  d-flex
+                  align-items-center
+                  text-center
+                  mx-auto
+                  text-white
+                  fs-7
+                  mb-32
+                "
+                :class="{ 'd-none': !userAttendObj.Status }"
+              >
+                <span class="material-icons fs-6 me-2">edit</span>
+                編輯個人檔案
+              </button>
+            </div>
+            <!-- 地點 -->
+            <div class="address py-32 border-dark border-top border-bottom">
+              <p
+                class="
+                  d-flex
+                  justify-content-start
+                  align-items-center
+                  text-dark
+                  m-0
+                "
+              >
+                <span class="material-icons me-2">place</span>
+                {{ profileObj.Country }}．{{ profileObj.City }}．{{
+                  profileObj.Area
+                }}
+              </p>
+            </div>
+            <!-- 關於我 -->
+            <div class="aboutMe py-32">
+              <h3 class="text-dark fs-6 mb-2">關於我</h3>
+              <p class="text-dark mb-32 fw-light">
+                {{ profileObj.AboutMe }}
+              </p>
+              <h3 class="text-dark fs-6 mb-2">我的專長</h3>
+              <p class="text-dark mb-32 fw-light">
+                {{ profileObj.MySkill }}
+              </p>
+              <h3 class="text-dark fs-6 mb-2">我的興趣</h3>
+              <p class="text-dark mb-0 fw-light">
+                {{ profileObj.MyInterest }}
+              </p>
+            </div>
+            <!-- 社群軟體 -->
+            <div class="py-32 border-dark border-top">
+              <h3 class="text-dark fs-6 mb-4">社群軟體</h3>
+              <ul class="list-unstyled d-flex justify-content-between mb-0">
+                <li class="nav-item py-0">
+                  <a
+                    class="nav-link text-dark p-0 fs-3"
+                    :href="profileObj.FacebookLink"
+                  >
+                    <i class="fab fa-facebook-square"></i>
+                  </a>
+                </li>
+                <li class="nav-item py-0">
+                  <a
+                    class="nav-link text-dark p-0 fs-3"
+                    :href="profileObj.InstagramLink"
+                  >
+                    <i class="fab fa-instagram"></i>
+                  </a>
+                </li>
+                <li class="nav-item py-0">
+                  <a
+                    class="nav-link text-dark p-0 fs-3"
+                    :href="profileObj.LineLink"
+                  >
+                    <i class="fab fa-line"></i>
+                  </a>
+                </li>
+              </ul>
+            </div>
+            <!-- 加入時間、瀏覽次數 -->
             <p
-              class="
-                d-flex
-                justify-content-start
-                align-items-center
-                text-secondary
-                m-0
-              "
+              class="text-dark fs-7 pt-32 border-top border-dark mb-2 fw-light"
             >
-              <span class="material-icons me-2">place</span>
-              {{ profileObj.Country }}．{{ profileObj.City }}．{{
-                profileObj.Area
-              }}
+              於 {{ profileObj.transCreatDate }} 加入
             </p>
+            <p class="text-dark fw-light">瀏覽次數：{{ profileObj.Views }}</p>
           </div>
-          <!-- 關於我 -->
-          <div class="aboutMe py-32">
-            <h3 class="text-secondary fs-6 mb-2">關於我</h3>
-            <p class="text-secondary mb-32 fw-light">
-              {{ profileObj.AboutMe }}
-            </p>
-            <h3 class="text-secondary fs-6 mb-2">我的專長</h3>
-            <p class="text-secondary mb-32 fw-light">
-              {{ profileObj.MySkill }}
-            </p>
-            <h3 class="text-secondary fs-6 mb-2">我的興趣</h3>
-            <p class="text-secondary mb-0 fw-light">
-              {{ profileObj.MyInterest }}
-            </p>
-          </div>
-          <!-- 社群軟體 -->
-          <div class="py-32 border-secondary border-top">
-            <h3 class="text-secondary fs-6 mb-4">社群軟體</h3>
-            <ul class="list-unstyled d-flex justify-content-between mb-0">
-              <li class="nav-item py-0">
-                <a
-                  class="nav-link text-secondary p-0 fs-3"
-                  :href="profileObj.FacebookLink"
-                >
-                  <i class="fab fa-facebook-square"></i>
-                </a>
-              </li>
-              <li class="nav-item py-0">
-                <a
-                  class="nav-link text-secondary p-0 fs-3"
-                  :href="profileObj.InstagramLink"
-                >
-                  <i class="fab fa-instagram"></i>
-                </a>
-              </li>
-              <li class="nav-item py-0">
-                <a
-                  class="nav-link text-secondary p-0 fs-3"
-                  :href="profileObj.LineLink"
-                >
-                  <i class="fab fa-line"></i>
-                </a>
-              </li>
-            </ul>
-          </div>
-          <!-- 加入時間、瀏覽次數 -->
-          <p
-            class="
-              text-secondary
-              fs-7
-              pt-32
-              border-top border-secondary
-              mb-2
-              fw-light
-            "
-          >
-            於 {{ profileObj.transCreatDate }} 加入
-          </p>
-          <p class="text-secondary fw-light">
-            瀏覽次數：{{ profileObj.Views }}
-          </p>
         </div>
-      </div>
-      <div class="col-md-9 px-13">
-        <router-link
-          :to="`/profile/my-activity/${this.routeUserId}`"
-          class="mb-32 fw-bold fs-4 text-secondary me-4"
-          type="button"
-          >我的活動</router-link
-        >
-        <router-link
-          :to="`/profile/study-partner/${this.routeUserId}`"
-          class="mb-32 fw-bold fs-4 text-secondary me-4"
-          type="button"
-          >讀冊夥伴</router-link
-        >
-        <router-view></router-view>
+        <div class="col-md-9 px-13">
+          <router-link
+            :to="`/profile/my-activity/${this.routeUserId}`"
+            class="mb-32 fw-bold fs-4 text-dark me-4"
+            type="button"
+            >我的活動</router-link
+          >
+          <router-link
+            :to="`/profile/study-partner/${this.routeUserId}`"
+            class="mb-32 fw-bold fs-4 text-dark me-4"
+            type="button"
+            >讀冊夥伴</router-link
+          >
+          <router-view></router-view>
+        </div>
       </div>
     </div>
   </div>

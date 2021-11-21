@@ -33,14 +33,14 @@
           aria-label="Close"
         >
         </router-link>
-        <p class="fs-4 text-secondary mb-4 text-center">恭喜您成功註冊會員！</p>
-        <p class="text-secondary mb-4">
+        <p class="fs-4 text-dark mb-4 text-center">恭喜您成功註冊會員！</p>
+        <p class="text-dark mb-4">
           系統已發送驗證信至您的信箱，請至電子信箱驗證信箱以啟用會員資格，方可享有參加活動之權利。
         </p>
         <router-link
           to="/study-circle"
           type="button"
-          class="btn btn-secondary rounded-pill text-white py-13"
+          class="btn btn-dark rounded-pill text-white py-13"
           @click="hideModal()"
         >
           回到首頁

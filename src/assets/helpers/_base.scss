@@ -58,3 +58,10 @@ img{
     max-width: 100%;
     object-fit:cover;
 }
+
+//按鈕
+.btn-outline{
+    &:hover{
+        color:#ffffff;
+    }
+}

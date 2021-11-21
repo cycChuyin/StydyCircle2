@@ -256,7 +256,7 @@
               <h5 class="card-title mb-2 p-0 fs-4">
                 <router-link
                   :to="`/activity-content/${item.Id}`"
-                  class="stretched-link text-secondary"
+                  class="stretched-link text-dark"
                 >
                   {{ item.Name }}
                 </router-link>
@@ -281,7 +281,7 @@
                   {{ item.EvaluateStars }}/5 ({{ item.OpinionNumber }}則評論)
                 </p>
               </div>
-              <p class="text-secondary mb-4">
+              <p class="text-dark mb-4">
                 <span class="pe-13">{{ item.transStartDate }}</span
                 >｜<span class="px-13"
                   >{{ item.transStartTime }} - {{ item.transEndTime }}</span
@@ -298,11 +298,11 @@
                   align-items-end
                 "
               >
-                <p class="text-secondary fs-8 m-0">
+                <p class="text-dark fs-8 m-0">
                   {{ item.ApplicantNumber }}人參加 ｜
                   {{ item.CollectNumber }}人收藏
                 </p>
-                <p class="text-secondary fs-4 m-0">NT$ {{ item.Price }}</p>
+                <p class="text-dark fs-4 m-0">NT$ {{ item.Price }}</p>
               </div>
             </div>
           </div>
@@ -334,7 +334,7 @@
         fs-4
         align-items-center
         py-12
-        text-secondary
+        text-dark
       "
     >
       <nav aria-label="Page navigation example">

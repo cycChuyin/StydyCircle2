@@ -12,13 +12,13 @@
       <div class="modal-content rounded-6 px-sm-8 py-5 px-5">
         <div class="modal-header border-0 d-flex justify-content-center">
           <h5
-            class="modal-title text-center text-secondary fs-4 fw-bold mb-32"
+            class="modal-title text-center text-dark fs-4 fw-bold mb-32"
             id="exampleModalLabel"
           >
             確定取消報名？
           </h5>
         </div>
-        <div class="modal-body text-secondary">
+        <div class="modal-body text-dark">
           <p class="lh-4">你要取消的活動如下：</p>
           <p class="lh-4 fw-light">
             活動｜<span
@@ -45,7 +45,7 @@
           <div class="form-check">
             <input
               type="checkbox"
-              class="form-check-input rounded-0 border-secondary rounded-1"
+              class="form-check-input rounded-0 border-dark rounded-1"
               id="rule"
               ref="cancleRule"
               @click="checkAgreeBtn"
@@ -68,7 +68,7 @@
         <div class="border-0 d-flex">
           <button
             type="button"
-            class="btn btn-searchselect text-secondary rounded-8 w-50 me-4"
+            class="btn btn-searchselect text-dark rounded-8 w-50 me-4"
             @click="cancleRegister"
           >
             確定取消
@@ -76,7 +76,7 @@
 
           <button
             type="button"
-            class="btn btn-secondary text-white rounded-8 w-50"
+            class="btn btn-dark text-white rounded-8 w-50"
             @click="hideModal"
           >
             保留票券

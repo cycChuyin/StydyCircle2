@@ -3,20 +3,20 @@
   <!-- banner -->
   <div class="loginBannerBG py-10">
     <div class="container">
-      <h2 class="text-secondary text-center mb-5 fw-light fs-1">
+      <h2 class="text-dark text-center mb-5 fw-light fs-1">
         - 忘記密碼 -
       </h2>
       <!-- 登入頁內容 -->
       <div class="row justify-content-center">
         <div class="col-md-6">
           <div
-            class="border border-secondary border-widths-2 rounded-6 px-6 py-7"
+            class="border border-dark border-widths-2 rounded-6 px-6 py-7"
           >
             <div class="d-flex align-items-end mb-3">
-              <h3 class="text-secondary fs-4 fw-normal me-3 mb-0">
+              <h3 class="text-dark fs-4 fw-normal me-3 mb-0">
                 會員的電子信箱
               </h3>
-              <p class="fs-7 text-secondary fw-light m-0">
+              <p class="fs-7 text-dark fw-light m-0">
                 ＊請輸入註冊之電子信箱，隨後會收到重置密碼的郵件
               </p>
             </div>
@@ -39,13 +39,13 @@
                   />
                 </div>
                 <div class="col-3">
-                  <!-- <button class="btn btn-secondary rounded-pill w-100 text-white" type="button" id="button-addon2">送出</button> -->
+                  <!-- <button class="btn btn-dark rounded-pill w-100 text-white" type="button" id="button-addon2">送出</button> -->
 
                   <!-- popUp - 設定完成視窗  -->
                   <!-- Button trigger modal -->
                   <button
                     type="submit"
-                    class="btn btn-secondary rounded-pill text-white w-100 py-13"
+                    class="btn btn-dark rounded-pill text-white w-100 py-13"
                     data-bs-toggle="modal"
                     data-bs-target="#staticBackdrop"
                   >
@@ -82,12 +82,12 @@
                           data-bs-dismiss="modal"
                           aria-label="Close"
                         ></button>
-                        <p class="fs-4 text-secondary mb-4">
+                        <p class="fs-4 text-dark mb-4">
                           請前往電子信箱點擊連結並重置密碼！
                         </p>
                         <router-link
                           to="/login"
-                          class="btn btn-secondary rounded-pill text-white py-13"
+                          class="btn btn-dark rounded-pill text-white py-13"
                           data-bs-dismiss="modal"
                         >
                           確定

@@ -67,31 +67,31 @@ $colors: (
 // scss-docs-end colors-map
 
 // scss-docs-start theme-color-variables
-$primary:       #F4C200 !default;
-$secondary:     #0092DB !default;
+$primary:       #F8D268 !default;
+$secondary:     #FEFBF0 !default;
 $success:       #72C76B !default;
 $info:          $cyan !default;
 $warning:       $yellow !default;
 $danger:        $red !default;
 $light:         $gray-100 !default;
 // $dark:          $gray-900 !default;
-$dark:          #1F3143;
-$select:  #ECF2F5;
+$dark:          #111111;
+$select:  #FCEBB9;
 $disabled:#E4E4E4;
 // scss-docs-end theme-color-variables
 
 // scss-docs-start theme-colors-map
 $theme-colors: (
-  "primary":     #F4C200,
-  "secondary":  #0092DB,
+  "primary":     #F8D268,
+  "secondary":  #FEFBF0,
   "success":    #72C76B,
   "info":       $info,
   "warning":    $warning,
   "danger":     $danger,
   "light":      $light,
-  "dark":       #1F3143,
+  "dark":       #111111,
   "disabled":   #E4E4E4,
-  "searchselect" :#ECF2F5,
+  "searchselect" :#FCEBB9,
   "gray":$gray-600,
 ) !default;
 // scss-docs-end theme-colors-map
@@ -102,7 +102,8 @@ $min-contrast-ratio:   4.5 !default;
 
 // Customize the light and dark text colors for use in our color contrast function.
 $color-contrast-dark:      $black !default;
-$color-contrast-light:     $white !default;
+// $color-contrast-light:     $white !default;
+$color-contrast-light:     $dark !default;
 
 // fusv-disable
 $blue-100: tint-color($blue, 80%) !default;
@@ -294,7 +295,8 @@ $position-values: (
 //
 // Settings for the `<body>` element.
 
-$body-bg:                   $white !default;
+// $body-bg:                   $white !default;
+$body-bg:                   $secondary !default;
 $body-color:                $gray-900 !default;
 $body-text-align:           null !default;
 
@@ -303,7 +305,8 @@ $body-text-align:           null !default;
 //
 // Style anchor elements.
 
-$link-color:                              $secondary !default;
+// $link-color:                              $secondary !default;
+$link-color:                              $dark !default;
 $link-decoration:                         none;//underline !default;
 $link-shade-percentage:                   20% !default;
 $link-hover-color:                        shift-color($link-color, $link-shade-percentage) !default;
@@ -411,7 +414,7 @@ $box-shadow-inset:            inset 0 1px 2px rgba($black, .075) !default;
 $box-shadow-card:             3px 3px 6px rgba($black, .025) !default;
 // scss-docs-end box-shadow-variables
 
-$component-active-color:      $white !default;
+$component-active-color:      $dark !default;
 $component-active-bg:         $primary !default;
 // scss-docs-start caret-variables
 $caret-width:                 .3em !default;
@@ -724,7 +727,8 @@ $input-padding-y-lg:                    $input-btn-padding-y-lg !default;
 $input-padding-x-lg:                    $input-btn-padding-x-lg !default;
 $input-font-size-lg:                    $input-btn-font-size-lg !default;
 
-$input-bg:                              $white !default;
+// $input-bg:                              $white !default;
+$input-bg:                              transparent;
 $input-disabled-bg:                     $gray-200 !default;
 $input-disabled-border-color:           null !default;
 

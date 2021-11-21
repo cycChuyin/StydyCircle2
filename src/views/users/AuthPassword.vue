@@ -3,20 +3,20 @@
   <!-- banner -->
   <div class="loginBannerBG py-10">
     <div class="container">
-      <h2 class="text-secondary text-center mb-5 fw-light fs-1">
+      <h2 class="text-dark text-center mb-5 fw-light fs-1">
         - 驗證舊密碼 -
       </h2>
       <!-- 內容 -->
       <div class="row justify-content-center">
         <div class="col-md-6">
           <div
-            class="border border-secondary border-widths-2 rounded-6 px-6 py-7"
+            class="border border-dark border-widths-2 rounded-6 px-6 py-7"
           >
             <div class="d-flex align-items-end mb-3">
-              <h3 class="text-secondary fs-4 fw-normal me-3 mb-0">
+              <h3 class="text-dark fs-4 fw-normal me-3 mb-0">
                 現在的密碼
               </h3>
-              <p class="fs-7 text-secondary fw-light m-0">
+              <p class="fs-7 text-dark fw-light m-0">
                 ＊請先輸入目前登入之密碼，以便重置新密碼
               </p>
             </div>
@@ -47,7 +47,7 @@
                 </div>
                 <div class="col-md-3">
                   <button
-                    class="btn btn-secondary rounded-pill w-100 text-white py-13"
+                    class="btn btn-dark rounded-pill w-100 text-white py-13"
                     type="submit"
                     id="button-addon2"
                   >

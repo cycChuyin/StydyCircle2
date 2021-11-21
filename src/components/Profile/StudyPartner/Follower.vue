@@ -7,7 +7,7 @@
         v-for="item in getFollowersData"
         :key="item.Id"
       >
-        <div class="rounded-4 bg-white pb-3">
+        <div class="rounded-4 pb-3">
           <div class="row g-0">
             <div class="col-sm-10">
               <div class="d-flex">
@@ -20,17 +20,17 @@
                 </router-link>
                 <div class="card-body p-0">
                   <router-link :to="`/profile/my-activity/${item.Id}`">
-                    <p class="card-text text-secondary mb-2 fs-5">
-                      {{ item.Name }}{{ item.NickName }}
+                    <p class="card-text text-dark mb-2 fs-5">
+                      {{ item.Name }}｜{{ item.NickName }}
                     </p>
                   </router-link>
-                  <p class="card-text text-secondary mb-2 fw-light fs-8">
+                  <p class="card-text text-dark mb-2 fw-light fs-8">
                     {{ item.FollowingNumber }} 關注中｜{{
                       item.FollowersNumber
                     }}
                     追蹤者
                   </p>
-                  <p class="card-text text-secondary fs-7">
+                  <p class="card-text text-dark fs-7">
                     {{ item.AboutMe }}
                   </p>
                 </div>
@@ -40,7 +40,7 @@
               <button
                 type="button"
                 class="
-                  btn btn-secondary
+                  btn btn-dark
                   fw-light
                   rounded-pill
                   d-flex
@@ -58,7 +58,7 @@
               <button
                 type="button"
                 class="
-                  btn btn-secondary
+                  btn btn-dark
                   fw-light
                   rounded-pill
                   d-flex
@@ -81,7 +81,7 @@
     </ul>
     <!-- pagination -->
     <div
-      class="d-flex justify-content-end fs-4 align-items-center text-secondary"
+      class="d-flex justify-content-end fs-4 align-items-center text-dark"
     >
       <nav aria-label="Page navigation example">
         <div class="d-flex align-items-center">

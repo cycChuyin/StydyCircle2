@@ -1,6 +1,6 @@
 <template>
   <!-- 內容 -->
-  <div class="bg-white">
+  <div class="bg-secondary">
     <div class="container">
       <!-- loading 元件 -->
       <loading :active="isLoading" :is-full-page="fullPage"></loading>
@@ -13,7 +13,7 @@
               class="
                 categorySearchBar
                 rounded-pill
-                border border-secondary
+                border border-dark
                 d-flex
                 align-items-center
               "
@@ -22,7 +22,7 @@
                 <!-- 類別 -->
                 <button
                   class="
-                    btn btn-outline-secondary
+                    btn btn-outline-dark
                     dropdown-toggle
                     border-0
                     text-dark
@@ -45,6 +45,7 @@
                     p-0
                     border-0
                     rounded-3
+                    shadow
                   "
                   aria-labelledby="defaultDropdown"
                 >
@@ -124,7 +125,7 @@
             <button
               type="submit"
               class="
-                btn btn-secondary
+                btn btn-dark
                 rounded-pill
                 text-white
                 w-100
@@ -143,11 +144,9 @@
       <div class="mb-5">
         <!-- 標題 -->
         <div class="d-flex justify-content-between align-items-center mb-4">
-          <h6 class="display-6 text-secondary fw-bold">
-            即將截止報名的線上讀書會
-          </h6>
+          <h6 class="display-6 text-dark fw-bold">即將截止報名的線上讀書會</h6>
           <router-link
-            class="text-secondary fs-4 d-flex align-items-center"
+            class="text-dark fs-4 d-flex align-items-center"
             to="/activities/more/recommend/0/0/9/1"
           >
             <span class="material-icons me-2">east</span>
@@ -159,7 +158,7 @@
           <li class="col" v-for="item in newOnlineComingData" :key="item.Id">
             <div class="position-relative">
               <!-- 卡片圖片與內容 -->
-              <div class="card h-100 rounded-4">
+              <div class="card h-100 rounded-4 shadow-sm">
                 <router-link :to="`/activity-content/${item.Id}`">
                   <img
                     :src="item.imgUrl"
@@ -171,7 +170,7 @@
                   <h5 class="card-title mb-2 p-0 fs-4">
                     <router-link
                       :to="`/activity-content/${item.Id}`"
-                      class="stretched-link text-secondary"
+                      class="stretched-link text-dark"
                     >
                       {{ item.Name }}
                     </router-link>
@@ -198,11 +197,13 @@
                       }}則評論)
                     </p>
                   </div>
-                  <p class="text-secondary mb-4">
-                    <span class="pe-13">{{ item.transStartDate }}</span
-                    >｜<span class="px-13"
+                  <p class="text-dark mb-4">
+                    <span class="p-e-lg-13 pe-2">{{ item.transStartDate }}</span
+                    >｜<span class="p-x-lg-13 px-2"
                       >{{ item.transStartTime }} - {{ item.transEndTime }}</span
-                    >｜<span class="ps-13">{{ item.OrganizerName }}</span>
+                    >｜<span class="p-s-lg-13 ps-2">{{
+                      item.OrganizerName
+                    }}</span>
                   </p>
                   <div
                     class="
@@ -215,11 +216,11 @@
                       align-items-end
                     "
                   >
-                    <p class="text-secondary fs-8 m-0">
+                    <p class="text-dark fs-8 m-0">
                       {{ item.ApplicantNumber }}人參加 ｜
                       {{ item.CollectNumber }}人收藏
                     </p>
-                    <p class="text-secondary fs-4 m-0">NT$ {{ item.Price }}</p>
+                    <p class="text-dark fs-4 m-0">NT$ {{ item.Price }}</p>
                   </div>
                 </div>
               </div>
@@ -248,11 +249,9 @@
       <div class="mb-5">
         <!-- 標題 -->
         <div class="d-flex justify-content-between align-items-center mb-4">
-          <h6 class="display-6 text-secondary fw-bold">
-            最多人報名的線上讀書會
-          </h6>
+          <h6 class="display-6 text-dark fw-bold">最多人報名的線上讀書會</h6>
           <router-link
-            class="text-secondary fs-4 d-flex align-items-center"
+            class="text-dark fs-4 d-flex align-items-center"
             to="/activities/more/recommend/1/0/9/1"
           >
             <span class="material-icons me-2">east</span>
@@ -264,7 +263,7 @@
           <li class="col" v-for="item in newOnlineHotData" :key="item.Id">
             <div class="position-relative">
               <!-- 卡片圖片與內容 -->
-              <div class="card h-100 rounded-4">
+              <div class="card h-100 rounded-4 shadow-sm">
                 <router-link :to="`/activity-content/${item.Id}`">
                   <img
                     :src="item.imgUrl"
@@ -276,7 +275,7 @@
                   <h5 class="card-title mb-2 p-0 fs-4">
                     <router-link
                       :to="`/activity-content/${item.Id}`"
-                      class="stretched-link text-secondary"
+                      class="stretched-link text-dark"
                     >
                       {{ item.Name }}
                     </router-link>
@@ -303,11 +302,13 @@
                       }}則評論)
                     </p>
                   </div>
-                  <p class="text-secondary mb-4">
-                    <span class="pe-13">{{ item.transStartDate }}</span
-                    >｜<span class="px-13"
+                  <p class="text-dark mb-4">
+                    <span class="p-e-lg-13 pe-2">{{ item.transStartDate }}</span
+                    >｜<span class="p-x-lg-13 px-2"
                       >{{ item.transStartTime }} - {{ item.transEndTime }}</span
-                    >｜<span class="ps-13">{{ item.OrganizerName }}</span>
+                    >｜<span class="p-s-lg-13 ps-2">{{
+                      item.OrganizerName
+                    }}</span>
                   </p>
                   <div
                     class="
@@ -320,11 +321,11 @@
                       align-items-end
                     "
                   >
-                    <p class="text-secondary fs-8 m-0">
+                    <p class="text-dark fs-8 m-0">
                       {{ item.ApplicantNumber }}人參加 ｜
                       {{ item.CollectNumber }}人收藏
                     </p>
-                    <p class="text-secondary fs-4 m-0">NT$ {{ item.Price }}</p>
+                    <p class="text-dark fs-4 m-0">NT$ {{ item.Price }}</p>
                   </div>
                 </div>
               </div>
@@ -353,11 +354,9 @@
       <div class="mb-5">
         <!-- 標題 -->
         <div class="d-flex justify-content-between align-items-center mb-4">
-          <h6 class="display-6 text-secondary fw-bold">
-            本週新推出的線上讀書會
-          </h6>
+          <h6 class="display-6 text-dark fw-bold">本週新推出的線上讀書會</h6>
           <router-link
-            class="text-secondary fs-4 d-flex align-items-center"
+            class="text-dark fs-4 d-flex align-items-center"
             to="/activities/more/recommend/3/0/9/1"
           >
             <span class="material-icons me-2">east</span>
@@ -369,7 +368,7 @@
           <li class="col" v-for="item in newOnlineNewData" :key="item.Id">
             <div class="position-relative">
               <!-- 卡片圖片與內容 -->
-              <div class="card h-100 rounded-4">
+              <div class="card h-100 rounded-4 shadow-sm">
                 <router-link :to="`/activity-content/${item.Id}`">
                   <img
                     :src="item.imgUrl"
@@ -381,7 +380,7 @@
                   <h5 class="card-title mb-2 p-0 fs-4">
                     <router-link
                       :to="`/activity-content/${item.Id}`"
-                      class="stretched-link text-secondary"
+                      class="stretched-link text-dark"
                     >
                       {{ item.Name }}
                     </router-link>
@@ -408,11 +407,13 @@
                       }}則評論)
                     </p>
                   </div>
-                  <p class="text-secondary mb-4">
-                    <span class="pe-13">{{ item.transStartDate }}</span
-                    >｜<span class="px-13"
+                  <p class="text-dark mb-4">
+                    <span class="p-e-lg-13 pe-2">{{ item.transStartDate }}</span
+                    >｜<span class="p-x-lg-13 px-2"
                       >{{ item.transStartTime }} - {{ item.transEndTime }}</span
-                    >｜<span class="ps-13">{{ item.OrganizerName }}</span>
+                    >｜<span class="p-s-lg-13 ps-2">{{
+                      item.OrganizerName
+                    }}</span>
                   </p>
                   <div
                     class="
@@ -425,11 +426,11 @@
                       align-items-end
                     "
                   >
-                    <p class="text-secondary fs-8 m-0">
+                    <p class="text-dark fs-8 m-0">
                       {{ item.ApplicantNumber }}人參加 ｜
                       {{ item.CollectNumber }}人收藏
                     </p>
-                    <p class="text-secondary fs-4 m-0">NT$ {{ item.Price }}</p>
+                    <p class="text-dark fs-4 m-0">NT$ {{ item.Price }}</p>
                   </div>
                 </div>
               </div>
@@ -458,7 +459,7 @@
       <div class="d-flex justify-content-center">
         <router-link
           type="button"
-          class="btn btn-secondary rounded-pill mt-5 mb-10 text-white"
+          class="btn btn-dark rounded-pill mt-5 mb-10 text-white"
           to="/activities/search/9/1/-1/-1/-1/0/%E3%80%8A"
         >
           查看所有結果

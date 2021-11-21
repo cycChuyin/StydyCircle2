@@ -44,14 +44,19 @@
             "
           >
             <li
-              :class="{ linkActive: isOnline }"
+              :class="{ linkActive: isOnline, disabled: isOnline }"
               class="nav-item rounded-4 rounded-bottom-0"
               aria-current="true"
               aria-selected="true"
               @click="changeActive('Online')"
             >
               <router-link
-                class="nav-link px-32 py-3 rounded-4 rounded-bottom-0"
+                class="
+                  nav-link-threeTheme
+                  px-32
+                  py-3
+                  rounded-4 rounded-bottom-0
+                "
                 type="button"
                 :to="`/activity/online`"
                 >線上讀書會</router-link
@@ -59,12 +64,18 @@
             </li>
             <li
               class="nav-item rounded-4 rounded-bottom-0"
-              :class="{ linkActive: isEntity }"
+              :class="{ linkActive: isEntity, disabled: isEntity }"
+              :disabled="isEntity"
               aria-selected="false"
               @click="changeActive('Entity')"
             >
               <router-link
-                class="nav-link px-32 py-3 rounded-4 rounded-bottom-0"
+                class="
+                  nav-link-threeTheme
+                  px-32
+                  py-3
+                  rounded-4 rounded-bottom-0
+                "
                 type="button"
                 :to="`/activity/entity`"
                 >實體讀書會</router-link
@@ -72,12 +83,17 @@
             </li>
             <li
               class="nav-item rounded-4 rounded-bottom-0"
-              :class="{ linkActive: isWorkShop }"
+              :class="{ linkActive: isWorkShop, disabled: isWorkShop }"
               aria-selected="false"
               @click="changeActive('Workshop')"
             >
               <router-link
-                class="nav-link px-32 py-3 rounded-4 rounded-bottom-0"
+                class="
+                  nav-link-threeTheme
+                  px-32
+                  py-3
+                  rounded-4 rounded-bottom-0
+                "
                 type="button"
                 :to="`/activity/workshop`"
                 >活動工作坊</router-link
@@ -99,10 +115,9 @@
 
 <style>
 .linkActive {
-  color: #495057;
-  background-color: #fff;
-  border-color: #dee2e6 #dee2e6 #fff;
+  color: #111111;
   border-bottom: 0;
+  background-color:#F8D268;
   font-weight: bold;
 }
 .bannerOnlineUrl {

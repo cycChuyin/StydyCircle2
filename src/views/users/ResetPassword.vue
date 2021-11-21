@@ -2,20 +2,20 @@
   <!-- banner -->
   <div class="loginBannerBG py-10">
     <div class="container">
-      <h2 class="text-secondary text-center mb-5 fw-light fs-1">
+      <h2 class="text-dark text-center mb-5 fw-light fs-1">
         - 重置密碼 -
       </h2>
       <!-- 重置密碼內容 -->
       <div class="row justify-content-center">
         <div class="col-md-4">
           <div
-            class="border border-secondary border-widths-2 rounded-6 px-6 py-7"
+            class="border border-dark border-widths-2 rounded-6 px-6 py-7"
           >
             <form @submit.prevent="resetPassword">
               <div class="mb-3">
                 <label
                   for="inputNewPassword"
-                  class="text-secondary fs-4 fw-normal me-3 mb-2"
+                  class="text-dark fs-4 fw-normal me-3 mb-2"
                   >新密碼</label
                 >
                 <input
@@ -34,14 +34,14 @@
                   placeholder=""
                   v-model="user.Password"
                 />
-                <span class="fs-7 fw-light text-secondary mt-1"
+                <span class="fs-7 fw-light text-dark mt-1"
                   >＊密碼必須為 8 個字元及至少一個大寫字母</span
                 >
               </div>
               <div class="mb-5">
                 <label
                   for="inputCheckPassword"
-                  class="text-secondary fs-4 fw-normal me-3 mb-2"
+                  class="text-dark fs-4 fw-normal me-3 mb-2"
                   >確認密碼</label
                 >
                 <input
@@ -62,7 +62,7 @@
               </div>
 
               <button
-                class="btn btn-secondary rounded-pill w-100 text-white py-13"
+                class="btn btn-dark rounded-pill w-100 text-white py-13"
                 type="submit"
                 id="button-addon2"
               >

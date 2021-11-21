@@ -15,26 +15,27 @@
               :alt="item.Image"
             />
             <div class="card-body p-3">
-              <h5 class="card-title mb-2 p-0 fw-light fs-4">
+              <h5 class="card-title mb-2 p-0"
+              style="font-size: 1.2rem">
                 <router-link
                   :to="`/activity-content/${item.ActivityId}`"
-                  class="stretched-link text-secondary"
+                  class="stretched-link text-dark"
                 >
                   {{ item.Name }}
                 </router-link>
               </h5>
               <div class="d-flex align-items-center mb-2">
                 <div class="d-flex align-items-center">
-                  <span class="material-icons text-primary me-1"
+                  <span class="material-icons text-primary"
                     >star_rate</span
                   >
-                  <span class="material-icons text-primary me-1"
+                  <span class="material-icons text-primary"
                     >star_rate</span
                   >
-                  <span class="material-icons text-primary me-1"
+                  <span class="material-icons text-primary"
                     >star_rate</span
                   >
-                  <span class="material-icons text-primary me-1"
+                  <span class="material-icons text-primary"
                     >star_rate</span
                   >
                   <span class="material-icons text-primary">star_rate</span>
@@ -43,7 +44,7 @@
                   {{ item.EvaluateStars }}/5 ({{ item.OpinionNumber }}則評論)
                 </p>
               </div>
-              <p class="text-secondary mb-4">
+              <p class="text-dark mb-4 fs-7">
                 <span>{{ item.transStartDate }}</span
                 >｜<span
                   >{{ item.transStartTime }} - {{ item.transEndTime }}</span
@@ -60,11 +61,11 @@
                   align-items-end
                 "
               >
-                <p class="text-secondary fs-8 m-0">
+                <p class="text-dark fs-8 m-0">
                   {{ item.ApplicantNumber }}人參加 ｜
                   {{ item.CollectNumber }}人收藏
                 </p>
-                <p class="text-secondary fs-4 m-0">NT$ {{ item.Price }}</p>
+                <p class="text-dark fs-4 m-0">NT$ {{ item.Price }}</p>
               </div>
             </div>
           </div>

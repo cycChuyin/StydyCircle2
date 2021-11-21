@@ -1,15 +1,23 @@
 <template>
-  <div class="bg-searchselect">
-    <div class="container">
-      <div class="row justify-content-end py-10">
+  <div class="bgHeader" style="height: 560px">
+    <div class="container pt-4">
+      <div class="row justify-content-end py-10 pt-12">
         <div class="col-md-6 d-flex justify-content-center">
           <!-- <img src="https://studycircle.rocket-coding.com/upload/activity/9.jpg?2021"/> -->
-          <img :src="newOnlineObj.Image" v-if="Type === 'Online'" />
+          <!-- <img :src="newOnlineObj.Image" v-if="Type === 'Online'" />
           <img :src="newEntityObj.Image" v-else-if="Type === 'Entity'" />
-          <img :src="newWorkShop.Image" v-else-if="Type === 'WorkShop'" />
+          <img :src="newWorkShop.Image" v-else-if="Type === 'WorkShop'" /> -->
+          <img src="https://thak-tsheh.rocket-coding.com/upload/top_img_new_1.png" v-if="Type === 'Online'" />
+          <img src="https://thak-tsheh.rocket-coding.com/upload/top_img_new_2.png" v-else-if="Type === 'Entity'" />
+          <img src="https://thak-tsheh.rocket-coding.com/upload/top_img_new_3.png" v-else-if="Type === 'WorkShop'" />
+
         </div>
         <div class="col-md-6">
-          <ul class="nav nav-pills mb-3" id="pills-tab" role="tablist">
+          <ul
+            class="nav nav-pills mb-3 HotActivity"
+            id="pills-tab"
+            role="tablist"
+          >
             <li class="nav-item" role="presentation">
               <button
                 class="nav-link active"
@@ -57,16 +65,17 @@
             </li>
           </ul>
           <div class="tab-content" id="pills-tabContent">
+            <!-- 線上讀書會 -->
             <div
-              class="text-secondary tab-pane fade show active"
+              class="text-dark tab-pane fade show active"
               id="pills-home"
               role="tabpanel"
               aria-labelledby="pills-home-tab"
             >
-              <h3 class="fs-4 fw-bold mb-2">
+              <h3 class="fs-4 fw-bolder mb-4">
                 {{ newOnlineObj.Name }}
               </h3>
-              <p class="mb-0">
+              <p class="mb-4 fw-light">
                 ｜日期：<span
                   >{{ newOnlineObj.transStartDate }}（{{
                     newOnlineObj.transDay
@@ -78,29 +87,30 @@
                 >
                 ｜人數：<span>{{ newOnlineObj.LimitNumber }} 人以內</span>
               </p>
-              <p class="py-3">
+              <p class="py-3 fw-light fw-light">
                 {{ newOnlineObj.Summary }}
               </p>
               <div class="d-flex justify-content-md-end">
                 <router-link
                   :to="`/activity-content/${newOnlineObj.Id}`"
                   type="button"
-                  class="btn btn-secondary rounded-pill text-white"
+                  class="btn btn-dark rounded-pill text-white"
                 >
                   立即參加
                 </router-link>
               </div>
             </div>
+            <!-- 實體讀書會 -->
             <div
-              class="text-secondary tab-pane fade"
+              class="text-dark tab-pane fade"
               id="pills-profile"
               role="tabpanel"
               aria-labelledby="pills-profile-tab"
             >
-              <h3 class="fs-4 fw-bold mb-2">
+              <h3 class="fs-4 fw-bolder mb-4">
                 {{ newEntityObj.Name }}
               </h3>
-              <p class="mb-0">
+              <p class="mb-4 fw-light">
                 ｜日期：<span
                   >{{ newEntityObj.transStartDate }}（{{
                     newEntityObj.transDay
@@ -112,29 +122,30 @@
                 >
                 ｜人數：<span>{{ newEntityObj.LimitNumber }} 人以內</span>
               </p>
-              <p class="py-3">
+              <p class="py-3 fw-light">
                 {{ newEntityObj.Summary }}
               </p>
               <div class="d-flex justify-content-md-end">
                 <router-link
                   :to="`/activity-content/${newEntityObj.Id}`"
                   type="button"
-                  class="btn btn-secondary rounded-pill text-white"
+                  class="btn btn-dark rounded-pill text-white"
                 >
                   立即參加
                 </router-link>
               </div>
             </div>
+            <!-- 活動工作坊 -->
             <div
-              class="text-secondary tab-pane fade"
+              class="text-dark tab-pane fade"
               id="pills-contact"
               role="tabpanel"
               aria-labelledby="pills-contact-tab"
             >
-              <h3 class="fs-4 fw-bold mb-2">
+              <h3 class="fs-4 fw-bolder mb-4">
                 {{ newWorkShop.Name }}
               </h3>
-              <p class="mb-0">
+              <p class="mb-4 fw-light">
                 ｜日期：<span
                   >{{ newWorkShop.transStartDate }}（{{
                     newWorkShop.transDay
@@ -146,14 +157,14 @@
                 >
                 ｜人數：<span>{{ newWorkShop.LimitNumber }} 人以內</span>
               </p>
-              <p class="py-3">
+              <p class="py-3 fw-light">
                 {{ newWorkShop.Summary }}
               </p>
               <div class="d-flex justify-content-md-end">
                 <router-link
                   :to="`/activity-content/${newWorkShop.Id}`"
                   type="button"
-                  class="btn btn-secondary rounded-pill text-white"
+                  class="btn btn-dark rounded-pill text-white"
                 >
                   立即參加
                 </router-link>
@@ -165,6 +176,19 @@
     </div>
   </div>
 </template>
+
+<style lang="scss">
+.bgHeader {
+  background-image: url(https://thak-tsheh.rocket-coding.com/upload/backgroundimg/bg_header.png);
+}
+.nav-pills .nav-link.active {
+  color: #ffffff;
+  background-color: #111111;
+}
+.nav-pills .nav-link.hover {
+  background-color: #fefbf0;
+}
+</style>
 
 <script>
 export default {

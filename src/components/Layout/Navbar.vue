@@ -1,6 +1,9 @@
 <template>
-  <div class="position-relative shadow">
-    <nav class="navbar navbar-expand-lg bg-white navbar-light py-5">
+  <div class="position-relative">
+    <nav
+      class="navbar navbar-expand-lg py-5 bg-transparent bgNav"
+      style="height: 181px; margin-bottom: -96px;"
+    >
       <div class="container">
         <button
           class="navbar-toggler"
@@ -18,7 +21,7 @@
             <li class="nav-item">
               <router-link
                 :to="`/activity/online`"
-                class="nav-link text-secondary active"
+                class="nav-link fw-lig text-dark active"
                 aria-current="page"
                 @click="changeType('online')"
               >
@@ -28,7 +31,7 @@
             <li class="nav-item">
               <router-link
                 :to="`/activity/entity`"
-                class="nav-link text-secondary"
+                class="nav-link fw-lig text-dark"
                 aria-current="page"
                 @click="changeType('entity')"
               >
@@ -38,7 +41,7 @@
             <li class="nav-item">
               <router-link
                 :to="`/activity/workshop`"
-                class="nav-link text-secondary"
+                class="nav-link fw-lig text-dark"
                 aria-current="page"
                 @click="changeType('workshop')"
               >
@@ -51,7 +54,7 @@
             <li class="nav-item">
               <router-link
                 type="button"
-                class="nav-link text-secondary"
+                class="nav-link text-dark"
                 to="/activities/search/9/1/-1/-1/-1/0/%E3%80%8A"
               >
                 <span class="material-icons d-flex align-items-center">
@@ -65,7 +68,7 @@
                 <li class="nav-item ms-7">
                   <router-link
                     to="/sign-up"
-                    class="nav-link text-secondary px-3 py-2"
+                    class="nav-link text-dark px-3 py-2"
                   >
                     註冊
                   </router-link>
@@ -75,7 +78,7 @@
                     to="/login"
                     type="button"
                     class="
-                      btn btn-secondary
+                      btn btn-dark
                       nav-link
                       fw-bold
                       rounded-pill
@@ -109,10 +112,11 @@
                   dropdown-menu dropdown-menu-end
                   p-0
                   rounded-top rounded-4
+                  shadow
                 "
                 aria-labelledby="navbarDropdown"
               >
-                <li class="text-center text-secondary">
+                <li class="text-center text-dark">
                   <router-link
                     :to="`/profile/my-activity/${UserInfoData.Id}`"
                     class="
@@ -127,7 +131,7 @@
                     個人檔案
                   </router-link>
                 </li>
-                <li class="text-center text-secondary">
+                <li class="text-center text-dark">
                   <a
                     class="
                       dropdown-item
@@ -142,7 +146,7 @@
                     探索活動</a
                   >
                 </li>
-                <li class="text-center text-secondary">
+                <li class="text-center text-dark">
                   <router-link
                     to="/auth-password"
                     class="
@@ -157,10 +161,10 @@
                     重設密碼
                   </router-link>
                 </li>
-                <li class="text-center text-secondary px-32 py-0">
+                <li class="text-center text-dark px-32 py-0">
                   <hr class="dropdown-divider m-0" />
                 </li>
-                <li class="text-center text-secondary">
+                <li class="text-center text-dark">
                   <a
                     class="dropdown-item py-3"
                     href="#"
@@ -176,13 +180,20 @@
     </nav>
     <router-link to="/study-circle">
       <img
-        src="@/assets/photo/thak-tsheh.png?20211118"
+        :src="`${this.envUploadLOGO}/logo_thak-tsheh.png`"
         class="position-absolute top-50 start-50 translate-middle"
-        style="width: 239px; height: auto"
+        style="height:85px;"
       />
     </router-link>
   </div>
 </template>
+
+<style lang="scss">
+.bgNav {
+  background-image: url(https://thak-tsheh.rocket-coding.com/upload/backgroundimg/bg_nav_shadow_final.png);
+  // background-image: url(https://thak-tsheh.rocket-coding.com/upload/backgroundimg/bg_nav.png);
+}
+</style>
 
 <script>
 export default {
@@ -192,10 +203,15 @@ export default {
       UserInfoData: {},
       isLogin: false,
       isSighOut: true,
-      UserId: ''
+      UserId: '',
+      // logo 的環境變數路徑
+      envUploadLOGO: ''
     }
   },
   created () {
+    // 宣告變數為環境變數的路徑，方便 HTML 可以換圖片
+    this.envUploadLOGO = `${process.env.VUE_APP_LOGO}`
+    // console.log(this.envUploadLOGO)
     console.log(this.$route)
     // this.UserId = JSON.parse(localStorage.getItem('UserId'))
     this.UserId = this.$route.params.UserId

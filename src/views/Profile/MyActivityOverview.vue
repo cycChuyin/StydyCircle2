@@ -4,13 +4,13 @@
       nav nav-pills nav-justified
       mb-32
       pb-3
-      border-bottom border-secondary
+      border-bottom border-dark
     "
   >
     <li class="nav-item" role="presentation">
       <button
         type="button"
-        class="nav-link rounded-pill py-13"
+        class="nav-link-profileData rounded-pill py-13"
         :class="{ active: open === 'comingsoon' }"
         @click="open = 'comingsoon'"
       >
@@ -24,7 +24,7 @@
     >
       <button
         type="button"
-        class="nav-link rounded-pill py-13"
+        class="nav-link-profileData rounded-pill py-13"
         :class="{ active: open === 'unopinion' }"
         @click="open = 'unopinion'"
       >
@@ -34,7 +34,7 @@
     <li class="nav-item" role="presentation">
       <button
         type="button"
-        class="nav-link rounded-pill py-13"
+        class="nav-link-profileData rounded-pill py-13"
         :class="{ active: open === 'collected' }"
         @click="open = 'collected'"
       >
@@ -44,7 +44,7 @@
     <li class="nav-item" role="presentation">
       <button
         type="button"
-        class="nav-link rounded-pill py-13"
+        class="nav-link-profileData rounded-pill py-13"
         :class="{ active: open === 'finished' }"
         @click="open = 'finished'"
       >
@@ -54,7 +54,7 @@
     <li class="nav-item" role="presentation">
       <button
         type="button"
-        class="nav-link rounded-pill py-13"
+        class="nav-link-profileData rounded-pill py-13"
         :class="{ active: open === 'deleted' }"
         @click="open = 'deleted'"
       >
@@ -67,8 +67,23 @@
   <had-collected v-else-if="open === 'collected'"></had-collected>
   <had-finished v-else-if="open === 'finished'"></had-finished>
   <had-deleted v-else-if="open === 'deleted'"></had-deleted>
-
 </template>
+
+<style lang="scss">
+.nav-link-profileData {
+  width: 100%;
+  color: #111111;
+  background-color: transparent;
+  border:0px;
+  &:hover {
+    background-color: #f8d26829;
+  }
+}
+.nav-link-profileData.active {
+  color: #ffffff;
+  background-color: #111111;
+}
+</style>
 
 <script>
 import comingSoon from '@/components/Profile/MyActivity/ComingSoon.vue'

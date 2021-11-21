@@ -7,7 +7,7 @@
     <ul class="row row-cols-1 list-unstyled">
       <template v-for="(item, index) in newCommingData" :key="item.ActivityId">
         <li class="col mb-4">
-          <div class="card text-secondary fw-light border-secondary rounded-7">
+          <div class="card text-dark fw-light rounded-7 shadow-sm">
             <img
               :src="item.imgUrl"
               :alt="item.Image"
@@ -43,12 +43,12 @@
                     class="d-flex justify-content-between align-items-center"
                   >
                     <p class="card-text fs-7 m-0">
-                      <span class="material-icons fs-6">favorite_border</span>
+                      <!-- <span class="material-icons fs-6">favorite_border</span> -->
                       已有 {{ item.ApplicantNumber }} 人參加
                     </p>
                     <button
                       class="
-                        btn btn-outline-secondary
+                        btn btn-outline-dark
                         rounded-pill
                         d-flex
                         align-items-center
@@ -67,40 +67,40 @@
               </div>
             </div>
             <div class="collapse" :id="`collapse${index + 1}`">
-              <div class="card-body border-top border-dark p-5">
-                <h6 class="fs-4 text-secondary mb-3">
+              <div class="card-body border-top p-5">
+                <h6 class="fs-4 text-dark mb-3">
                   {{ item.Name }} - {{ item.OrganizerName }}
                 </h6>
-                <p class="fw-light text-secondary m-0">
+                <p class="fw-light text-dark m-0">
                   {{ item.Summary }}
                 </p>
-                <div class="py-32 border-bottom border-secondary">
-                  <p class="fw-light text-secondary mb-3">
+                <div class="py-32 border-bottom border-dark">
+                  <p class="fw-light text-dark mb-3">
                     進行方式｜{{ item.ActivityType }} - {{ item.Software }}
                   </p>
-                  <p class="fw-light text-secondary mb-3">
+                  <p class="fw-light text-dark mb-3">
                     活動日期｜{{ item.transStartDate }} （{{ item.transDay }}）
                   </p>
-                  <p class="fw-light text-secondary mb-3">
+                  <p class="fw-light text-dark mb-3">
                     活動時間｜{{ item.transStartTime }} -
                     {{ item.transEndTime }}
                   </p>
-                  <p class="fw-light text-secondary mb-3">
+                  <p class="fw-light text-dark mb-3">
                     活動費用｜$ {{ item.Price }}
                   </p>
-                  <p class="fw-light text-secondary">
+                  <p class="fw-light text-dark">
                     活動連結｜{{ item.Link }}
                   </p>
                 </div>
                 <div class="pt-4 pb-8">
-                  <p class="fw-normal text-secondary mb-2">注意事項</p>
-                  <p class="fw-light text-secondary mb-24">
+                  <p class="fw-normal text-dark mb-2">注意事項</p>
+                  <p class="fw-light text-dark mb-24">
                     煩請在活動開始前先自行下載及註冊
                     Zoom，以免影響活動進行。為了維持活動之品質，倘若遲到 30
                     分鐘即代表放棄活動資格，並不會退還活動之費用，敬請大家互相配合！
                   </p>
-                  <p class="fw-normal text-secondary mb-2">取消規則</p>
-                  <p class="fw-light text-secondary mb-24">
+                  <p class="fw-normal text-dark mb-2">取消規則</p>
+                  <p class="fw-light text-dark mb-24">
                     若於報名 7 日內取消報名，將可取回活動費用總額之
                     50%。若在報名完成之 7
                     日後取消報名，恕無法退還所有報名費用。煩請各位參加者事先預留活動之時間，希望大家可以好好享受活動的樂趣。
@@ -108,13 +108,13 @@
                 </div>
                 <div class="d-flex justify-content-between align-items-center">
                   <p class="card-text fs-7 m-0">
-                    <span class="material-icons fs-6">favorite_border</span>
+                    <!-- <span class="material-icons fs-6">favorite_border</span> -->
                     已有 {{ item.ApplicantNumber }} 人參加
                   </p>
                   <div class="d-flex">
                     <button
                       class="
-                        btn btn-outline-secondary
+                        btn btn-outline-dark
                         rounded-pill
                         d-flex
                         align-items-center
@@ -130,7 +130,7 @@
                     </button>
                     <button
                       class="
-                        btn btn-outline-secondary
+                        btn btn-outline-dark
                         rounded-pill
                         d-flex
                         align-items-center
@@ -144,7 +144,7 @@
                     <router-link
                       :to="`/activity-content/${item.ActivityId}`"
                       class="
-                        btn btn-outline-secondary
+                        btn btn-dark
                         rounded-pill
                         d-flex
                         align-items-center
@@ -175,26 +175,29 @@
               :alt="item.Image"
             />
             <div class="card-body p-3">
-              <h5 class="card-title mb-2 p-0 fw-light fs-4">
+              <h5
+                class="card-title mb-2 p-0"
+                style="font-size: 1.2rem"
+              >
                 <router-link
                   :to="`/activity-content/${item.ActivityId}`"
-                  class="stretched-link text-secondary"
+                  class="stretched-link text-dark"
                 >
                   {{ item.Name }}
                 </router-link>
               </h5>
               <div class="d-flex align-items-center mb-2">
                 <div class="d-flex align-items-center">
-                  <span class="material-icons text-primary me-1"
+                  <span class="material-icons text-primary"
                     >star_rate</span
                   >
-                  <span class="material-icons text-primary me-1"
+                  <span class="material-icons text-primary"
                     >star_rate</span
                   >
-                  <span class="material-icons text-primary me-1"
+                  <span class="material-icons text-primary"
                     >star_rate</span
                   >
-                  <span class="material-icons text-primary me-1"
+                  <span class="material-icons text-primary"
                     >star_rate</span
                   >
                   <span class="material-icons text-primary">star_rate</span>
@@ -203,7 +206,7 @@
                   {{ item.EvaluateStars }}/5 ({{ item.OpinionNumber }}則評論)
                 </p>
               </div>
-              <p class="text-secondary mb-4">
+              <p class="text-dark mb-4 fs-7">
                 <span>{{ item.transStartDate }}</span
                 >｜<span
                   >{{ item.transStartTime }} - {{ item.transEndTime }}</span
@@ -220,11 +223,11 @@
                   align-items-end
                 "
               >
-                <p class="text-secondary fs-8 m-0">
+                <p class="text-dark fs-8 m-0">
                   {{ item.ApplicantNumber }}人參加 ｜
                   {{ item.CollectNumber }}人收藏
                 </p>
-                <p class="text-secondary fs-4 m-0">NT$ {{ item.Price }}</p>
+                <p class="text-dark fs-4 m-0">NT$ {{ item.Price }}</p>
               </div>
             </div>
           </div>

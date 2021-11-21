@@ -7,7 +7,7 @@
           <h2 class="text-center">
             <span class="material-icons display-2 pb-4"> check_circle_outline </span>
           </h2>
-          <h2 class="text-secondary text-center mb-5">＼報名成功／</h2>
+          <h2 class="text-dark text-center mb-5">＼報名成功／</h2>
         </div>
         <div class="row justify-content-center">
           <div class="col-xl-6 col-md-9 px-0">
@@ -21,10 +21,10 @@
                 "
               >
                 <span
-                  class="material-icons text-secondary me-2 d-none d-md-block"
+                  class="material-icons text-dark me-2 d-none d-md-block"
                   >location_on</span
                 >
-                <p class="fs-4 text-secondary m-0 fw-light">
+                <p class="fs-4 text-dark m-0 fw-light">
                   {{ activityData.Name }}{{ activityData.ActivityType }}
                 </p>
               </div>
@@ -32,7 +32,7 @@
                 <button
                   type="button"
                   class="
-                    btn btn-outline-secondary
+                    btn btn-outline-dark
                     rounded-pill
                     d-flex
                     align-items-center
@@ -41,7 +41,7 @@
                     py-1
                   "
                 >
-                  <span class="material-icons text-secondary me-2 fs-6"
+                  <span class="material-icons text-dark me-2 fs-6"
                     >print</span
                   >
                   列印報名資訊
@@ -59,10 +59,10 @@
                 "
               >
                 <span
-                  class="material-icons text-secondary me-2 d-none d-md-block"
+                  class="material-icons text-dark me-2 d-none d-md-block"
                   >event_note</span
                 >
-                <p class="fs-4 text-secondary m-0 fw-light">
+                <p class="fs-4 text-dark m-0 fw-light">
                   {{ activityData.transStartDate }}（{{
                     activityData.transDay
                   }}）{{ activityData.transStartTime }} -
@@ -73,7 +73,7 @@
                 <button
                   type="button"
                   class="
-                    btn btn-outline-secondary
+                    btn btn-outline-dark
                     rounded-pill
                     d-flex
                     align-items-center
@@ -82,7 +82,7 @@
                     py-1
                   "
                 >
-                  <span class="material-icons text-secondary me-2 fs-6"
+                  <span class="material-icons text-dark me-2 fs-6"
                     >event_note</span
                   >
                   新增至行事曆
@@ -94,25 +94,25 @@
         <!-- 分隔線 -->
         <div class="row justify-content-center">
           <div class="col-xl-6 col-md-10 px-0">
-            <hr class="dropdown-divider my-4 text-secondary" />
+            <hr class="dropdown-divider my-4 text-dark" />
           </div>
         </div>
         <div class="row justify-content-center">
           <div class="col-xl-6 col-md-10">
             <!-- 提醒事項區塊 -->
-            <div class="text-secondary">
+            <div class="text-dark">
               <div class="d-flex">
                 <span class="material-icons me-2">warning_amber</span>
                 <p>提醒事項</p>
               </div>
               <ul class="p-0 fw-light">
-                <li class="text-secondary d-flex">
+                <li class="text-dark d-flex">
                   <p class="me-2">-</p>
                   <p>
                     線上活動之連結將會傳送至您的電子信箱，若在活動開始前一天尚未收到，請聯絡線上客服，或來電聯絡我們。
                   </p>
                 </li>
-                <li class="text-secondary d-flex">
+                <li class="text-dark d-flex">
                   <p class="me-2">-</p>
                   <p>
                     活動開始的前 10 日如需取消報名，需酌收票價 10%
@@ -125,7 +125,7 @@
             <!-- 分享區塊 -->
             <div class="row justify-content-center mb-5">
               <div class="col-md-9">
-                <p class="text-center fs-4 text-secondary">
+                <p class="text-center fs-4 text-dark">
                   分享參加的活動給朋友吧！
                 </p>
                 <div class="row justify-content-center">
@@ -134,17 +134,17 @@
                       class="list-unstyled d-flex justify-content-between m-0"
                     >
                       <li class="nav-item">
-                        <a class="nav-link text-secondary p-0" href="#">
+                        <a class="nav-link text-dark p-0" href="#">
                           <i class="bi bi-facebook fs-2"></i>
                         </a>
                       </li>
                       <li class="nav-item">
-                        <a class="nav-link text-secondary p-0" href="#">
+                        <a class="nav-link text-dark p-0" href="#">
                           <i class="bi bi-instagram fs-2"></i>
                         </a>
                       </li>
                       <li class="nav-item">
-                        <a class="nav-link text-secondary p-0" href="#">
+                        <a class="nav-link text-dark p-0" href="#">
                           <i class="bi bi-facebook fs-2"></i>
                         </a>
                       </li>
@@ -162,7 +162,7 @@
                       :to="`/profile/my-activity/${this.UserId}`"
                       type="button"
                       class="
-                        btn btn-outline-secondary
+                        btn btn-outline-dark
                         rounded-pill
                         d-flex
                         justify-content-center
@@ -172,7 +172,7 @@
                         w-100
                       "
                     >
-                      <span class="material-icons text-secondary me-2"
+                      <span class="material-icons text-dark me-2"
                         >search</span
                       >
                       查看票券
@@ -183,7 +183,7 @@
                       to="/study-circle"
                       type="button"
                       class="
-                        btn btn-outline-secondary
+                        btn btn-outline-dark
                         rounded-pill
                         d-flex
                         justify-content-center
@@ -194,7 +194,7 @@
                         mt-sm-0 mt-3
                       "
                     >
-                      <span class="material-icons text-secondary me-2"
+                      <span class="material-icons text-dark me-2"
                         >home</span
                       >
                       回到首頁
